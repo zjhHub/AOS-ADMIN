@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_chargeback_order[fc_chargeback_order]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-17 13:37:50 -->
+<mapper namespace="aos.fc.dao.Fc_chargeback_orderDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_chargeback_orderPO">
+		INSERT INTO fc_chargeback_order (
+		<if test="chargeback_accepted_id_ != null">
+	         chargeback_accepted_id_, <!-- chargeback_accepted_id_ -->
+		</if>
+		<if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+	         routed_third_channel_code_, <!-- routed_third_channel_code_ -->
+		</if>
+		<if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+	         third_channel_order_id_, <!-- third_channel_order_id_ -->
+		</if>
+		<if test="routed_third_channel_id_ != null">
+	         routed_third_channel_id_, <!-- routed_third_channel_id_ -->
+		</if>
+		<if test="location_ != null">
+	         location_, <!-- location_ -->
+		</if>
+		<if test="chargeback_amount_ != null">
+	         chargeback_amount_, <!-- chargeback_amount_ -->
+		</if>
+		<if test="chargeback_bank_id_ != null">
+	         chargeback_bank_id_, <!-- chargeback_bank_id_ -->
+		</if>
+		<if test="chargeback_account_ != null and chargeback_account_ != ''">
+	         chargeback_account_, <!-- chargeback_account_ -->
+		</if>
+		<if test="chargeback_name_ != null and chargeback_name_ != ''">
+	         chargeback_name_, <!-- chargeback_name_ -->
+		</if>
+		<if test="chargeback_idcard_ != null and chargeback_idcard_ != ''">
+	         chargeback_idcard_, <!-- chargeback_idcard_ -->
+		</if>
+		<if test="chargeback_cellphone_ != null and chargeback_cellphone_ != ''">
+	         chargeback_cellphone_, <!-- chargeback_cellphone_ -->
+		</if>
+		<if test="created_time_ != null and created_time_ != ''">
+	         created_time_, <!-- created_time_ -->
+		</if>
+		<if test="interact_times_ != null">
+	         interact_times_, <!-- interact_times_ -->
+		</if>
+		<if test="next_interact_time_ != null and next_interact_time_ != ''">
+	         next_interact_time_, <!-- next_interact_time_ -->
+		</if>
+		<if test="change_time_ != null and change_time_ != ''">
+	         change_time_, <!-- change_time_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="chargeback_accepted_id_ != null">
+	          #{chargeback_accepted_id_, jdbcType=INTEGER}, <!-- chargeback_accepted_id_ -->
+	    </if>
+		<if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+	          #{routed_third_channel_code_, jdbcType=VARCHAR}, <!-- routed_third_channel_code_ -->
+	    </if>
+		<if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+	          #{third_channel_order_id_, jdbcType=VARCHAR}, <!-- third_channel_order_id_ -->
+	    </if>
+		<if test="routed_third_channel_id_ != null">
+	          #{routed_third_channel_id_, jdbcType=INTEGER}, <!-- routed_third_channel_id_ -->
+	    </if>
+		<if test="location_ != null">
+	          #{location_, jdbcType=INTEGER}, <!-- location_ -->
+	    </if>
+		<if test="chargeback_amount_ != null">
+	          #{chargeback_amount_, jdbcType=NUMERIC}, <!-- chargeback_amount_ -->
+	    </if>
+		<if test="chargeback_bank_id_ != null">
+	          #{chargeback_bank_id_, jdbcType=INTEGER}, <!-- chargeback_bank_id_ -->
+	    </if>
+		<if test="chargeback_account_ != null and chargeback_account_ != ''">
+	          #{chargeback_account_, jdbcType=VARCHAR}, <!-- chargeback_account_ -->
+	    </if>
+		<if test="chargeback_name_ != null and chargeback_name_ != ''">
+	          #{chargeback_name_, jdbcType=VARCHAR}, <!-- chargeback_name_ -->
+	    </if>
+		<if test="chargeback_idcard_ != null and chargeback_idcard_ != ''">
+	          #{chargeback_idcard_, jdbcType=VARCHAR}, <!-- chargeback_idcard_ -->
+	    </if>
+		<if test="chargeback_cellphone_ != null and chargeback_cellphone_ != ''">
+	          #{chargeback_cellphone_, jdbcType=VARCHAR}, <!-- chargeback_cellphone_ -->
+	    </if>
+		<if test="created_time_ != null and created_time_ != ''">
+	          #{created_time_, jdbcType=VARCHAR}, <!-- created_time_ -->
+	    </if>
+		<if test="interact_times_ != null">
+	          #{interact_times_, jdbcType=INTEGER}, <!-- interact_times_ -->
+	    </if>
+		<if test="next_interact_time_ != null and next_interact_time_ != ''">
+	          #{next_interact_time_, jdbcType=VARCHAR}, <!-- next_interact_time_ -->
+	    </if>
+		<if test="change_time_ != null and change_time_ != ''">
+	          #{change_time_, jdbcType=VARCHAR}, <!-- change_time_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_chargeback_orderPO">
+		INSERT INTO fc_chargeback_order (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{chargeback_accepted_id_, jdbcType=INTEGER},  <!-- chargeback_accepted_id_ -->
+		    #{routed_third_channel_code_, jdbcType=VARCHAR},  <!-- routed_third_channel_code_ -->
+		    #{third_channel_order_id_, jdbcType=VARCHAR},  <!-- third_channel_order_id_ -->
+		    #{routed_third_channel_id_, jdbcType=INTEGER},  <!-- routed_third_channel_id_ -->
+		    #{location_, jdbcType=INTEGER},  <!-- location_ -->
+		    #{chargeback_amount_, jdbcType=NUMERIC},  <!-- chargeback_amount_ -->
+		    #{chargeback_bank_id_, jdbcType=INTEGER},  <!-- chargeback_bank_id_ -->
+		    #{chargeback_account_, jdbcType=VARCHAR},  <!-- chargeback_account_ -->
+		    #{chargeback_name_, jdbcType=VARCHAR},  <!-- chargeback_name_ -->
+		    #{chargeback_idcard_, jdbcType=VARCHAR},  <!-- chargeback_idcard_ -->
+		    #{chargeback_cellphone_, jdbcType=VARCHAR},  <!-- chargeback_cellphone_ -->
+		    #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+		    #{interact_times_, jdbcType=INTEGER},  <!-- interact_times_ -->
+		    #{next_interact_time_, jdbcType=VARCHAR},  <!-- next_interact_time_ -->
+		    #{change_time_, jdbcType=VARCHAR}  <!-- change_time_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_chargeback_orderPO">
+		UPDATE fc_chargeback_order
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="chargeback_accepted_id_ != null">
+		          chargeback_accepted_id_ = #{chargeback_accepted_id_, jdbcType=INTEGER},  <!-- chargeback_accepted_id_ -->
+			</if>
+			<if test="routed_third_channel_code_ != null">
+		          routed_third_channel_code_ = #{routed_third_channel_code_, jdbcType=VARCHAR},  <!-- routed_third_channel_code_ -->
+			</if>
+			<if test="third_channel_order_id_ != null">
+		          third_channel_order_id_ = #{third_channel_order_id_, jdbcType=VARCHAR},  <!-- third_channel_order_id_ -->
+			</if>
+			<if test="routed_third_channel_id_ != null">
+		          routed_third_channel_id_ = #{routed_third_channel_id_, jdbcType=INTEGER},  <!-- routed_third_channel_id_ -->
+			</if>
+			<if test="location_ != null">
+		          location_ = #{location_, jdbcType=INTEGER},  <!-- location_ -->
+			</if>
+			<if test="chargeback_amount_ != null">
+		          chargeback_amount_ = #{chargeback_amount_, jdbcType=NUMERIC},  <!-- chargeback_amount_ -->
+			</if>
+			<if test="chargeback_bank_id_ != null">
+		          chargeback_bank_id_ = #{chargeback_bank_id_, jdbcType=INTEGER},  <!-- chargeback_bank_id_ -->
+			</if>
+			<if test="chargeback_account_ != null">
+		          chargeback_account_ = #{chargeback_account_, jdbcType=VARCHAR},  <!-- chargeback_account_ -->
+			</if>
+			<if test="chargeback_name_ != null">
+		          chargeback_name_ = #{chargeback_name_, jdbcType=VARCHAR},  <!-- chargeback_name_ -->
+			</if>
+			<if test="chargeback_idcard_ != null">
+		          chargeback_idcard_ = #{chargeback_idcard_, jdbcType=VARCHAR},  <!-- chargeback_idcard_ -->
+			</if>
+			<if test="chargeback_cellphone_ != null">
+		          chargeback_cellphone_ = #{chargeback_cellphone_, jdbcType=VARCHAR},  <!-- chargeback_cellphone_ -->
+			</if>
+			<if test="created_time_ != null">
+		          created_time_ = #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+			</if>
+			<if test="interact_times_ != null">
+		          interact_times_ = #{interact_times_, jdbcType=INTEGER},  <!-- interact_times_ -->
+			</if>
+			<if test="next_interact_time_ != null">
+		          next_interact_time_ = #{next_interact_time_, jdbcType=VARCHAR},  <!-- next_interact_time_ -->
+			</if>
+			<if test="change_time_ != null">
+		          change_time_ = #{change_time_, jdbcType=VARCHAR},  <!-- change_time_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_chargeback_order WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_chargeback_orderPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_chargeback_order WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_chargeback_orderPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_chargeback_order
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_chargeback_orderPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_chargeback_order
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_chargeback_orderPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_chargeback_order
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_chargeback_orderPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_chargeback_order
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_chargeback_orderPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_chargeback_order
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_chargeback_order
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_chargeback_order
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  chargeback_accepted_id_,  <!-- chargeback_accepted_id_ -->
+		  routed_third_channel_code_,  <!-- routed_third_channel_code_ -->
+		  third_channel_order_id_,  <!-- third_channel_order_id_ -->
+		  routed_third_channel_id_,  <!-- routed_third_channel_id_ -->
+		  location_,  <!-- location_ -->
+		  chargeback_amount_,  <!-- chargeback_amount_ -->
+		  chargeback_bank_id_,  <!-- chargeback_bank_id_ -->
+		  chargeback_account_,  <!-- chargeback_account_ -->
+		  chargeback_name_,  <!-- chargeback_name_ -->
+		  chargeback_idcard_,  <!-- chargeback_idcard_ -->
+		  chargeback_cellphone_,  <!-- chargeback_cellphone_ -->
+		  created_time_,  <!-- created_time_ -->
+		  interact_times_,  <!-- interact_times_ -->
+		  next_interact_time_,  <!-- next_interact_time_ -->
+		  change_time_  <!-- change_time_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_chargeback_order.id_,  <!-- id_ -->
+		  fc_chargeback_order.chargeback_accepted_id_,  <!-- chargeback_accepted_id_ -->
+		  fc_chargeback_order.routed_third_channel_code_,  <!-- routed_third_channel_code_ -->
+		  fc_chargeback_order.third_channel_order_id_,  <!-- third_channel_order_id_ -->
+		  fc_chargeback_order.routed_third_channel_id_,  <!-- routed_third_channel_id_ -->
+		  fc_chargeback_order.location_,  <!-- location_ -->
+		  fc_chargeback_order.chargeback_amount_,  <!-- chargeback_amount_ -->
+		  fc_chargeback_order.chargeback_bank_id_,  <!-- chargeback_bank_id_ -->
+		  fc_chargeback_order.chargeback_account_,  <!-- chargeback_account_ -->
+		  fc_chargeback_order.chargeback_name_,  <!-- chargeback_name_ -->
+		  fc_chargeback_order.chargeback_idcard_,  <!-- chargeback_idcard_ -->
+		  fc_chargeback_order.chargeback_cellphone_,  <!-- chargeback_cellphone_ -->
+		  fc_chargeback_order.created_time_,  <!-- created_time_ -->
+		  fc_chargeback_order.interact_times_,  <!-- interact_times_ -->
+		  fc_chargeback_order.next_interact_time_,  <!-- next_interact_time_ -->
+		  fc_chargeback_order.change_time_  <!-- change_time_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	   <if test="chargeback_accepted_id_ != null ">
+		      AND chargeback_accepted_id_ = #{chargeback_accepted_id_}  <!-- chargeback_accepted_id_ -->
+		</if>
+	    <if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+		      AND routed_third_channel_code_ = #{routed_third_channel_code_}  <!-- routed_third_channel_code_ -->
+		</if>
+	    <if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+		      AND third_channel_order_id_ = #{third_channel_order_id_}  <!-- third_channel_order_id_ -->
+		</if>
+	   <if test="routed_third_channel_id_ != null ">
+		      AND routed_third_channel_id_ = #{routed_third_channel_id_}  <!-- routed_third_channel_id_ -->
+		</if>
+	   <if test="location_ != null ">
+		      AND location_ = #{location_}  <!-- location_ -->
+		</if>
+	   <if test="chargeback_amount_ != null ">
+		      AND chargeback_amount_ = #{chargeback_amount_}  <!-- chargeback_amount_ -->
+		</if>
+	   <if test="chargeback_bank_id_ != null ">
+		      AND chargeback_bank_id_ = #{chargeback_bank_id_}  <!-- chargeback_bank_id_ -->
+		</if>
+	    <if test="chargeback_account_ != null and chargeback_account_ != ''">
+		      AND chargeback_account_ = #{chargeback_account_}  <!-- chargeback_account_ -->
+		</if>
+	    <if test="chargeback_name_ != null and chargeback_name_ != ''">
+		      AND chargeback_name_ = #{chargeback_name_}  <!-- chargeback_name_ -->
+		</if>
+	    <if test="chargeback_idcard_ != null and chargeback_idcard_ != ''">
+		      AND chargeback_idcard_ = #{chargeback_idcard_}  <!-- chargeback_idcard_ -->
+		</if>
+	    <if test="chargeback_cellphone_ != null and chargeback_cellphone_ != ''">
+		      AND chargeback_cellphone_ = #{chargeback_cellphone_}  <!-- chargeback_cellphone_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ = #{created_time_}  <!-- created_time_ -->
+		</if>
+	   <if test="interact_times_ != null ">
+		      AND interact_times_ = #{interact_times_}  <!-- interact_times_ -->
+		</if>
+	    <if test="next_interact_time_ != null and next_interact_time_ != ''">
+		      AND next_interact_time_ = #{next_interact_time_}  <!-- next_interact_time_ -->
+		</if>
+	    <if test="change_time_ != null and change_time_ != ''">
+		      AND change_time_ = #{change_time_}  <!-- change_time_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+		      AND routed_third_channel_code_ like '%${routed_third_channel_code_}%'  <!-- routed_third_channel_code_ -->
+		</if>
+	    <if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+		      AND third_channel_order_id_ like '%${third_channel_order_id_}%'  <!-- third_channel_order_id_ -->
+		</if>
+	    <if test="chargeback_account_ != null and chargeback_account_ != ''">
+		      AND chargeback_account_ like '%${chargeback_account_}%'  <!-- chargeback_account_ -->
+		</if>
+	    <if test="chargeback_name_ != null and chargeback_name_ != ''">
+		      AND chargeback_name_ like '%${chargeback_name_}%'  <!-- chargeback_name_ -->
+		</if>
+	    <if test="chargeback_idcard_ != null and chargeback_idcard_ != ''">
+		      AND chargeback_idcard_ like '%${chargeback_idcard_}%'  <!-- chargeback_idcard_ -->
+		</if>
+	    <if test="chargeback_cellphone_ != null and chargeback_cellphone_ != ''">
+		      AND chargeback_cellphone_ like '%${chargeback_cellphone_}%'  <!-- chargeback_cellphone_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ like '%${created_time_}%'  <!-- created_time_ -->
+		</if>
+	    <if test="next_interact_time_ != null and next_interact_time_ != ''">
+		      AND next_interact_time_ like '%${next_interact_time_}%'  <!-- next_interact_time_ -->
+		</if>
+	    <if test="change_time_ != null and change_time_ != ''">
+		      AND change_time_ like '%${change_time_}%'  <!-- change_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

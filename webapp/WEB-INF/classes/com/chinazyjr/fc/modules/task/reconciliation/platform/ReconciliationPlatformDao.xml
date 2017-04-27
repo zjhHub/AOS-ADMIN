@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReconciliationPlatformDao">
+
+	<!-- 获取扣款对账信息集 -->
+	<select id="getChargebackList" parameterType="Dto" resultType="Dto">
+
+		select 
+		A.id_,
+		A.routed_third_channel_id_,
+		A.platform_id_,
+		A.contract_code_,
+		A.reference_,
+		A.chargeback_account_,
+		A.chargeback_amount_,
+		A.created_time_,
+		B.chargeback_status_,
+		B.chargebacked_amount_,
+		B.first_callback_time_
+		 From fc_chargeback_accepted as A
+		left join fc_chargback_accepted_result as B on A.id_ = B.chargeback_accepted_id_
+		where B.chargeback_status_ in (1, 2) 
+		and first_callback_time_ BETWEEN #{beginDate} and #{endDate}
+		and A.platform_id_ = #{platform_id_}
+
+	</select>
+	
+	<!-- 获取放款对账信息集 -->
+	<select id="getLoanAcceptedList" parameterType="Dto" resultType="Dto">
+
+		select 
+		A.id_,
+		A.routed_third_channel_id_,
+		A.platform_id_,
+		A.contract_code_,
+		A.reference_,
+		A.loan_account_,
+		A.loan_amount_,
+		A.created_time_,
+		B.order_result_status_,
+		B.first_callback_time_
+		from fc_loan_accepted_order as A
+		left join fc_loan_accepted_order_result as B on A.id_ = B.id_
+		where B.order_result_status_ = 1
+		and B.first_callback_time_  between #{beginDate} and #{endDate}
+		and A.platform_id_ = #{platform_id_} 
+		
+	</select>
+
+	<!-- 获取业务线对账文件条数  -->
+	<select id="getPlatformReconciliationCount" parameterType="Dto" resultType="int">
+		select count(1) 
+		from fc_platform_reconciliation 
+		where type_ = #{type_}
+		and platform_id_ = #{platform_id_} 
+		and reconciliation_date_ = #{reconciliation_date_}
+	</select>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByCondition" parameterType="Dto">
+		DELETE FROM fc_platform_reconciliation 
+		where type_ = #{type_}
+		and platform_id_ = #{platform_id_} 
+		and reconciliation_date_ = #{reconciliation_date_}
+	</delete>
+
+
+
+</mapper>

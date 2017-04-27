@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ContractSummaryDao">
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Dto"	>
+	SELECT 
+		  fc_contract.id_,  <!-- 借款合同ID -->
+		  fc_contract.platform_id_,  <!-- 归属业务线 -->
+		  fc_contract.contract_code_,  <!-- 借款合同编号 -->
+		  fc_contract.channel_,  <!-- 展业途径 -->
+		  fc_contract.customer_id_,  <!-- 借款人ID -->
+		  fc_contract.product_code_,  <!-- 产品编号 -->
+		  fc_contract.product_name_,  <!-- 产品名称 -->
+		  fc_contract.loan_pattern_,  <!-- 借款方式 -->
+		  fc_contract.loan_staging_amount_,  <!-- 借款期数 -->
+		  fc_contract.loan_staging_duration_,  <!-- 借款期长 -->
+		  fc_contract.annualized_rate_,  <!-- 年化利率 -->
+		  fc_contract.contract_pay_date_,  <!-- 约定放款日 -->
+		  fc_contract.contract_amount_,  <!-- 合同金额 -->
+		  fc_contract.expected_interest_,  <!-- 预计可收利息 -->
+		  fc_contract.expected_fee_,  <!-- 预计可收服务费 -->
+		  fc_contract.status_,  <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+		  fc_contract.ext_,  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		  fc_contract.created_time_,  <!-- created_time_ -->
+		  fc_contract.created_by_ , <!-- created_by_ -->
+		  fc_contract.customer_name_,
+		  fc_contract.customer_code_,
+		  fc_contract.customer_idcard_,
+		  fc_contract.customer_cellphone_ 
+		FRoM fc_contract AS fc_contract 
+		
+		<where>
+
+			<if test="platform_id_ != null and platform_id_ !=''"> 
+				AND fc_contract.platform_id_ = #{platform_id_}  <!-- 归属业务线 -->
+			</if>
+
+			<if test="channel != null and channel != ''" >
+				AND fc_contract.channel_ like '%${channel}%'  <!-- 展业途径 -->
+			</if>
+
+			<if test="product_name != null and product_name != ''">
+				AND fc_contract.product_name_ like '%${product_name}%'  <!-- 产品名称 -->
+			</if>
+
+			<if test="contract_status != null and contract_status != ''">
+				AND fc_contract.status_ = #{contract_status}
+			</if>
+
+			<if test="contract_id != null and contract_id !=''">
+				AND fc_contract.id_ = #{contract_id}  <!-- 借款合同ID -->
+			</if>
+
+
+			<if test="contract_code != null and contract_code != ''">
+				AND fc_contract.contract_code_ = #{contract_code}  <!-- 借款合同编号 -->
+			</if>
+
+			<if test="contract_amount_start != null and contract_amount_start !=''">
+				AND fc_contract.contract_amount_  &gt;= #{contract_amount_start}  <!-- 合同金额 -->
+			</if>
+			<if test="contract_amount_end != null and contract_amount_end != ''">
+				AND fc_contract.contract_amount_  &lt;=#{contract_amount_end}  <!-- 合同金额 -->
+			</if>
+
+			<if test="customer_name != null and customer_name !=''">
+				AND fc_contract.customer_name_ like '%${customer_name}%'  <!-- 客户名称 -->
+			</if>
+
+			<if test="customer_idcard != null and customer_idcard !=''">
+				AND fc_contract.customer_idcard_ like '%${customer_idcard}%'  <!-- 身份证 -->
+			</if>
+
+		</where>
+			order by fc_contract.id_
+	</select>
+
+
+
+
+</mapper>

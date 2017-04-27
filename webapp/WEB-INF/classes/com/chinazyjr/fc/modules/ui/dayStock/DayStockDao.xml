@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- -->
+<mapper namespace="dayStock">
+	<select id="dayStockPage" parameterType="Dto" resultType="Dto">
+		select
+			conStock.id_,
+			conStock.snapshot_date_,
+			platform.name_ platform_id_,
+			conStock.contract_id_,
+			conStock.contract_status_,
+			conStock.settle_count_,
+			conStock.overdue_day_,
+			conStock.overdue_count_,
+			con.contract_code_,
+			con.channel_,
+			con.customer_code_ customer_id_,
+			con.product_code_,
+			con.product_name_,
+			con.loan_pattern_,
+			con.loan_staging_amount_,
+			con.loan_staging_duration_,
+			con.annualized_rate_,
+			con.contract_pay_date_,
+			con.contract_amount_,
+			con.expected_interest_,
+			con.expected_fee_,
+			con.customer_name_ name_,
+			con.customer_cellphone_ cellphone_,
+			con.customer_idcard_ idcard_
+		from
+		fc_contract_stock conStock,fc_contract con,fc_platform platform
+		where conStock.contract_id_ = con.id_ and conStock.platform_id_ = platform.id_
+	 	<if test="contract_id_ != null and contract_id_ != ''">
+	 		and conStock.contract_id_ = #{contract_id_}
+	 	</if>
+	 	<if test="platform_id_ != null and platform_id_ != ''">
+	 		and platform.id_ = #{platform_id_}
+	 	</if>
+	 	<if test="snapshot_date_ != null and snapshot_date_ != ''">
+	 		and SUBSTR(snapshot_date_,1,10) = #{snapshot_date_}
+	 	</if>
+	 	<if test="contract_code_ != null and contract_code_ != ''">
+	 		and con.contract_code_ = #{contract_code_}
+	 	</if>
+	</select>
+	
+	<select id="dayStock" parameterType="Dto" resultType="Dto">
+		select
+			conStock.id_,
+			conStock.snapshot_date_,
+			platform.name_ platform_id_,
+			conStock.contract_id_,
+			conStock.contract_status_,
+			conStock.settle_count_,
+			conStock.overdue_day_,
+			conStock.overdue_count_,
+			con.contract_code_,
+			con.channel_,
+			con.customer_code_ customer_id_,
+			con.product_code_,
+			con.product_name_,
+			con.loan_pattern_,
+			con.loan_staging_amount_,
+			con.loan_staging_duration_,
+			con.annualized_rate_,
+			con.contract_pay_date_,
+			con.contract_amount_,
+			con.expected_interest_,
+			con.expected_fee_,
+			con.customer_name_ name_,
+			con.customer_cellphone_ cellphone_,
+			con.customer_idcard_ idcard_
+		from
+		fc_contract_stock conStock,fc_contract con,fc_platform platform
+		where conStock.contract_id_ = con.id_ and conStock.platform_id_ = platform.id_
+	 	<if test="contract_id_ != null and contract_id_ != ''">
+	 		and conStock.contract_id_ = #{contract_id_}
+	 	</if>
+	 	<if test="platform_id_ != null and platform_id_ != ''">
+	 		and platform.id_ = #{platform_id_}
+	 	</if>
+	 	<if test="snapshot_date_ != null and snapshot_date_ != ''">
+	 		and SUBSTR(snapshot_date_,1,10) = #{snapshot_date_}
+	 	</if>
+	 	<if test="contract_code_ != null and contract_code_ != ''">
+	 		and con.contract_code_ = #{contract_code_}
+	 	</if>
+	</select>
+	
+	<select id="categoryStock" parameterType="Dto" resultType="Dto">
+	select 
+		category_id_,receivable_amount_,received_amount_,remainder_amount_,unreceived_amount_,finCategory.name_
+	from fc_category_stock cateStock,fc_financial_category finCategory
+	where cateStock.category_id_ = finCategory.id_ and finCategory.type_ = 1 and cateStock.contract_stock_id_ = #{id_}
+	</select>
+</mapper>

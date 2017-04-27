@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="loanTransitOrderDao">
+
+	<select id="getLoanTransitOrderList" parameterType="Dto" resultType="Fc_loan_accepted_orderPO">
+
+		SELECT
+		<include refid="aos.fc.dao.Fc_loan_accepted_orderDao.column" />
+		FROM fc_loan_accepted_order
+		where
+
+			(location_ = #{location_} AND #{next_interact_time_} >= next_interact_time_)
+			or 
+			(location_ = #{location_} AND next_interact_time_ is null)
+
+		
+	</select>
+	
+	
+	
+	<select id="getOrderSendTop" parameterType="Dto" resultType="Fc_loan_order_sendPO">
+
+		SELECT
+			<include refid="aos.fc.dao.Fc_loan_order_sendDao.column" />
+		
+		FROM
+			fc_loan_order_send
+		WHERE
+			loan_accepted_order_id_ = #{loan_accepted_order_id_}
+		ORDER BY
+			sent_time_ DESC
+		LIMIT 1
+
+		
+	</select>
+
+</mapper>

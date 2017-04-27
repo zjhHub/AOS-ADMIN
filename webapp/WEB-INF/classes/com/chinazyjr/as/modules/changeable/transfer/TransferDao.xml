@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TransferDao">
+
+
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateAccountsBalanceByKey" parameterType="Dto">
+		UPDATE as_accounts
+		<set>
+
+			<if test="available_balance_ != null">
+				available_balance_ = available_balance_+#{available_balance_,jdbcType=NUMERIC},  <!-- available_balance_ -->
+			</if>
+			<if test="froze_balance_ != null">
+				froze_balance_ = froze_balance_+#{froze_balance_, jdbcType=NUMERIC},  <!-- 
+					froze_balance_ -->
+			</if>
+			<if test="total_balance_ != null">
+				total_balance_ = total_balance_+#{total_balance_, jdbcType=NUMERIC},  <!-- 
+					total_balance_ -->
+			</if>
+			<if test="update_time_ != null">
+				update_time_ = #{update_time_, jdbcType=VARCHAR},  <!-- update_time_ -->
+			</if>
+			
+			data_version_ = data_version_+1,  <!-- data_version_ -->
+		
+			sn_ =MD5(concat(#{sn_},available_balance_,froze_balance_,total_balance_,update_time_))
+		
+		</set>
+		WHERE id_ = #{id_}	and sn_ = MD5(	concat(#{sn_},available_balance_,froze_balance_,total_balance_,update_time_))
+	</update>
+
+</mapper>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- -->
+<mapper namespace="releaseBusinessDao">
+	<select id="listReleaseBusinessPage" parameterType="Dto" resultType="Dto">
+		SELECT
+			fm.id_,
+			fp.name_ platform_id_,
+			ftc.name_ third_channel_,
+			fm.order_id_,
+			fm.target_account_,
+			fm.trans_amount_,
+			ffb.contract_id_,
+			fm.request_time_ AS request_time,
+			fm.reponse_time_ AS response_time,
+			fm.flow_biz_id_,
+			fm.third_channel_fee_,
+			fm.arrived_time_ ,
+			fm.record_time_
+		FROM
+			fc_flow_money fm,
+			fc_flow_business ffb,
+			fc_platform fp,
+			fc_third_channel ftc
+		WHERE
+			fm.flow_biz_id_ = ffb.id_
+			AND fm.platform_id_ = fp.id_
+			and ftc.id_ = fm.third_channel_
+			and fm.trade_type_ = 1
+			<if test="platform_id_ != null and platform_id_ != ''">
+				and fm.platform_id_ = #{platform_id_}
+			</if>
+			<if test="third_channel_ != null and third_channel_ != ''">
+				and ftc.id_ = #{third_channel_}
+			</if>
+			<if test="arrived_start_time_ != null and arrived_start_time_ != ''">
+				and substr(fm.arrived_time_,1,10) &gt;= #{arrived_start_time_}
+			</if>
+			<if test="arrived_end_time_ != null and arrived_end_time_ != ''">
+				and substr(fm.arrived_time_,1,10) &lt;= #{arrived_end_time_}
+			</if>
+			<if test="record_start_time_ != null and record_start_time_ != ''">
+				and substr(fm.record_time_,1,10) &gt;= #{record_start_time_}
+			</if>
+			<if test="record_end_time_ != null and record_end_time_ != ''">
+				and substr(fm.record_time_,1,10) &lt;= #{record_end_time_}
+			</if>
+			<if test="order_id_ != null and order_id_ != ''">
+				and fm.order_id_ = #{order_id_}
+			</if>
+	</select>
+	
+	<select id="listReleaseBusiness" parameterType="Dto" resultType="Dto">
+		SELECT
+			fm.id_,
+			fp.name_ platform_id_,
+			ftc.name_ third_channel_,
+			fm.order_id_,
+			fm.target_account_,
+			fm.trans_amount_,
+			ffb.contract_id_,
+			fm.request_time_ AS request_time,
+			fm.reponse_time_ AS response_time,
+			fm.flow_biz_id_,
+			fm.third_channel_fee_,
+			fm.arrived_time_ ,
+			fm.record_time_
+		FROM
+			fc_flow_money fm,
+			fc_flow_business ffb,
+			fc_platform fp,
+			fc_third_channel ftc
+		WHERE
+			fm.flow_biz_id_ = ffb.id_
+			AND fm.platform_id_ = fp.id_
+			and ftc.id_ = fm.third_channel_
+			and fm.trade_type_ = 1
+			<if test="platform_id_ != null and platform_id_ != ''">
+				and fm.platform_id_ = #{platform_id_}
+			</if>
+			<if test="third_channel_ != null and third_channel_ != ''">
+				and ftc.id_ = #{third_channel_}
+			</if>
+			<if test="arrived_start_time_ != null and arrived_start_time_ != ''">
+				and substr(fm.arrived_time_,1,10) &gt;= #{arrived_start_time_}
+			</if>
+			<if test="arrived_end_time_ != null and arrived_end_time_ != ''">
+				and substr(fm.arrived_time_,1,10) &lt;= #{arrived_end_time_}
+			</if>
+			<if test="record_start_time_ != null and record_start_time_ != ''">
+				and substr(fm.record_time_,1,10) &gt;= #{record_start_time_}
+			</if>
+			<if test="record_end_time_ != null and record_end_time_ != ''">
+				and substr(fm.record_time_,1,10) &lt;= #{record_end_time_}
+			</if>
+			<if test="order_id_ != null and order_id_ != ''">
+				and fm.order_id_ = #{order_id_}
+			</if>
+	</select>
+	
+	<select id="contractInfo" parameterType="Dto" resultType="Dto">
+		SELECT
+			fo.product_code_,
+			fo.product_name_,
+			fo.loan_pattern_,
+			fo.loan_staging_amount_,
+			fo.loan_staging_duration_,
+			fo.annualized_rate_,
+			fo.contract_pay_date_,
+			fo.contract_amount_,
+			fo.expected_interest_,
+			fo.expected_fee_,
+			fo.status_,
+			fo.customer_name_ name_,
+			fo.customer_idcard_ idcard_,
+			fo.customer_cellphone_ cellphone_,
+			fo.contract_code_,
+			fo.channel_,
+			fo.customer_code_ customer_id_
+		FROM
+			fc_contract fo
+		WHERE
+			fo.id_ = #{contract_id_}
+		<if test="contract_code_ != null and contract_code_ != ''">
+			and fo.contract_code_ = #{contract_code_}
+		</if>
+		<if test="name_ != null and name_ != ''">
+			and fo.customer_name_ = #{name_}
+		</if>
+		<if test="idcard_ != null and idcard_ != ''">
+			and fo.customer_idcard_ = #{idcard_}
+		</if>
+		<if test="product_name_ != null and product_name_ != ''">
+			and fo.product_name_ = #{product_name_}
+		</if>
+		<if test="channel_ != null and channel_ != ''">
+			and fo.channel_ = #{channel_}
+		</if>
+	</select>
+	
+	<select id="cutdto" parameterType="Dto" resultType="Dto">
+		SELECT
+			ffc.name_,
+			fbc.cut_amount_ AS amount,
+			ffc.id_
+		FROM
+			fc_book_cuts fbc,
+			fc_financial_category ffc
+		WHERE
+			fbc.category_id_ = ffc.id_
+		AND fbc.contract_id_ = #{contract_id_}
+		AND ffc.type_ = 2
+	</select>
+</mapper>

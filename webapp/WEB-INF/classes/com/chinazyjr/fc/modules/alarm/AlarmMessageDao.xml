@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="AlarmMessageDao">
+
+	<!-- 获取没有处理的警报 -->
+	<select id="selectFcAlarmList" resultType="Dto">
+		select
+		<include refid="aos.fc.dao.Fc_alarmDao.column" /> 
+ 		from fc_alarm where alarm_status_ = 1 and (alarm_count_ = 0 or now() >= alarm_next_)
+ 		group by alarm_type_ 
+	</select>
+	<!-- 根据类型获取配置列表 -->
+	<select id="selectFcAlarmConfigList" parameterType="int" resultType="Fc_alarm_send_configPO">
+		select 
+		<include refid="aos.fc.dao.Fc_alarm_send_configDao.column" /> 
+		 from fc_alarm_send_config where alarm_type_ = #{id}
+	</select>
+	<!-- 更新警报数据 -->
+	<update id="updateAlarmForBatch" parameterType="Dto">
+		update fc_alarm set alarm_next_ = #{alarm_next_}, alarm_count_ = alarm_count_ + 1 where 
+		 alarm_type_ = #{alarm_type_} and alarm_status_ = 1
+	</update>
+
+	<!-- 扣款指令信息 -->
+	<select id="selectKkCharBackOrder" parameterType="Dto" resultType="Fc_chargeback_orderPO">
+		SELECT 
+			fc.id_,
+			chargeback_accepted_id_,
+			routed_third_channel_code_,
+			third_channel_order_id_,
+			routed_third_channel_id_,
+			location_,
+			chargeback_amount_,
+			chargeback_bank_id_,
+			chargeback_account_,
+			chargeback_name_,
+			chargeback_idcard_,
+			chargeback_cellphone_,
+			created_time_,
+			interact_times_,
+			next_interact_time_,
+			change_time_
+		FROM fc_chargeback_order fc LEFT JOIN fc_chargeback_order_result fr ON fc.id_ = fr.id_
+		<where>
+			<if test="interact_times_ != null ">
+			      AND (fc.interact_times_ > #{interact_times_} AND fc.location_ = 2)
+			</if>
+			<if test="thirdOutTime != null ">
+			      AND (timestampdiff(MINUTE,fc.change_time_,NOW()) > #{thirdOutTime} AND fc.location_ = 2)
+			</if>
+			<if test="systemOutTime != null ">
+			      AND (timestampdiff(MINUTE,fc.change_time_,NOW()) > #{systemOutTime} AND fc.location_ in (1,3,5,6,7,8))
+			</if>
+		</where>
+	</select>
+	
+	<!-- 扣款异常表信息 -->
+	<select id="selectKkOrderException" parameterType="Dto" resultType="Fc_chargeback_order_exceptionPO">
+		SELECT 
+		  order_id_,
+		  response_code_,
+		  response_summary_,
+		  response_msg_templet_,
+		  exception_time_
+		FROM fc_chargeback_order_exception
+		<where>
+			<if test="order_id_ != null ">
+		      AND order_id_ = #{order_id_}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 放款指令信息 -->
+	<select id="selectFkLoanAcceptOrder" parameterType="Dto" resultType="Fc_loan_accepted_orderPO">
+		SELECT 
+			fo.id_,
+			location_,
+			routed_third_channel_code_,
+			routed_third_channel_id_,
+			platform_id_,
+			contract_id_,
+			contract_code_,
+			loan_amount_,
+			loan_bank_id_,
+			bank_code_,
+			loan_account_,
+			loan_name_,
+			loan_idcard_,
+			loan_cellphone_,
+			created_time_,
+			interact_times_,
+			next_interact_time_,
+			third_channel_order_id_,
+			change_time_
+		FROM fc_loan_accepted_order fo LEFT JOIN fc_loan_accepted_order_result fr ON fo.id_ = fr.id_ 
+		<where>
+			<if test="interact_times_ != null ">
+			      AND (fo.interact_times_ > #{interact_times_} AND location_ = 2)
+			</if>
+			<if test="thirdOutTime != null ">
+			      AND (timestampdiff(MINUTE,fo.change_time_,NOW()) > #{thirdOutTime} AND location_ = 2)
+			</if>
+			<if test="systemOutTime != null ">
+			      AND (timestampdiff(MINUTE,fo.change_time_,NOW()) > #{systemOutTime} AND location_ in (1,3,5,6,7,8))
+			</if>
+		</where>
+	</select>
+	
+	<!-- 放款异常表信息 -->
+	<select id="selectFkLoanException" parameterType="Dto" resultType="Fc_loan_order_exceptionPO">
+		SELECT 
+		  accepted_id_,
+		  response_code_,
+		  response_summary_,
+		  response_msg_templet_,
+		  exception_time_
+		FROM fc_loan_order_exception
+		<where>
+			<if test="accepted_id_ != null ">
+		      AND accepted_id_ = #{accepted_id_}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 获取第三方信息 -->
+	<select id="selectChannelById" parameterType="Dto" resultType="Fc_third_channelPO">
+		SELECT
+		  id_,
+		  code_,
+		  name_,
+		  failure_permission_times_,
+		  success_permission_times_,
+		  route_priority,
+		  back_sign_supported_,
+		  order_sequence_,
+		  loan_supported_
+		FROM fc_third_channel
+		<where>
+			<if test="id_ != null ">
+		      AND id_ = #{id_}
+			</if>
+		</where>
+	</select>
+
+	
+	<select id="selectPayOrderInfo" parameterType="Dto" resultType="Dto"	>
+		SELECT fc.*,ft.name_ FROM fc_chargeback_order fc,fc_third_channel ft
+		<where>
+			<if test="id_ != null ">
+		      AND fc.id_ = #{id_} AND fc.routed_third_channel_id_ = ft.id_
+			</if>
+		</where> 
+		
+	</select>
+	
+	<select id="selectLoanOrderInfo" parameterType="Dto" resultType="Dto"	>
+		SELECT fa.*,ft.name_ FROM fc_loan_accepted_order fa,fc_third_channel ft 
+		<where>
+			<if test="id_ != null ">
+		      AND fa.id_ = #{id_} AND fa.routed_third_channel_id_ = ft.id_
+			</if>
+		</where> 
+		
+	</select>
+
+</mapper>

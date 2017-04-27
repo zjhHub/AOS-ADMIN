@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChangeLogDao">
+
+<!-- 查询未到齐，已逾期的合同-->
+	<select id="getContractListByStatus" resultType="Fc_contractPO"
+		parameterType="Dto">
+		SELECT id_,status_
+		FROM fc_contract 
+		WHERE  status_ in (${status}) 
+	</select>
+
+
+
+
+	<!-- 根据分期状态查询 -->
+	<select id="countStagingByStatus" resultType="Integer"
+		parameterType="Dto">
+		SELECT count(id_)
+		FROM fc_staging
+		WHERE
+		contract_id_=#{contract_id_} AND status_=#{status_}
+
+	</select>
+
+<!-- 查询已结清的SUBJECT-->
+	<select id="countSubjectBySettle" resultType="Integer"
+		parameterType="Dto">
+		SELECT count(id_)
+		FROM fc_book_subject
+		WHERE
+		staging_id_=#{staging_id_} AND received_amount_ >=receivable_amount_
+
+	</select>
+	
+	
+	
+<!-- 查询未结清的SUBJECT-->
+	<select id="countSubjectOverdue" resultType="Integer"
+		parameterType="Dto">
+		SELECT count(id_) 
+		FROM fc_book_subject
+		WHERE staging_id_=#{staging_id_} AND received_amount_ <![CDATA[<]]> receivable_amount_
+	</select>
+
+</mapper>

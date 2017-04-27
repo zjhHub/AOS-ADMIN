@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="logRquest">
+	<select id="logRquestPage" parameterType="Dto" resultType="Dto">
+		SELECT
+			fq.uuid_,
+			fq.service_code_,
+			fq.time_,
+			fq.content_,
+			fpm.name_ platformName,
+			fpm.id_  platformId,
+			fip.ip_address_,
+			fp.request_uuid_,
+			IFNULL(fp.response_time_, '--') response_time_,
+			IFNULL(fp.response_code, '--') response_code,
+			IFNULL(fp.summary, '--') summary,
+			IFNULL(fp.response_content_, '--') response_content_
+		FROM
+			fc_log_request fq,
+			fc_log_response fp ,
+			fc_platform fpm,
+			fc_ip_white_list fip 
+ 
+	<where>
+			AND fq.uuid_ = fp.request_uuid_
+			AND fpm.id_ = fq.platform_id_
+			AND fip.id_ = fq.ip_
+
+		<if test="uuid_ != null and uuid_ != ''">
+			AND fq.uuid_ like '%${uuid_}%' <!--  -->
+		</if>
+		
+		<if test="platformId != null and platformId != ''">
+			AND fpm.id_ = #{platformId}
+		</if>
+
+		<if test="ip_address_ != null and ip_address_ != ''">
+			AND fip.ip_address_ like '%${ip_address_}%'
+		</if>
+
+		<if test="service_code_ != null and service_code_ != ''">
+			AND fq.service_code_ = #{service_code_}
+		</if>
+
+		<if test="start_time_ != null and start_time_ !='' "> 
+			AND fq.time_ <![CDATA[ >= ]]> #{start_time_}  <!-- 开始日期 -->
+		</if>
+		
+		<if test="end_time_!= null and end_time_ !='' ">
+			AND fq.time_ <![CDATA[ <= ]]> CONCAT(#{end_time_},' 23:59:59')  <!-- 结束日期 -->
+		</if>
+		
+		<if test="start_response_time_ != null and start_response_time_ !='' "> 
+			AND fp.response_time_ <![CDATA[ >= ]]> #{start_response_time_}  <!-- 开始日期 -->
+		</if>
+		
+		<if test="end_response_time_ != null and end_response_time_ !='' ">
+			AND fp.response_time_ <![CDATA[ <= ]]> CONCAT(#{end_response_time_},' 23:59:59')  <!-- 结束日期 -->
+		</if>
+		
+		<if test="response_code != null and response_code != ''">
+			AND fp.response_code = #{response_code}
+		</if>
+	</where>
+<!-- 		ORDER BY fq.time_ DESC -->
+		
+	</select>
+	<select id="logDetails" parameterType="Dto" resultType="Dto">
+		SELECT
+			a.uuid_,
+			a.platformId,
+			a.platformName,
+			a.ip_address_,
+			a.service_code_,
+			a.time_,
+			a.content_,
+			fp.request_uuid_,
+			fp.response_time_,
+			fp.response_code,
+			fp.summary,
+			fp.response_content_
+		FROM
+		(
+			SELECT
+				fpm.id_ AS platformId,
+				fq.uuid_,
+				fpm.name_ AS platformName,
+				fip.ip_address_,
+				fq.service_code_,
+				fq.time_,
+				fq.content_
+		FROM
+			fc_log_request fq,
+			fc_platform fpm,
+			fc_ip_white_list fip
+		WHERE
+			fpm.id_ = fq.platform_id_
+		AND fip.id_ = fq.ip_
+		) a
+		LEFT JOIN fc_log_response fp 
+		ON 
+		a.uuid_ = fp.request_uuid_
+			where 1=1
+		<if test="uuid_ != null and uuid_ != ''">
+			AND a.uuid_ = #{uuid_} <!--  -->
+		</if>
+		
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+			AND fp.request_uuid_ = #{request_uuid_}
+		</if>
+		
+	</select>
+	
+</mapper>

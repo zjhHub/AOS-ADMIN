@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_task_log[fc_task_log]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-02-07 10:53:02 -->
+<mapper namespace="aos.fc.dao.Fc_task_logDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_task_logPO">
+		INSERT INTO fc_task_log (
+		<if test="uuid_ != null and uuid_ != ''">
+	         uuid_, <!-- uuid_ -->
+		</if>
+		<if test="name_ != null and name_ != ''">
+	         name_, <!-- name_ -->
+		</if>
+		<if test="status_ != null">
+	         status_, <!-- status_ -->
+		</if>
+		<if test="p_id_ != null">
+	         p_id_, <!-- p_id_ -->
+		</if>
+		<if test="remark_ != null and remark_ != ''">
+	         remark_, <!-- remark_ -->
+		</if>
+		<if test="start_time_ != null and start_time_ != ''">
+	         start_time_, <!-- start_time_ -->
+		</if>
+		<if test="consuming_ != null">
+	         consuming_, <!-- consuming_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="uuid_ != null and uuid_ != ''">
+	          #{uuid_, jdbcType=VARCHAR}, <!-- uuid_ -->
+	    </if>
+		<if test="name_ != null and name_ != ''">
+	          #{name_, jdbcType=VARCHAR}, <!-- name_ -->
+	    </if>
+		<if test="status_ != null">
+	          #{status_, jdbcType=INTEGER}, <!-- status_ -->
+	    </if>
+		<if test="p_id_ != null">
+	          #{p_id_, jdbcType=INTEGER}, <!-- p_id_ -->
+	    </if>
+		<if test="remark_ != null and remark_ != ''">
+	          #{remark_, jdbcType=VARCHAR}, <!-- remark_ -->
+	    </if>
+		<if test="start_time_ != null and start_time_ != ''">
+	          #{start_time_, jdbcType=VARCHAR}, <!-- start_time_ -->
+	    </if>
+		<if test="consuming_ != null">
+	          #{consuming_, jdbcType=INTEGER}, <!-- consuming_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_task_logPO">
+		INSERT INTO fc_task_log (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{uuid_, jdbcType=VARCHAR},  <!-- uuid_ -->
+		    #{name_, jdbcType=VARCHAR},  <!-- name_ -->
+		    #{status_, jdbcType=INTEGER},  <!-- status_ -->
+		    #{p_id_, jdbcType=INTEGER},  <!-- p_id_ -->
+		    #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+		    #{start_time_, jdbcType=VARCHAR},  <!-- start_time_ -->
+		    #{consuming_, jdbcType=INTEGER}  <!-- consuming_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_task_logPO">
+		UPDATE fc_task_log
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="uuid_ != null">
+		          uuid_ = #{uuid_, jdbcType=VARCHAR},  <!-- uuid_ -->
+			</if>
+			<if test="name_ != null">
+		          name_ = #{name_, jdbcType=VARCHAR},  <!-- name_ -->
+			</if>
+			<if test="status_ != null">
+		          status_ = #{status_, jdbcType=INTEGER},  <!-- status_ -->
+			</if>
+			<if test="p_id_ != null">
+		          p_id_ = #{p_id_, jdbcType=INTEGER},  <!-- p_id_ -->
+			</if>
+			<if test="remark_ != null">
+		          remark_ = #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+			</if>
+			<if test="start_time_ != null">
+		          start_time_ = #{start_time_, jdbcType=VARCHAR},  <!-- start_time_ -->
+			</if>
+			<if test="consuming_ != null">
+		          consuming_ = #{consuming_, jdbcType=INTEGER},  <!-- consuming_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_task_log WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_task_logPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_task_log WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_task_logPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_task_log
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_task_logPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_task_log
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_task_logPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_task_log
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_task_logPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_task_log
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_task_logPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_task_log
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_task_log
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_task_log
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  uuid_,  <!-- uuid_ -->
+		  name_,  <!-- name_ -->
+		  status_,  <!-- status_ -->
+		  p_id_,  <!-- p_id_ -->
+		  remark_,  <!-- remark_ -->
+		  start_time_,  <!-- start_time_ -->
+		  consuming_  <!-- consuming_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_task_log.id_,  <!-- id_ -->
+		  fc_task_log.uuid_,  <!-- uuid_ -->
+		  fc_task_log.name_,  <!-- name_ -->
+		  fc_task_log.status_,  <!-- status_ -->
+		  fc_task_log.p_id_,  <!-- p_id_ -->
+		  fc_task_log.remark_,  <!-- remark_ -->
+		  fc_task_log.start_time_,  <!-- start_time_ -->
+		  fc_task_log.consuming_  <!-- consuming_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	    <if test="uuid_ != null and uuid_ != ''">
+		      AND uuid_ = #{uuid_}  <!-- uuid_ -->
+		</if>
+	    <if test="name_ != null and name_ != ''">
+		      AND name_ = #{name_}  <!-- name_ -->
+		</if>
+	   <if test="status_ != null ">
+		      AND status_ = #{status_}  <!-- status_ -->
+		</if>
+	   <if test="p_id_ != null ">
+		      AND p_id_ = #{p_id_}  <!-- p_id_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ = #{remark_}  <!-- remark_ -->
+		</if>
+	    <if test="start_time_ != null and start_time_ != ''">
+		      AND start_time_ = #{start_time_}  <!-- start_time_ -->
+		</if>
+	   <if test="consuming_ != null ">
+		      AND consuming_ = #{consuming_}  <!-- consuming_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="uuid_ != null and uuid_ != ''">
+		      AND uuid_ like '%${uuid_}%'  <!-- uuid_ -->
+		</if>
+	    <if test="name_ != null and name_ != ''">
+		      AND name_ like '%${name_}%'  <!-- name_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ like '%${remark_}%'  <!-- remark_ -->
+		</if>
+	    <if test="start_time_ != null and start_time_ != ''">
+		      AND start_time_ like '%${start_time_}%'  <!-- start_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

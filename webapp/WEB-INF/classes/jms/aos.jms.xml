@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd     http://www.springframework.org/schema/context     http://www.springframework.org/schema/context/spring-context-3.0.xsd    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
+	<context:component-scan base-package="aos" />
+
+	<!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory -->
+	<bean id="connectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="idleTimeout"  value="0" />
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="tcp://127.0.0.1:61616" />
+				<property name="useAsyncSend" value="true" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="messageConverter"
+		class="com.chinazyjr.fc.modules.activemq.ObjectMessageConverter" />
+
+	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="messageConverter" ref="messageConverter" />
+	</bean>
+
+
+	 <!--划扣请求队列-->
+	<bean id="requestDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>requestQueue</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 划扣请求生产消息配置 -->	
+	<bean id="requestProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="requestDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!--这个是通联支付的目的地 -->
+	<bean id="tlDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>tlQueue</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 通联生产消息配置 -->
+	<bean id="tlProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="tlDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+
+
+
+	<!--这个是通联批次支付的目的地 -->
+	<bean id="tlBatchDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>tlBatchQueue</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 通联批次生产消息配置 -->
+	<bean id="tlBatchProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="tlBatchDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+
+
+ 	<!--这个是宝付的目的地 -->
+	<bean id="bfDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>bfQueue</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 宝付生产消息配置 -->
+	<bean id="bfProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="bfDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--这个是银生宝的目的地 -->
+	<bean id="ysbDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>ysbQueue</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 银生宝生产消息配置 -->
+	<bean id="ysbProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="ysbDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--这个是快付通的目的地 -->
+<!-- 	<bean id="kftDestination" class="org.apache.activemq.command.ActiveMQQueue"> -->
+<!-- 		<constructor-arg> -->
+<!-- 			<value>kftQueue</value> -->
+<!-- 		</constructor-arg> -->
+<!-- 	</bean> -->
+	
+<!-- 	快付通生产消息配置 -->
+<!-- 	<bean id="kftProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer"> -->
+<!-- 		<property name="destination" ref="kftDestination"/> -->
+<!-- 		<property name="jmsTemplate"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="jmsTemplate"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean>  -->
+	
+	
+	<!--这个是快捷通的目的地 -->
+	<bean id="kjtDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>kjtQueue</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 快捷通生产消息配置 -->
+	<bean id="kjtProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="kjtDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+
+	
+	<!--                                         划扣核查队列                                                                 				 -->
+	
+	<!--通联核查队列、生产者 -->
+	<bean id="tlCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>tlCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="tlCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="tlCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!--通联批次划扣核查队列、生产者 -->
+	<bean id="tlBatchCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>tlBatchCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="tlBatchCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="tlBatchCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	<!--银生宝核查队列、生产者 -->
+	<bean id="ysbCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>ysbCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="ysbCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="ysbCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+ 	<!-- 宝付核查队列、生产者 --> 
+	<bean id="bfCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>bfCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="bfCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="bfCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+ 	<!-- 快付通核查队列、生产者 --> 
+<!-- 	<bean id="kftCheckDestination" class="org.apache.activemq.command.ActiveMQQueue"> -->
+<!-- 		<constructor-arg> -->
+<!-- 			<value>kftCheckQueue</value> -->
+<!-- 		</constructor-arg> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="kftCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer"> -->
+<!-- 		<property name="destination" ref="kftCheckDestination"/> -->
+<!-- 		<property name="jmsTemplate"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="jmsTemplate"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+
+ 	<!-- 快捷通核查队列、生产者 --> 
+	<bean id="kjtCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>kjtCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="kjtCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="kjtCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+
+
+ <!--银生宝放款队列-->
+	<bean id="ysbLoanDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>ysbLoanQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="ysbLoanProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="ysbLoanDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+
+ <!--银生宝放款核查队列-->
+	<bean id="ysbLoanCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>ysbLoanCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="ysbLoanCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="ysbLoanCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!--这个是通联放款的目的地 -->
+	<bean id="tlLoanDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>tlLoan</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 通联放款生产消息配置 -->
+	<bean id="tlLoanProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="tlLoanDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- 通联放款核查队列 -->
+	<bean id="tlLoanCheckDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>tlLoanCheckQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="tlLoanCheckProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="tlLoanCheckDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 账户报警队列-->
+	<bean id="asAlarmDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>asAlarmQueue</value>
+		</constructor-arg>
+	</bean>
+	<bean id="asAlarmProducer" class="com.chinazyjr.fc.modules.activemq.MessageProducer">
+		<property name="destination" ref="asAlarmDestination"/>
+		<property name="jmsTemplate">
+			<list>
+				<ref bean="jmsTemplate"/>
+			</list>
+		</property>
+	</bean>
+
+</beans>

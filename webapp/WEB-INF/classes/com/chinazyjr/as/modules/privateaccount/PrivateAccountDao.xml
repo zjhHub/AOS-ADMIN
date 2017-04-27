@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PrivateAccountDao">
+
+	<!-- 判断账户用途是否重复 -->
+	<select id="existAccountPurpose" parameterType="Dto" resultType="int">
+	
+		select count(1) from as_accounts as A
+		left join fc_platform as B
+		on A.attach_platform_ = B.id_
+		where 
+		B.name_ = #{name_}
+		and A.customer_id_ = #{customer_id_}
+		and A.purpose_ = #{purpose_}
+		
+	</select>
+	
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insertForSn" useGeneratedKeys="true" keyProperty="id_" parameterType="As_accountsPO">
+		INSERT INTO as_accounts (
+		<if test="attach_platform_ != null">
+	         attach_platform_, <!-- attach_platform_ -->
+		</if>
+		<if test="customer_id_ != null">
+	         customer_id_, <!-- customer_id_ -->
+		</if>
+		<if test="account_code_ != null and account_code_ != ''">
+	         account_code_, <!-- account_code_ -->
+		</if>
+		<if test="group_type_ != null">
+	         group_type_, <!-- group_type_ -->
+		</if>
+		<if test="purpose_ != null and purpose_ != ''">
+	         purpose_, <!-- purpose_ -->
+		</if>
+		<if test="type_ != null">
+	         type_, <!-- type_ -->
+		</if>
+		<if test="status_ != null">
+	         status_, <!-- status_ -->
+		</if>
+		<if test="create_time_ != null and create_time_ != ''">
+	         create_time_, <!-- create_time_ -->
+		</if>
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	         request_uuid_, <!-- request_uuid_ -->
+		</if>
+		<if test="available_balance_ != null">
+	         available_balance_, <!-- available_balance_ -->
+		</if>
+		<if test="froze_balance_ != null">
+	         froze_balance_, <!-- froze_balance_ -->
+		</if>
+		<if test="total_balance_ != null">
+	         total_balance_, <!-- total_balance_ -->
+		</if>
+		<if test="update_time_ != null and update_time_ != ''">
+	         update_time_, <!-- update_time_ -->
+		</if>
+		<if test="data_version_ != null">
+	         data_version_, <!-- data_version_ -->
+		</if>
+	         sn_, <!-- sn_ -->
+		<if test="ext_reference_ != null and ext_reference_ != ''">
+	         ext_reference_, <!-- ext_reference_ -->
+		</if>
+		<if test="remark_ != null and remark_ != ''">
+	         remark_, <!-- remark_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="attach_platform_ != null">
+	          #{attach_platform_, jdbcType=INTEGER}, <!-- attach_platform_ -->
+	    </if>
+		<if test="customer_id_ != null">
+	          #{customer_id_, jdbcType=INTEGER}, <!-- customer_id_ -->
+	    </if>
+		<if test="account_code_ != null and account_code_ != ''">
+	          #{account_code_, jdbcType=VARCHAR}, <!-- account_code_ -->
+	    </if>
+		<if test="group_type_ != null">
+	          #{group_type_, jdbcType=INTEGER}, <!-- group_type_ -->
+	    </if>
+		<if test="purpose_ != null and purpose_ != ''">
+	          #{purpose_, jdbcType=VARCHAR}, <!-- purpose_ -->
+	    </if>
+		<if test="type_ != null">
+	          #{type_, jdbcType=INTEGER}, <!-- type_ -->
+	    </if>
+		<if test="status_ != null">
+	          #{status_, jdbcType=INTEGER}, <!-- status_ -->
+	    </if>
+		<if test="create_time_ != null and create_time_ != ''">
+	          #{create_time_, jdbcType=VARCHAR}, <!-- create_time_ -->
+	    </if>
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	          #{request_uuid_, jdbcType=VARCHAR}, <!-- request_uuid_ -->
+	    </if>
+		<if test="available_balance_ != null">
+	          #{available_balance_, jdbcType=NUMERIC}, <!-- available_balance_ -->
+	    </if>
+		<if test="froze_balance_ != null">
+	          #{froze_balance_, jdbcType=NUMERIC}, <!-- froze_balance_ -->
+	    </if>
+		<if test="total_balance_ != null">
+	          #{total_balance_, jdbcType=NUMERIC}, <!-- total_balance_ -->
+	    </if>
+		<if test="update_time_ != null and update_time_ != ''">
+	          date_format(#{update_time_}, '%Y-%m-%d %H:%i:%s'), <!-- update_time_ -->
+	    </if>
+		<if test="data_version_ != null">
+	          #{data_version_, jdbcType=INTEGER}, <!-- data_version_ -->
+	    </if>
+		MD5(concat(#{sn_}, 0.00, 0.00, 0.00, date_format(#{update_time_}, '%Y-%m-%d %H:%i:%s'))),
+		<if test="ext_reference_ != null and ext_reference_ != ''">
+	          #{ext_reference_, jdbcType=VARCHAR}, <!-- ext_reference_ -->
+	    </if>
+		<if test="remark_ != null and remark_ != ''">
+	          #{remark_, jdbcType=VARCHAR}, <!-- remark_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+
+</mapper>

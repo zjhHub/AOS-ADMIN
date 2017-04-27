@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ContractStagingDao">
+
+
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+<!-- 	<select id="selectFc_contract_stockPO" resultType="Fc_contract_stockPO" -->
+<!-- 		parameterType="Dto"> -->
+<!-- 		SELECT -->
+<!-- 		id_, -->
+<!-- 		contract_id_, -->
+<!-- 		platform_id_, -->
+<!-- 		contract_status_, -->
+<!-- 		snapshot_date_ -->
+<!-- 		FROM fc_contract_stock -->
+<!-- 		WHERE -->
+<!-- 		contract_id_ = #{contract_id_} -->
+	
+<!-- 			AND snapshot_date_ &gt;=#{start_time_} and snapshot_date_ -->
+<!-- 			&lt;#{end_time_} -->
+	
+
+<!-- 	</select> -->
+
+	<select id="selectStagingList" resultType="Dto" parameterType="Dto">
+		select staging_id_ as staging_id_,staging_no_ as no,staging_billing_date_ AS
+		billing_date,
+		staging_status_ AS staging_status
+		from fc_book_staging_stock
+		WHERE contract_stock_id_=#{id_}
+
+
+
+	</select>
+	
+	<select id="queryFcStagingList" resultType="Dto" parameterType="Dto">
+		select id_,no_,billing_date_,CASE status_ WHEN 1 THEN '正常' WHEN 2 THEN '逾期' WHEN 3 THEN '结清' WHEN 4 THEN '坏账' END AS status_
+		from fc_staging 
+		WHERE contract_id_ = #{contract_id_}
+	</select>
+	
+
+	
+	<select id="querybookSubList" resultType="Dto" parameterType="Dto">
+		SELECT bs.receivable_amount_,bs.received_amount_,fc.name_ FROM fc_book_subject bs,fc_financial_category fc 
+		WHERE bs.category_id_=fc.id_ AND bs.contract_id_=#{contract_id_} AND bs.staging_id_=#{staging_id_}
+	
+	</select>
+	
+	
+	<select id="selectSubjectList" resultType="Dto" parameterType="Dto">
+		SELECT fc.name_ AS subject,receivable_amount_ AS
+		receivable_amount ,received_amount_ AS received_amount
+		FROM
+		fc_book_subject  bs 
+		left join fc_financial_category fc on  bs.category_id_= fc.id_
+		WHERE staging_id_=#{staging_id_} 
+	</select>
+
+	<select id="selectStatusChangeLog" resultType="Fc_status_change_logPO" parameterType="Dto">
+	SELECT
+		*
+	FROM
+		fc_status_change_log
+	WHERE changing_date_ &gt;= #{start_time}
+	AND changing_date_ &lt; #{end_time} 
+		AND ref_id_=#{ref_id} and  type_ = #{change_type}  
+	order by  changing_date_ desc ,ref_id_
+	LIMIT 1 
+	</select>
+	
+	
+
+<select id="selectStatusChangeLogByList" resultType="Dto" parameterType="Dto">
+SELECT
+	id_,ref_id_,type_,before_,after_ 
+FROM
+	fc_status_change_log
+WHERE  changing_date_ &gt;= #{start_time}
+	AND changing_date_ &lt; #{end_time} 
+	AND ref_id_ in 
+		<foreach collection="listStaging" item="item" open="("
+				close=")" separator=",">
+				#{item.id_}
+		</foreach>
+	 and  type_ = #{change_type}  and
+	  id_ in (
+SELECT MAX(id_) from fc_status_change_log
+WHERE changing_date_ &gt;= #{start_time}
+	AND changing_date_ &lt; #{end_time} 
+	AND ref_id_ in 
+		<foreach collection="listStaging" item="item" open="("
+				close=")" separator=",">
+				#{item.id_}
+		</foreach>
+	 and  type_ = #{change_type}   
+GROUP BY  ref_id_,type_ 
+)
+
+	</select>
+
+
+
+<select id="selectBookChangeLogByList" resultType="Dto" parameterType="Dto">
+SELECT 
+CONCAT(cl.record_id_,cl.target_) as record_id_,fc.name_  ,cl.after_amount_ 
+FROM
+	fc_book_change_log cl
+left join fc_financial_category fc on  cl.category_id_= fc.id_
+
+WHERE  changing_date_ &gt;= #{start_time}
+	AND changing_date_ &lt; #{end_time} 
+	AND record_id_ in 
+	 <foreach collection="listSubject" item="item" open="("
+				close=")" separator=",">
+				#{item.id_}
+		</foreach>
+		 and  book_type_ = #{book_type}  and cl.id_ in (
+SELECT max(id_)
+FROM fc_book_change_log 
+WHERE changing_date_ &gt;= #{start_time}
+	AND changing_date_ &lt; #{end_time} 
+	AND record_id_ in 
+	 <foreach collection="listSubject" item="item" open="("
+				close=")" separator=",">
+				#{item.id_}
+		</foreach>
+		 and  book_type_ = #{book_type} 
+GROUP BY record_id_,book_type_ ,target_)
+
+	</select>
+
+
+<select id="selectStagingListByContract" parameterType="Dto" resultType="Dto">
+		SELECT
+			bs.id_,bs.contract_id_,bs.staging_id_,bs.category_id_,bs.receivable_amount_,bs.received_amount_,bs.version_,fc.name_
+		FROM fc_book_subject  bs
+		left join fc_financial_category fc on  bs.category_id_= fc.id_
+		where contract_id_=#{contract_id}
+	</select>
+
+</mapper>

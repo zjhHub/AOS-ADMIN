@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- as_accounts[as_accounts]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-28 11:33:41 -->
+<mapper namespace="com.chinazyjr.as.dao.As_accountsDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="As_accountsPO">
+		INSERT INTO as_accounts (
+		<if test="attach_platform_ != null">
+	         attach_platform_, <!-- attach_platform_ -->
+		</if>
+		<if test="customer_id_ != null">
+	         customer_id_, <!-- customer_id_ -->
+		</if>
+		<if test="account_code_ != null and account_code_ != ''">
+	         account_code_, <!-- account_code_ -->
+		</if>
+		<if test="group_type_ != null">
+	         group_type_, <!-- group_type_ -->
+		</if>
+		<if test="purpose_ != null and purpose_ != ''">
+	         purpose_, <!-- purpose_ -->
+		</if>
+		<if test="type_ != null">
+	         type_, <!-- type_ -->
+		</if>
+		<if test="status_ != null">
+	         status_, <!-- status_ -->
+		</if>
+		<if test="create_time_ != null and create_time_ != ''">
+	         create_time_, <!-- create_time_ -->
+		</if>
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	         request_uuid_, <!-- request_uuid_ -->
+		</if>
+		<if test="available_balance_ != null">
+	         available_balance_, <!-- available_balance_ -->
+		</if>
+		<if test="froze_balance_ != null">
+	         froze_balance_, <!-- froze_balance_ -->
+		</if>
+		<if test="total_balance_ != null">
+	         total_balance_, <!-- total_balance_ -->
+		</if>
+		<if test="update_time_ != null and update_time_ != ''">
+	         update_time_, <!-- update_time_ -->
+		</if>
+		<if test="data_version_ != null">
+	         data_version_, <!-- data_version_ -->
+		</if>
+		<if test="sn_ != null and sn_ != ''">
+	         sn_, <!-- sn_ -->
+		</if>
+		<if test="ext_reference_ != null and ext_reference_ != ''">
+	         ext_reference_, <!-- ext_reference_ -->
+		</if>
+		<if test="remark_ != null and remark_ != ''">
+	         remark_, <!-- remark_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="attach_platform_ != null">
+	          #{attach_platform_, jdbcType=INTEGER}, <!-- attach_platform_ -->
+	    </if>
+		<if test="customer_id_ != null">
+	          #{customer_id_, jdbcType=INTEGER}, <!-- customer_id_ -->
+	    </if>
+		<if test="account_code_ != null and account_code_ != ''">
+	          #{account_code_, jdbcType=VARCHAR}, <!-- account_code_ -->
+	    </if>
+		<if test="group_type_ != null">
+	          #{group_type_, jdbcType=INTEGER}, <!-- group_type_ -->
+	    </if>
+		<if test="purpose_ != null and purpose_ != ''">
+	          #{purpose_, jdbcType=VARCHAR}, <!-- purpose_ -->
+	    </if>
+		<if test="type_ != null">
+	          #{type_, jdbcType=INTEGER}, <!-- type_ -->
+	    </if>
+		<if test="status_ != null">
+	          #{status_, jdbcType=INTEGER}, <!-- status_ -->
+	    </if>
+		<if test="create_time_ != null and create_time_ != ''">
+	          #{create_time_, jdbcType=VARCHAR}, <!-- create_time_ -->
+	    </if>
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	          #{request_uuid_, jdbcType=VARCHAR}, <!-- request_uuid_ -->
+	    </if>
+		<if test="available_balance_ != null">
+	          #{available_balance_, jdbcType=NUMERIC}, <!-- available_balance_ -->
+	    </if>
+		<if test="froze_balance_ != null">
+	          #{froze_balance_, jdbcType=NUMERIC}, <!-- froze_balance_ -->
+	    </if>
+		<if test="total_balance_ != null">
+	          #{total_balance_, jdbcType=NUMERIC}, <!-- total_balance_ -->
+	    </if>
+		<if test="update_time_ != null and update_time_ != ''">
+	          #{update_time_, jdbcType=VARCHAR}, <!-- update_time_ -->
+	    </if>
+		<if test="data_version_ != null">
+	          #{data_version_, jdbcType=INTEGER}, <!-- data_version_ -->
+	    </if>
+		<if test="sn_ != null and sn_ != ''">
+	          #{sn_, jdbcType=VARCHAR}, <!-- sn_ -->
+	    </if>
+		<if test="ext_reference_ != null and ext_reference_ != ''">
+	          #{ext_reference_, jdbcType=VARCHAR}, <!-- ext_reference_ -->
+	    </if>
+		<if test="remark_ != null and remark_ != ''">
+	          #{remark_, jdbcType=VARCHAR}, <!-- remark_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="As_accountsPO">
+		INSERT INTO as_accounts (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{attach_platform_, jdbcType=INTEGER},  <!-- attach_platform_ -->
+		    #{customer_id_, jdbcType=INTEGER},  <!-- customer_id_ -->
+		    #{account_code_, jdbcType=VARCHAR},  <!-- account_code_ -->
+		    #{group_type_, jdbcType=INTEGER},  <!-- group_type_ -->
+		    #{purpose_, jdbcType=VARCHAR},  <!-- purpose_ -->
+		    #{type_, jdbcType=INTEGER},  <!-- type_ -->
+		    #{status_, jdbcType=INTEGER},  <!-- status_ -->
+		    #{create_time_, jdbcType=VARCHAR},  <!-- create_time_ -->
+		    #{request_uuid_, jdbcType=VARCHAR},  <!-- request_uuid_ -->
+		    #{available_balance_, jdbcType=NUMERIC},  <!-- available_balance_ -->
+		    #{froze_balance_, jdbcType=NUMERIC},  <!-- froze_balance_ -->
+		    #{total_balance_, jdbcType=NUMERIC},  <!-- total_balance_ -->
+		    #{update_time_, jdbcType=VARCHAR},  <!-- update_time_ -->
+		    #{data_version_, jdbcType=INTEGER},  <!-- data_version_ -->
+		    #{sn_, jdbcType=VARCHAR},  <!-- sn_ -->
+		    #{ext_reference_, jdbcType=VARCHAR},  <!-- ext_reference_ -->
+		    #{remark_, jdbcType=VARCHAR}  <!-- remark_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="As_accountsPO">
+		UPDATE as_accounts
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="attach_platform_ != null">
+		          attach_platform_ = #{attach_platform_, jdbcType=INTEGER},  <!-- attach_platform_ -->
+			</if>
+			<if test="customer_id_ != null">
+		          customer_id_ = #{customer_id_, jdbcType=INTEGER},  <!-- customer_id_ -->
+			</if>
+			<if test="account_code_ != null">
+		          account_code_ = #{account_code_, jdbcType=VARCHAR},  <!-- account_code_ -->
+			</if>
+			<if test="group_type_ != null">
+		          group_type_ = #{group_type_, jdbcType=INTEGER},  <!-- group_type_ -->
+			</if>
+			<if test="purpose_ != null">
+		          purpose_ = #{purpose_, jdbcType=VARCHAR},  <!-- purpose_ -->
+			</if>
+			<if test="type_ != null">
+		          type_ = #{type_, jdbcType=INTEGER},  <!-- type_ -->
+			</if>
+			<if test="status_ != null">
+		          status_ = #{status_, jdbcType=INTEGER},  <!-- status_ -->
+			</if>
+			<if test="create_time_ != null">
+		          create_time_ = #{create_time_, jdbcType=VARCHAR},  <!-- create_time_ -->
+			</if>
+			<if test="request_uuid_ != null">
+		          request_uuid_ = #{request_uuid_, jdbcType=VARCHAR},  <!-- request_uuid_ -->
+			</if>
+			<if test="available_balance_ != null">
+		          available_balance_ = #{available_balance_, jdbcType=NUMERIC},  <!-- available_balance_ -->
+			</if>
+			<if test="froze_balance_ != null">
+		          froze_balance_ = #{froze_balance_, jdbcType=NUMERIC},  <!-- froze_balance_ -->
+			</if>
+			<if test="total_balance_ != null">
+		          total_balance_ = #{total_balance_, jdbcType=NUMERIC},  <!-- total_balance_ -->
+			</if>
+			<if test="update_time_ != null">
+		          update_time_ = #{update_time_, jdbcType=VARCHAR},  <!-- update_time_ -->
+			</if>
+			<if test="data_version_ != null">
+		          data_version_ = #{data_version_, jdbcType=INTEGER},  <!-- data_version_ -->
+			</if>
+			<if test="sn_ != null">
+		          sn_ = #{sn_, jdbcType=VARCHAR},  <!-- sn_ -->
+			</if>
+			<if test="ext_reference_ != null">
+		          ext_reference_ = #{ext_reference_, jdbcType=VARCHAR},  <!-- ext_reference_ -->
+			</if>
+			<if test="remark_ != null">
+		          remark_ = #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM as_accounts WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="As_accountsPO">
+		SELECT
+		<include refid="column" />
+		FROM as_accounts WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="As_accountsPO">
+		SELECT
+		    <include refid="column" />
+		FROM as_accounts
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="As_accountsPO">
+		SELECT
+			<include refid="column" />	
+		FROM as_accounts
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="As_accountsPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM as_accounts
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="As_accountsPO">
+		SELECT
+			<include refid="column" />	
+		FROM as_accounts
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="As_accountsPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM as_accounts
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM as_accounts
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM as_accounts
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  attach_platform_,  <!-- attach_platform_ -->
+		  customer_id_,  <!-- customer_id_ -->
+		  account_code_,  <!-- account_code_ -->
+		  group_type_,  <!-- group_type_ -->
+		  purpose_,  <!-- purpose_ -->
+		  type_,  <!-- type_ -->
+		  status_,  <!-- status_ -->
+		  create_time_,  <!-- create_time_ -->
+		  request_uuid_,  <!-- request_uuid_ -->
+		  available_balance_,  <!-- available_balance_ -->
+		  froze_balance_,  <!-- froze_balance_ -->
+		  total_balance_,  <!-- total_balance_ -->
+		  update_time_,  <!-- update_time_ -->
+		  data_version_,  <!-- data_version_ -->
+		  sn_,  <!-- sn_ -->
+		  ext_reference_,  <!-- ext_reference_ -->
+		  remark_  <!-- remark_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  as_accounts.id_,  <!-- id_ -->
+		  as_accounts.attach_platform_,  <!-- attach_platform_ -->
+		  as_accounts.customer_id_,  <!-- customer_id_ -->
+		  as_accounts.account_code_,  <!-- account_code_ -->
+		  as_accounts.group_type_,  <!-- group_type_ -->
+		  as_accounts.purpose_,  <!-- purpose_ -->
+		  as_accounts.type_,  <!-- type_ -->
+		  as_accounts.status_,  <!-- status_ -->
+		  as_accounts.create_time_,  <!-- create_time_ -->
+		  as_accounts.request_uuid_,  <!-- request_uuid_ -->
+		  as_accounts.available_balance_,  <!-- available_balance_ -->
+		  as_accounts.froze_balance_,  <!-- froze_balance_ -->
+		  as_accounts.total_balance_,  <!-- total_balance_ -->
+		  as_accounts.update_time_,  <!-- update_time_ -->
+		  as_accounts.data_version_,  <!-- data_version_ -->
+		  as_accounts.sn_,  <!-- sn_ -->
+		  as_accounts.ext_reference_,  <!-- ext_reference_ -->
+		  as_accounts.remark_  <!-- remark_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	   <if test="attach_platform_ != null ">
+		      AND attach_platform_ = #{attach_platform_}  <!-- attach_platform_ -->
+		</if>
+	   <if test="customer_id_ != null ">
+		      AND customer_id_ = #{customer_id_}  <!-- customer_id_ -->
+		</if>
+	    <if test="account_code_ != null and account_code_ != ''">
+		      AND account_code_ = #{account_code_}  <!-- account_code_ -->
+		</if>
+	   <if test="group_type_ != null ">
+		      AND group_type_ = #{group_type_}  <!-- group_type_ -->
+		</if>
+	    <if test="purpose_ != null and purpose_ != ''">
+		      AND purpose_ = #{purpose_}  <!-- purpose_ -->
+		</if>
+	   <if test="type_ != null ">
+		      AND type_ = #{type_}  <!-- type_ -->
+		</if>
+	   <if test="status_ != null ">
+		      AND status_ = #{status_}  <!-- status_ -->
+		</if>
+	    <if test="create_time_ != null and create_time_ != ''">
+		      AND create_time_ = #{create_time_}  <!-- create_time_ -->
+		</if>
+	    <if test="request_uuid_ != null and request_uuid_ != ''">
+		      AND request_uuid_ = #{request_uuid_}  <!-- request_uuid_ -->
+		</if>
+	   <if test="available_balance_ != null ">
+		      AND available_balance_ = #{available_balance_}  <!-- available_balance_ -->
+		</if>
+	   <if test="froze_balance_ != null ">
+		      AND froze_balance_ = #{froze_balance_}  <!-- froze_balance_ -->
+		</if>
+	   <if test="total_balance_ != null ">
+		      AND total_balance_ = #{total_balance_}  <!-- total_balance_ -->
+		</if>
+	    <if test="update_time_ != null and update_time_ != ''">
+		      AND update_time_ = #{update_time_}  <!-- update_time_ -->
+		</if>
+	   <if test="data_version_ != null ">
+		      AND data_version_ = #{data_version_}  <!-- data_version_ -->
+		</if>
+	    <if test="sn_ != null and sn_ != ''">
+		      AND sn_ = #{sn_}  <!-- sn_ -->
+		</if>
+	    <if test="ext_reference_ != null and ext_reference_ != ''">
+		      AND ext_reference_ = #{ext_reference_}  <!-- ext_reference_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ = #{remark_}  <!-- remark_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="account_code_ != null and account_code_ != ''">
+		      AND account_code_ like '%${account_code_}%'  <!-- account_code_ -->
+		</if>
+	    <if test="purpose_ != null and purpose_ != ''">
+		      AND purpose_ like '%${purpose_}%'  <!-- purpose_ -->
+		</if>
+	    <if test="create_time_ != null and create_time_ != ''">
+		      AND create_time_ like '%${create_time_}%'  <!-- create_time_ -->
+		</if>
+	    <if test="request_uuid_ != null and request_uuid_ != ''">
+		      AND request_uuid_ like '%${request_uuid_}%'  <!-- request_uuid_ -->
+		</if>
+	    <if test="update_time_ != null and update_time_ != ''">
+		      AND update_time_ like '%${update_time_}%'  <!-- update_time_ -->
+		</if>
+	    <if test="sn_ != null and sn_ != ''">
+		      AND sn_ like '%${sn_}%'  <!-- sn_ -->
+		</if>
+	    <if test="ext_reference_ != null and ext_reference_ != ''">
+		      AND ext_reference_ like '%${ext_reference_}%'  <!-- ext_reference_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ like '%${remark_}%'  <!-- remark_ -->
+		</if>
+	</sql>
+	
+</mapper>

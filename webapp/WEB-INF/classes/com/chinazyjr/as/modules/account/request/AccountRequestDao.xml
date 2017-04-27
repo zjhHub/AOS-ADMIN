@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AccountRequestDao">
+
+
+	<!-- 判断第三方订单号是否失败 -->
+	<select id="isExistOrderSuccess" parameterType="String" resultType="int">
+	
+		select count(1) as countA from as_recharge_withdraw_accepted as A
+		left join  as_recharge_withdraw_accepted_result as B on A.id_ = B.accepted_id_
+		where A.order_id_ = #{id} and B.status_ != 2 and B.status_ is not null
+		
+		
+	</select>
+	
+	<select id="isExistOrderHandling" parameterType="String" resultType="int">
+	
+		select count(1)  as countB from as_recharge_withdraw_accepted as A
+		left join  as_recharge_withdraw_accepted_result as B on A.id_ = B.accepted_id_
+		where A.order_id_ = #{id} and B.status_ is null
+		
+	</select>
+	
+	<!-- 	根据条件获取账户 -->
+	<select id="getAccountByAccountCode" parameterType="java.util.List" resultType="As_accountsPO">
+		select * from as_accounts
+		where account_code_ in 
+		(
+		<foreach collection="list" item="item" separator="," > 
+	        #{item}  
+	    </foreach> 
+	    )
+	</select>
+	
+	<!-- 判断账号是否能使用 -->
+	<select id="countAccountUsing" parameterType="java.util.List" resultType="int">
+	
+		select count(1) from as_accounts
+		where account_code_ in 
+		(
+		<foreach collection="list" item="item" separator="," > 
+	        #{item}  
+	    </foreach> 
+	    )
+		 and status_ = 1
+		
+	</select>
+	
+	<!-- 判断账号是否属于某一个业务线 -->
+	<select id="countAccountBelongPlatform" parameterType="Dto" resultType="int">
+	
+		select count(1) from as_accounts as A
+		left join fc_platform as B
+		on A.attach_platform_ = B.id_
+		where 
+		A.account_code_ in (
+		<foreach collection="account_code_" item="item" separator="," > 
+	        #{item}  
+	    </foreach> ) 
+		and B.name_ = #{attach_platform_}
+		and A.status_ = 1
+		
+	</select>
+	
+	<!-- 充值提现自动第三方渠道  判断是否自动处理 -->
+	<select id="countAccountIsAutoThird" parameterType="Dto" resultType="int">
+		select count(1) from as_recharge_withdraw_auto_third_channel
+		where 
+		name_ = #{name_} 
+		and type_ = #{type_}
+		and flag_ = 1 
+	</select>
+	
+	<!-- 获取 充值提现受理执行结果  正在和没有回调的数据 -->
+	<select id="getAcceptedResultList" parameterType="Dto" resultType="As_recharge_withdraw_accepted_resultPO">
+		select * from as_recharge_withdraw_accepted_result
+		where status_ in (1, 2)
+		and last_callback_status_ != #{last_callback_status_}
+		and #{last_callback_count_} > last_callback_count_ 
+		and #{next_callback_time_} >= next_callback_time_
+		or next_callback_time_ is null
+	</select>
+	
+	
+	
+
+</mapper>

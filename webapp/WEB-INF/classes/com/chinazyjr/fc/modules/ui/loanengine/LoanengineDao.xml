@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="loanengine">
+	<select id="loanlist" parameterType="Dto" resultType="Fc_loan_accepted_orderPO">
+		select
+		<include refid="aos.fc.dao.Fc_loan_accepted_orderDao.column" />
+		FROM
+			fc_loan_accepted_order
+		WHERE
+			location_ = 1
+		AND third_channel_order_id_ IS NULL
+	</select>
+	
+	<select id="fcLoanaccorderPage" parameterType="Dto" resultType="Dto">
+		SELECT id_,request_id_,location_,routed_third_channel_code_,async_callback_,biz_summary,
+		contract_code_,loan_amount_,bank_code_,loan_account_,loan_name_,loan_idcard_,loan_cellphone_,
+		CASE routed_third_channel_id_  WHEN 1 THEN '宝付' WHEN 2 THEN '通联' WHEN 3 THEN '快捷通' WHEN 4 THEN '银生宝' END AS routed_third_channel_name,
+		third_channel_order_id_ FROM fc_loan_accepted_order
+		<where>
+		location_ in (1,2)
+		<if test="location_ != null and location_ != ''">
+			AND location_ = #{location_}
+		</if>
+		<if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+			AND third_channel_order_id_ like '%${third_channel_order_id_}%'
+		</if>
+		
+		</where>
+		
+	</select>
+	
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- -->
+<mapper namespace="chargebackPayDao">
+	<!-- <select id="chargebackOrderListPage" parameterType="Dto" resultType="Dto">
+		SELECT
+			fco.id_,
+			fco.created_time_,
+			ftc.name_ routed_third_channel_id_,
+			fco.location_,
+			fco.chargeback_accepted_id_,
+			fco.chargeback_amount_,
+			fbs.full_name_ chargeback_bank_id_,
+			fco.chargeback_account_,
+			fco.chargeback_name_,
+			fco.chargeback_idcard_,
+			fco.third_channel_order_id_,
+			fco.chargeback_cellphone_,
+			(select res.order_result_status_ from fc_chargeback_order_result res where id_ = fco.id_) status_
+		FROM
+			fc_chargeback_order fco,
+			fc_third_channel ftc,
+			fc_banks fbs
+		WHERE
+			ftc.id_ = fco.routed_third_channel_id_
+			and fbs.id_ = fco.chargeback_bank_id_
+			<if test="chargeback_order_id_ != null and chargeback_order_id_ != ''">
+				and fco.id_ = #{chargeback_order_id_}
+			</if>
+	</select> -->
+	<select id="chargebackOrderListPage" parameterType="Dto" resultType="Dto">
+		select t.*,fcor.order_result_status_ status_ from (
+			SELECT
+				fco.id_,
+				fco.created_time_,
+				ftc.name_ routed_third_channel_id_,
+				fco.location_,
+				fco.chargeback_accepted_id_,
+				fco.chargeback_amount_,
+				fbs.full_name_ chargeback_bank_id_,
+				fco.chargeback_account_,
+				fco.chargeback_name_,
+				fco.chargeback_idcard_,
+				fco.third_channel_order_id_,
+				fco.chargeback_cellphone_
+			FROM
+				fc_chargeback_order fco,
+				fc_third_channel ftc,
+				fc_banks fbs,
+				fc_chargeback_accepted fca
+			WHERE
+				ftc.id_ = fco.routed_third_channel_id_
+				and fbs.id_ = fco.chargeback_bank_id_
+				and fco.chargeback_accepted_id_ = fca.id_
+				<if test="chargeback_order_id_ != null and chargeback_order_id_ != ''">
+					and fco.id_ = #{chargeback_order_id_}
+				</if>
+				<if test="chargeback_accepted_id_ != null and chargeback_accepted_id_ != ''">
+					and fco.chargeback_accepted_id_ = #{chargeback_accepted_id_}
+				</if>
+				<if test="request_id_ != null and request_id_ != ''">
+					and fca.request_id_ = #{request_id_}
+				</if>
+				<if test="location_ != null and location_ != ''">
+					and fco.location_ = #{location_}
+				</if>
+				<if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+					and fco.third_channel_order_id_ = #{third_channel_order_id_}
+				</if>
+				<if test="conctract_no_ != null and conctract_no_ != ''">
+					and fca.contract_code_ = #{conctract_no_}
+				</if>
+				<if test="third_channel_ != null and third_channel_ != ''">
+					and fco.routed_third_channel_id_ = #{third_channel_}
+				</if>
+				<if test="chargeback_name_ != null and chargeback_name_ != ''">
+					and fco.chargeback_name_ = #{chargeback_name_}
+				</if>
+				<if test="create_time_start_ != null and create_time_start_ != ''">
+					and substr(fco.created_time_,1,10) &gt;= #{create_time_start_}
+				</if>
+				<if test="create_time_end_ != null and create_time_end_ != ''">
+					and substr(fco.created_time_,1,10) &lt;= #{create_time_end_}
+				</if>
+			) t LEFT JOIN fc_chargeback_order_result fcor
+			on t.id_ = fcor.id_
+			<if test="result_status_ != null and result_status_ != ''">
+				<if test="result_status_ == '-1'.toString()">
+					where fcor.order_result_status_ is null
+				</if>
+				<if test="result_status_ != '-1'.toString()">
+					where fcor.order_result_status_ = #{result_status_}
+				</if>
+			</if>
+			ORDER BY t.created_time_ DESC
+	</select>
+</mapper>

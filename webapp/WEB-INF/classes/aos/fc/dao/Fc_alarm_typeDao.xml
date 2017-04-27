@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_alarm_type[fc_alarm_type]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-15 17:08:47 -->
+<mapper namespace="aos.fc.dao.Fc_alarm_typeDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_alarm_typePO">
+		INSERT INTO fc_alarm_type (
+		<if test="pid_ != null">
+	         pid_, <!-- pid_ -->
+		</if>
+		<if test="name_ != null and name_ != ''">
+	         name_, <!-- name_ -->
+		</if>
+		<if test="cycle_ != null">
+	         cycle_, <!-- cycle_ -->
+		</if>
+		<if test="templet_ != null and templet_ != ''">
+	         templet_, <!-- templet_ -->
+		</if>
+		<if test="create_time_ != null and create_time_ != ''">
+	         create_time_, <!-- create_time_ -->
+		</if>
+		<if test="creator_ != null and creator_ != ''">
+	         creator_, <!-- creator_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="pid_ != null">
+	          #{pid_, jdbcType=INTEGER}, <!-- pid_ -->
+	    </if>
+		<if test="name_ != null and name_ != ''">
+	          #{name_, jdbcType=VARCHAR}, <!-- name_ -->
+	    </if>
+		<if test="cycle_ != null">
+	          #{cycle_, jdbcType=INTEGER}, <!-- cycle_ -->
+	    </if>
+		<if test="templet_ != null and templet_ != ''">
+	          #{templet_, jdbcType=VARCHAR}, <!-- templet_ -->
+	    </if>
+		<if test="create_time_ != null and create_time_ != ''">
+	          #{create_time_, jdbcType=VARCHAR}, <!-- create_time_ -->
+	    </if>
+		<if test="creator_ != null and creator_ != ''">
+	          #{creator_, jdbcType=VARCHAR}, <!-- creator_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_alarm_typePO">
+		INSERT INTO fc_alarm_type (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{pid_, jdbcType=INTEGER},  <!-- pid_ -->
+		    #{name_, jdbcType=VARCHAR},  <!-- name_ -->
+		    #{cycle_, jdbcType=INTEGER},  <!-- cycle_ -->
+		    #{templet_, jdbcType=VARCHAR},  <!-- templet_ -->
+		    #{create_time_, jdbcType=VARCHAR},  <!-- create_time_ -->
+		    #{creator_, jdbcType=VARCHAR}  <!-- creator_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_alarm_typePO">
+		UPDATE fc_alarm_type
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="pid_ != null">
+		          pid_ = #{pid_, jdbcType=INTEGER},  <!-- pid_ -->
+			</if>
+			<if test="name_ != null">
+		          name_ = #{name_, jdbcType=VARCHAR},  <!-- name_ -->
+			</if>
+			<if test="cycle_ != null">
+		          cycle_ = #{cycle_, jdbcType=INTEGER},  <!-- cycle_ -->
+			</if>
+			<if test="templet_ != null">
+		          templet_ = #{templet_, jdbcType=VARCHAR},  <!-- templet_ -->
+			</if>
+			<if test="create_time_ != null">
+		          create_time_ = #{create_time_, jdbcType=VARCHAR},  <!-- create_time_ -->
+			</if>
+			<if test="creator_ != null">
+		          creator_ = #{creator_, jdbcType=VARCHAR},  <!-- creator_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_alarm_type WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_alarm_typePO">
+		SELECT
+		<include refid="column" />
+		FROM fc_alarm_type WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_alarm_typePO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_alarm_type
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_alarm_typePO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_alarm_type
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_alarm_typePO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_alarm_type
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_alarm_typePO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_alarm_type
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_alarm_typePO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_alarm_type
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_alarm_type
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_alarm_type
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  pid_,  <!-- pid_ -->
+		  name_,  <!-- name_ -->
+		  cycle_,  <!-- cycle_ -->
+		  templet_,  <!-- templet_ -->
+		  create_time_,  <!-- create_time_ -->
+		  creator_  <!-- creator_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_alarm_type.id_,  <!-- id_ -->
+		  fc_alarm_type.pid_,  <!-- pid_ -->
+		  fc_alarm_type.name_,  <!-- name_ -->
+		  fc_alarm_type.cycle_,  <!-- cycle_ -->
+		  fc_alarm_type.templet_,  <!-- templet_ -->
+		  fc_alarm_type.create_time_,  <!-- create_time_ -->
+		  fc_alarm_type.creator_  <!-- creator_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	   <if test="pid_ != null ">
+		      AND pid_ = #{pid_}  <!-- pid_ -->
+		</if>
+	    <if test="name_ != null and name_ != ''">
+		      AND name_ = #{name_}  <!-- name_ -->
+		</if>
+	   <if test="cycle_ != null ">
+		      AND cycle_ = #{cycle_}  <!-- cycle_ -->
+		</if>
+	    <if test="templet_ != null and templet_ != ''">
+		      AND templet_ = #{templet_}  <!-- templet_ -->
+		</if>
+	    <if test="create_time_ != null and create_time_ != ''">
+		      AND create_time_ = #{create_time_}  <!-- create_time_ -->
+		</if>
+	    <if test="creator_ != null and creator_ != ''">
+		      AND creator_ = #{creator_}  <!-- creator_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="name_ != null and name_ != ''">
+		      AND name_ like '%${name_}%'  <!-- name_ -->
+		</if>
+	    <if test="templet_ != null and templet_ != ''">
+		      AND templet_ like '%${templet_}%'  <!-- templet_ -->
+		</if>
+	    <if test="create_time_ != null and create_time_ != ''">
+		      AND create_time_ like '%${create_time_}%'  <!-- create_time_ -->
+		</if>
+	    <if test="creator_ != null and creator_ != ''">
+		      AND creator_ like '%${creator_}%'  <!-- creator_ -->
+		</if>
+	</sql>
+	
+</mapper>

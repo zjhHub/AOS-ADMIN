@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="reconciliationEngine" class="com.chinazyjr.fc.modules.task.reconciliation.ReconciliationEngine"></bean>
+	
+	<bean id="dealBFFIOrder" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationEngine" />
+		</property>
+		<property name="targetMethod">
+			<value>dealBFFIOrder</value>
+		</property>
+	</bean>
+
+	<!-- 凌晨 0-：00  宝付划扣对账 -->
+	<bean id="taskDealBFFIOrder" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealBFFIOrder" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/2 * * * ?</value>
+		</property>
+	</bean>
+	
+	
+ 	<bean id="dealTLFIOrder" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationEngine" />
+		</property>
+		<property name="targetMethod">
+			<value>dealTLFIOrder</value>
+		</property>
+	</bean>
+
+	<!-- 凌晨 0-：00  通联划扣对账 -->
+	<bean id="taskDealTLFIOrder" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealTLFIOrder" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/2 * * * ?</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="dealYSBFIOrder" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationEngine" />
+		</property>
+		<property name="targetMethod">
+			<value>dealYSBFIOrder</value>
+		</property>
+	</bean>
+
+	<!-- 凌晨 0-：00   银生通 划扣对账 -->
+	<bean id="taskDealYSBFIOrder" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealYSBFIOrder" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/2 * * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="dealYSBFOOrder" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationEngine" />
+		</property>
+		<property name="targetMethod">
+			<value>dealYSBFOOrder</value>
+		</property>
+	</bean>
+
+	<!-- 凌晨 0-：00  银生通 放款 对账 -->
+	<bean id="taskDealYSBFOOrder" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealYSBFOOrder" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/2 * * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="dealKJTFIOrder" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationEngine" />
+		</property>
+		<property name="targetMethod">
+			<value>dealKJTFIOrder</value>
+		</property>
+	</bean>
+
+	<!-- 凌晨 0-：00 快捷通扣款 对账 -->
+	<bean id="taskDealKJTFIOrder" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealKJTFIOrder" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/2 * * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="reconciliationTask" class="com.chinazyjr.fc.modules.task.reconciliation.ReconciliationTask"></bean>
+
+	<bean id="dealReconciliationTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationTask" />
+		</property>
+		<property name="targetMethod">
+			<value>task</value>
+		</property>
+	</bean>
+
+	<!--  对账 细节 操作 -->
+	<bean id="taskReconciliation" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealReconciliationTask" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/3 * * * ?</value>
+		</property>
+	</bean>
+
+	<!-- 业务线对账任务 -->
+	<bean id="reconciliationPlatformTask" class="com.chinazyjr.fc.modules.task.reconciliation.platform.ReconciliationPlatformTask"></bean>
+	<bean id="dealReconciliationPlatformTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reconciliationPlatformTask" />
+		</property>
+		<property name="targetMethod">
+			<value>mainJob</value>
+		</property>
+	</bean>
+
+	<!--  业务线对账任务  操作 -->
+	<bean id="taskReconciliationPlatform" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="dealReconciliationPlatformTask" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/3 * * * ?</value>
+		</property>
+	</bean>
+
+	<!-- 启动触发器的配置开始 -->
+	<bean name="startQuertzReconciliation" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+<!-- 				<ref bean="taskDealBFFIOrder" /> -->
+<!-- 		     	<ref bean="taskDealTLFIOrder" /> -->
+<!-- 				<ref bean="taskDealYSBFIOrder"/> -->
+<!-- 				<ref bean="taskDealYSBFOOrder"/> -->
+<!-- 				<ref bean="taskDealKJTFIOrder"/> -->
+<!-- 				<ref bean="taskReconciliation"/> -->
+<!-- 				<ref bean="taskReconciliationPlatform"/> -->
+			</list>
+		</property>
+	</bean>
+
+</beans>

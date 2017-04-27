@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_alarm_send_config[fc_alarm_send_config]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-15 17:08:47 -->
+<mapper namespace="aos.fc.dao.Fc_alarm_send_configDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_alarm_send_configPO">
+		INSERT INTO fc_alarm_send_config (
+		<if test="alarm_type_ != null">
+	         alarm_type_, <!-- alarm_type_ -->
+		</if>
+		<if test="address_ != null and address_ != ''">
+	         address_, <!-- address_ -->
+		</if>
+		<if test="send_status_ != null">
+	         send_status_, <!-- send_status_ -->
+		</if>
+		<if test="send_name_ != null and send_name_ != ''">
+	         send_name_, <!-- send_name_ -->
+		</if>
+		<if test="send_position_ != null and send_position_ != ''">
+	         send_position_, <!-- send_position_ -->
+		</if>
+		<if test="create_time_ != null and create_time_ != ''">
+	         create_time_, <!-- create_time_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="alarm_type_ != null">
+	          #{alarm_type_, jdbcType=INTEGER}, <!-- alarm_type_ -->
+	    </if>
+		<if test="address_ != null and address_ != ''">
+	          #{address_, jdbcType=VARCHAR}, <!-- address_ -->
+	    </if>
+		<if test="send_status_ != null">
+	          #{send_status_, jdbcType=INTEGER}, <!-- send_status_ -->
+	    </if>
+		<if test="send_name_ != null and send_name_ != ''">
+	          #{send_name_, jdbcType=VARCHAR}, <!-- send_name_ -->
+	    </if>
+		<if test="send_position_ != null and send_position_ != ''">
+	          #{send_position_, jdbcType=VARCHAR}, <!-- send_position_ -->
+	    </if>
+		<if test="create_time_ != null and create_time_ != ''">
+	          #{create_time_, jdbcType=VARCHAR}, <!-- create_time_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_alarm_send_configPO">
+		INSERT INTO fc_alarm_send_config (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{alarm_type_, jdbcType=INTEGER},  <!-- alarm_type_ -->
+		    #{address_, jdbcType=VARCHAR},  <!-- address_ -->
+		    #{send_status_, jdbcType=INTEGER},  <!-- send_status_ -->
+		    #{send_name_, jdbcType=VARCHAR},  <!-- send_name_ -->
+		    #{send_position_, jdbcType=VARCHAR},  <!-- send_position_ -->
+		    #{create_time_, jdbcType=VARCHAR}  <!-- create_time_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_alarm_send_configPO">
+		UPDATE fc_alarm_send_config
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="alarm_type_ != null">
+		          alarm_type_ = #{alarm_type_, jdbcType=INTEGER},  <!-- alarm_type_ -->
+			</if>
+			<if test="address_ != null">
+		          address_ = #{address_, jdbcType=VARCHAR},  <!-- address_ -->
+			</if>
+			<if test="send_status_ != null">
+		          send_status_ = #{send_status_, jdbcType=INTEGER},  <!-- send_status_ -->
+			</if>
+			<if test="send_name_ != null">
+		          send_name_ = #{send_name_, jdbcType=VARCHAR},  <!-- send_name_ -->
+			</if>
+			<if test="send_position_ != null">
+		          send_position_ = #{send_position_, jdbcType=VARCHAR},  <!-- send_position_ -->
+			</if>
+			<if test="create_time_ != null">
+		          create_time_ = #{create_time_, jdbcType=VARCHAR},  <!-- create_time_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_alarm_send_config WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_alarm_send_configPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_alarm_send_config WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_alarm_send_configPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_alarm_send_config
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_alarm_send_configPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_alarm_send_config
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_alarm_send_configPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_alarm_send_config
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_alarm_send_configPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_alarm_send_config
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_alarm_send_configPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_alarm_send_config
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_alarm_send_config
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_alarm_send_config
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  alarm_type_,  <!-- alarm_type_ -->
+		  address_,  <!-- address_ -->
+		  send_status_,  <!-- send_status_ -->
+		  send_name_,  <!-- send_name_ -->
+		  send_position_,  <!-- send_position_ -->
+		  create_time_  <!-- create_time_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_alarm_send_config.id_,  <!-- id_ -->
+		  fc_alarm_send_config.alarm_type_,  <!-- alarm_type_ -->
+		  fc_alarm_send_config.address_,  <!-- address_ -->
+		  fc_alarm_send_config.send_status_,  <!-- send_status_ -->
+		  fc_alarm_send_config.send_name_,  <!-- send_name_ -->
+		  fc_alarm_send_config.send_position_,  <!-- send_position_ -->
+		  fc_alarm_send_config.create_time_  <!-- create_time_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	   <if test="alarm_type_ != null ">
+		      AND alarm_type_ = #{alarm_type_}  <!-- alarm_type_ -->
+		</if>
+	    <if test="address_ != null and address_ != ''">
+		      AND address_ = #{address_}  <!-- address_ -->
+		</if>
+	   <if test="send_status_ != null ">
+		      AND send_status_ = #{send_status_}  <!-- send_status_ -->
+		</if>
+	    <if test="send_name_ != null and send_name_ != ''">
+		      AND send_name_ = #{send_name_}  <!-- send_name_ -->
+		</if>
+	    <if test="send_position_ != null and send_position_ != ''">
+		      AND send_position_ = #{send_position_}  <!-- send_position_ -->
+		</if>
+	    <if test="create_time_ != null and create_time_ != ''">
+		      AND create_time_ = #{create_time_}  <!-- create_time_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="address_ != null and address_ != ''">
+		      AND address_ like '%${address_}%'  <!-- address_ -->
+		</if>
+	    <if test="send_name_ != null and send_name_ != ''">
+		      AND send_name_ like '%${send_name_}%'  <!-- send_name_ -->
+		</if>
+	    <if test="send_position_ != null and send_position_ != ''">
+		      AND send_position_ like '%${send_position_}%'  <!-- send_position_ -->
+		</if>
+	    <if test="create_time_ != null and create_time_ != ''">
+		      AND create_time_ like '%${create_time_}%'  <!-- create_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

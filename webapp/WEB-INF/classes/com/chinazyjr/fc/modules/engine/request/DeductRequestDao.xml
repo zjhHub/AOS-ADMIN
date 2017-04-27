@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DeductRequestDao">
+
+
+
+		<select id="selectOne" parameterType="Dto" resultType="Fc_chargeback_acceptedPO">
+		SELECT
+		    <include refid="aos.fc.dao.Fc_chargeback_acceptedDao.column" />
+		FROM fc_chargeback_accepted
+		<where>
+		     <if test="contract_id_ != null ">
+		      AND contract_id_ = #{contract_id_}  <!-- contract_id_ -->
+			</if>
+			   <if test="location_ != null ">
+		      AND location_ != #{location_}  <!-- location_ -->
+		</if>
+		</where>		
+	</select>
+	
+	
+	<select id="getAcceptedResultList" resultType="Dto">
+		SELECT
+		   chargeback_accepted_id_
+		FROM fc_chargback_accepted_result
+		<where>
+		    chargeback_accepted_id_ in  
+		    <foreach collection="list" item="item" open="("
+				close=")" separator=",">
+				#{item.id_}
+			</foreach>
+		</where>		
+	</select>
+
+
+</mapper>

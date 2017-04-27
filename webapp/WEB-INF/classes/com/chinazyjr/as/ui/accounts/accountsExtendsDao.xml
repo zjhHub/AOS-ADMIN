@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="accountsExtends">
+	
+	<!-- 个人和业务线 账户列表 -->
+	<select id="listPage" parameterType="Dto" resultType="Dto" useCache="false">
+	    SELECT
+			<include refid="com.chinazyjr.as.dao.As_accountsDao.column2" />
+			,b_.name_ attach_platform_name_
+			,a_.idcard_
+			,a_.customer_code_
+		  	,a_.name_
+		FRoM as_accounts as_accounts
+		LEFT JOIN fc_customer a_ on a_.id_ = as_accounts.customer_id_
+		LEFT JOIN fc_platform b_ on as_accounts.attach_platform_ = b_.id_
+		<where>
+		   <if test="id_ != null and id_ != '' ">
+			      AND as_accounts.id_ = #{id_}
+		   </if>
+		   <if test="type_ != null ">
+		      	  AND as_accounts.type_ = #{type_}
+		   </if>
+		   <if test="attach_platform_ != null and attach_platform_ != '' ">
+			      AND as_accounts.attach_platform_ = #{attach_platform_}
+			</if>
+		   <if test="attach_platform_name_ != null and attach_platform_name_ != '' ">
+			      AND b_.name_ like '%${attach_platform_name_}%'
+			</if>
+			<if test="custName != null and custName !='' ">
+			      AND a_.name_ like '%${custName}%'
+			</if>
+			<if test="idcard != null and idcard != '' ">
+			      AND a_.idcard_ like '%${idcard}%'
+			</if>
+			<if test="customer_code_ != null and customer_code_ != '' ">
+			      AND a_.customer_code_ = #{customer_code_}
+			</if>
+		    <if test="account_code_ != null and account_code_ != ''">
+			      AND as_accounts.account_code_ = #{account_code_}
+			</if>
+		    <if test="purpose_ != null and purpose_ != ''">
+			      AND as_accounts.purpose_ like '%${purpose_}%'
+			</if>
+		    <if test="status_ != null and status_ != ''">
+			      AND as_accounts.status_ = #{status_}
+			</if>
+		    <if test="create_time_l_ != null and create_time_l_ != ''">
+			      AND as_accounts.create_time_ &gt;= #{create_time_l_}
+			</if>
+		    <if test="create_time_r_ != null and create_time_r_ != ''">
+			      AND as_accounts.create_time_ &lt;= #{create_time_r_}
+			</if>
+		    <if test="total_balance_l_ != null and total_balance_l_ != '' ">
+			      AND as_accounts.total_balance_ &gt;= #{total_balance_l_}
+			</if>
+		    <if test="total_balance_r_ != null and total_balance_r_ != '' ">
+			      AND as_accounts.total_balance_ &lt;= #{total_balance_r_}
+			</if>
+		</where>
+		order by as_accounts.create_time_ desc
+	</select>
+	
+	<!-- 账户详情 -->
+	<select id="asaccountsDetails" parameterType="Dto" resultType="Dto">
+		SELECT aa.*,fp.name_,fc.name_ custName,fc.customer_code_,fc.idcard_ FROM as_accounts aa LEFT JOIN fc_platform fp 
+		ON aa.attach_platform_ = fp.id_ LEFT JOIN fc_customer fc ON aa.customer_id_ = fc.id_
+		<where>
+			<if test="id_ != null ">
+		      	AND aa.id_ = #{id_}
+			</if>
+		</where>
+
+	</select>
+	
+	<!-- 账户余额收支记录 -->
+	<select id="accBalanceInOutPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		  id_,
+		  account_id_,
+		  type_,
+		  snapshot_id_,
+		  time_,
+		  amount_,
+		  position_,
+		  remark_
+		FROM as_account_balance_in_out_trans
+		<where>
+		    <if test="account_id_ != null ">
+		      	AND account_id_ = #{account_id_}
+			</if>
+		</where>
+		order by time_ desc
+	</select>
+	
+	<!-- 账户的余额增减 -->
+	<select id="balancePlusMinsPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		  id_,
+		  account_id_,
+		  msg_code_,
+		  position_,
+		  tag_,
+		  amount_,
+		  certificate_path_,
+		  remark_,
+		  created_time_,
+		  created_by,
+		  status_
+		FROM as_balance_plus_minus
+		<where>
+		    <if test="account_id_ != null ">
+		      	AND account_id_ = #{account_id_}
+			</if>
+		</where>
+		order by created_time_ desc
+	</select>
+	
+	<!-- 新增业务线账户 -->
+	<insert id="insertPlatFormAccounts" useGeneratedKeys="true" keyProperty="id_" parameterType="As_accountsPO">
+		INSERT INTO as_accounts (
+		<if test="attach_platform_ != null">
+	         attach_platform_, <!-- attach_platform_ -->
+		</if>
+		<if test="account_code_ != null and account_code_ != ''">
+	         account_code_, <!-- account_code_ -->
+		</if>
+		<if test="group_type_ != null">
+	         group_type_, <!-- group_type_ -->
+		</if>
+		<if test="purpose_ != null and purpose_ != ''">
+	         purpose_, <!-- purpose_ -->
+		</if>
+		<if test="type_ != null">
+	         type_, <!-- type_ -->
+		</if>
+		<if test="status_ != null">
+	         status_, <!-- status_ -->
+		</if>
+		<if test="create_time_ != null and create_time_ != ''">
+	         create_time_, <!-- create_time_ -->
+		</if>
+		<if test="available_balance_ != null">
+	         available_balance_, <!-- available_balance_ -->
+		</if>
+		<if test="froze_balance_ != null">
+	         froze_balance_, <!-- froze_balance_ -->
+		</if>
+		<if test="total_balance_ != null">
+	         total_balance_, <!-- total_balance_ -->
+		</if>
+		<if test="update_time_ != null and update_time_ != ''">
+	         update_time_, <!-- update_time_ -->
+		</if>
+		<if test="data_version_ != null">
+	         data_version_, <!-- data_version_ -->
+		</if>
+	         sn_, <!-- sn_ -->
+	         id_
+		)VALUES(
+		<if test="attach_platform_ != null">
+	          #{attach_platform_, jdbcType=INTEGER}, <!-- attach_platform_ -->
+	    </if>
+		<if test="account_code_ != null and account_code_ != ''">
+	          #{account_code_, jdbcType=VARCHAR}, <!-- account_code_ -->
+	    </if>
+		<if test="group_type_ != null">
+	          #{group_type_, jdbcType=INTEGER}, <!-- group_type_ -->
+	    </if>
+		<if test="purpose_ != null and purpose_ != ''">
+	          #{purpose_, jdbcType=VARCHAR}, <!-- purpose_ -->
+	    </if>
+		<if test="type_ != null">
+	          #{type_, jdbcType=INTEGER}, <!-- type_ -->
+	    </if>
+		<if test="status_ != null">
+	          #{status_, jdbcType=INTEGER}, <!-- status_ -->
+	    </if>
+		<if test="create_time_ != null and create_time_ != ''">
+	          #{create_time_, jdbcType=VARCHAR}, <!-- create_time_ -->
+	    </if>
+		<if test="available_balance_ != null">
+	          #{available_balance_, jdbcType=NUMERIC}, <!-- available_balance_ -->
+	    </if>
+		<if test="froze_balance_ != null">
+	          #{froze_balance_, jdbcType=NUMERIC}, <!-- froze_balance_ -->
+	    </if>
+		<if test="total_balance_ != null">
+	          #{total_balance_, jdbcType=NUMERIC}, <!-- total_balance_ -->
+	    </if>
+		<if test="update_time_ != null and update_time_ != ''">
+	           date_format(#{update_time_}, '%Y-%m-%d %H:%i:%s'), <!-- update_time_ -->
+	    </if>
+		<if test="data_version_ != null">
+	          #{data_version_, jdbcType=INTEGER}, <!-- data_version_ -->
+	    </if>
+			  MD5(concat(#{sn_}, 0.00, 0.00, 0.00, date_format(#{update_time_}, '%Y-%m-%d %H:%i:%s'))),
+	          null
+		)
+	</insert>
+	
+</mapper>

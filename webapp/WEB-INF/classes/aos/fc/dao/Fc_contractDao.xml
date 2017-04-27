@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_contract[fc_contract]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-02-07 10:53:00 -->
+<mapper namespace="aos.fc.dao.Fc_contractDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_contractPO">
+		INSERT INTO fc_contract (
+		<if test="platform_id_ != null">
+	         platform_id_, <!-- 归属业务线 -->
+		</if>
+		<if test="contract_code_ != null and contract_code_ != ''">
+	         contract_code_, <!-- 借款合同编号 -->
+		</if>
+		<if test="customer_name_ != null and customer_name_ != ''">
+	         customer_name_, <!-- customer_name_ -->
+		</if>
+		<if test="customer_code_ != null and customer_code_ != ''">
+	         customer_code_, <!-- customer_code_ -->
+		</if>
+		<if test="customer_idcard_ != null and customer_idcard_ != ''">
+	         customer_idcard_, <!-- customer_idcard_ -->
+		</if>
+		<if test="customer_cellphone_ != null and customer_cellphone_ != ''">
+	         customer_cellphone_, <!-- customer_cellphone_ -->
+		</if>
+		<if test="customer_id_ != null">
+	         customer_id_, <!-- 借款人ID -->
+		</if>
+		<if test="channel_ != null and channel_ != ''">
+	         channel_, <!-- 展业途径 -->
+		</if>
+		<if test="product_code_ != null and product_code_ != ''">
+	         product_code_, <!-- 产品编号 -->
+		</if>
+		<if test="product_name_ != null and product_name_ != ''">
+	         product_name_, <!-- 产品名称 -->
+		</if>
+		<if test="loan_pattern_ != null and loan_pattern_ != ''">
+	         loan_pattern_, <!-- 借款方式 -->
+		</if>
+		<if test="loan_staging_amount_ != null">
+	         loan_staging_amount_, <!-- 借款期数 -->
+		</if>
+		<if test="loan_staging_duration_ != null and loan_staging_duration_ != ''">
+	         loan_staging_duration_, <!-- 借款期长 -->
+		</if>
+		<if test="annualized_rate_ != null">
+	         annualized_rate_, <!-- 年化利率 -->
+		</if>
+		<if test="contract_pay_date_ != null and contract_pay_date_ != ''">
+	         contract_pay_date_, <!-- 约定放款日 -->
+		</if>
+		<if test="contract_amount_ != null">
+	         contract_amount_, <!-- 合同金额 -->
+		</if>
+		<if test="expected_interest_ != null">
+	         expected_interest_, <!-- 预计可收利息 -->
+		</if>
+		<if test="expected_fee_ != null">
+	         expected_fee_, <!-- 预计可收服务费 -->
+		</if>
+		<if test="status_ != null">
+	         status_, <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+		</if>
+		<if test="ext_ != null and ext_ != ''">
+	         ext_, <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		</if>
+		<if test="created_time_ != null and created_time_ != ''">
+	         created_time_, <!-- created_time_ -->
+		</if>
+		<if test="created_by_ != null">
+	         created_by_, <!-- created_by_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="platform_id_ != null">
+	          #{platform_id_, jdbcType=INTEGER}, <!-- 归属业务线 -->
+	    </if>
+		<if test="contract_code_ != null and contract_code_ != ''">
+	          #{contract_code_, jdbcType=VARCHAR}, <!-- 借款合同编号 -->
+	    </if>
+		<if test="customer_name_ != null and customer_name_ != ''">
+	          #{customer_name_, jdbcType=VARCHAR}, <!-- customer_name_ -->
+	    </if>
+		<if test="customer_code_ != null and customer_code_ != ''">
+	          #{customer_code_, jdbcType=VARCHAR}, <!-- customer_code_ -->
+	    </if>
+		<if test="customer_idcard_ != null and customer_idcard_ != ''">
+	          #{customer_idcard_, jdbcType=VARCHAR}, <!-- customer_idcard_ -->
+	    </if>
+		<if test="customer_cellphone_ != null and customer_cellphone_ != ''">
+	          #{customer_cellphone_, jdbcType=VARCHAR}, <!-- customer_cellphone_ -->
+	    </if>
+		<if test="customer_id_ != null">
+	          #{customer_id_, jdbcType=INTEGER}, <!-- 借款人ID -->
+	    </if>
+		<if test="channel_ != null and channel_ != ''">
+	          #{channel_, jdbcType=VARCHAR}, <!-- 展业途径 -->
+	    </if>
+		<if test="product_code_ != null and product_code_ != ''">
+	          #{product_code_, jdbcType=VARCHAR}, <!-- 产品编号 -->
+	    </if>
+		<if test="product_name_ != null and product_name_ != ''">
+	          #{product_name_, jdbcType=VARCHAR}, <!-- 产品名称 -->
+	    </if>
+		<if test="loan_pattern_ != null and loan_pattern_ != ''">
+	          #{loan_pattern_, jdbcType=VARCHAR}, <!-- 借款方式 -->
+	    </if>
+		<if test="loan_staging_amount_ != null">
+	          #{loan_staging_amount_, jdbcType=INTEGER}, <!-- 借款期数 -->
+	    </if>
+		<if test="loan_staging_duration_ != null and loan_staging_duration_ != ''">
+	          #{loan_staging_duration_, jdbcType=VARCHAR}, <!-- 借款期长 -->
+	    </if>
+		<if test="annualized_rate_ != null">
+	          #{annualized_rate_, jdbcType=NUMERIC}, <!-- 年化利率 -->
+	    </if>
+		<if test="contract_pay_date_ != null and contract_pay_date_ != ''">
+	          #{contract_pay_date_, jdbcType=VARCHAR}, <!-- 约定放款日 -->
+	    </if>
+		<if test="contract_amount_ != null">
+	          #{contract_amount_, jdbcType=NUMERIC}, <!-- 合同金额 -->
+	    </if>
+		<if test="expected_interest_ != null">
+	          #{expected_interest_, jdbcType=NUMERIC}, <!-- 预计可收利息 -->
+	    </if>
+		<if test="expected_fee_ != null">
+	          #{expected_fee_, jdbcType=NUMERIC}, <!-- 预计可收服务费 -->
+	    </if>
+		<if test="status_ != null">
+	          #{status_, jdbcType=INTEGER}, <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+	    </if>
+		<if test="ext_ != null and ext_ != ''">
+	          #{ext_, jdbcType=VARCHAR}, <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+	    </if>
+		<if test="created_time_ != null and created_time_ != ''">
+	          #{created_time_, jdbcType=VARCHAR}, <!-- created_time_ -->
+	    </if>
+		<if test="created_by_ != null">
+	          #{created_by_, jdbcType=INTEGER}, <!-- created_by_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_contractPO">
+		INSERT INTO fc_contract (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- 借款合同ID -->
+		    #{platform_id_, jdbcType=INTEGER},  <!-- 归属业务线 -->
+		    #{contract_code_, jdbcType=VARCHAR},  <!-- 借款合同编号 -->
+		    #{customer_name_, jdbcType=VARCHAR},  <!-- customer_name_ -->
+		    #{customer_code_, jdbcType=VARCHAR},  <!-- customer_code_ -->
+		    #{customer_idcard_, jdbcType=VARCHAR},  <!-- customer_idcard_ -->
+		    #{customer_cellphone_, jdbcType=VARCHAR},  <!-- customer_cellphone_ -->
+		    #{customer_id_, jdbcType=INTEGER},  <!-- 借款人ID -->
+		    #{channel_, jdbcType=VARCHAR},  <!-- 展业途径 -->
+		    #{product_code_, jdbcType=VARCHAR},  <!-- 产品编号 -->
+		    #{product_name_, jdbcType=VARCHAR},  <!-- 产品名称 -->
+		    #{loan_pattern_, jdbcType=VARCHAR},  <!-- 借款方式 -->
+		    #{loan_staging_amount_, jdbcType=INTEGER},  <!-- 借款期数 -->
+		    #{loan_staging_duration_, jdbcType=VARCHAR},  <!-- 借款期长 -->
+		    #{annualized_rate_, jdbcType=NUMERIC},  <!-- 年化利率 -->
+		    #{contract_pay_date_, jdbcType=VARCHAR},  <!-- 约定放款日 -->
+		    #{contract_amount_, jdbcType=NUMERIC},  <!-- 合同金额 -->
+		    #{expected_interest_, jdbcType=NUMERIC},  <!-- 预计可收利息 -->
+		    #{expected_fee_, jdbcType=NUMERIC},  <!-- 预计可收服务费 -->
+		    #{status_, jdbcType=INTEGER},  <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+		    #{ext_, jdbcType=VARCHAR},  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		    #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+		    #{created_by_, jdbcType=INTEGER}  <!-- created_by_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_contractPO">
+		UPDATE fc_contract
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- 借款合同ID -->
+			</if>
+			<if test="platform_id_ != null">
+		          platform_id_ = #{platform_id_, jdbcType=INTEGER},  <!-- 归属业务线 -->
+			</if>
+			<if test="contract_code_ != null">
+		          contract_code_ = #{contract_code_, jdbcType=VARCHAR},  <!-- 借款合同编号 -->
+			</if>
+			<if test="customer_name_ != null">
+		          customer_name_ = #{customer_name_, jdbcType=VARCHAR},  <!-- customer_name_ -->
+			</if>
+			<if test="customer_code_ != null">
+		          customer_code_ = #{customer_code_, jdbcType=VARCHAR},  <!-- customer_code_ -->
+			</if>
+			<if test="customer_idcard_ != null">
+		          customer_idcard_ = #{customer_idcard_, jdbcType=VARCHAR},  <!-- customer_idcard_ -->
+			</if>
+			<if test="customer_cellphone_ != null">
+		          customer_cellphone_ = #{customer_cellphone_, jdbcType=VARCHAR},  <!-- customer_cellphone_ -->
+			</if>
+			<if test="customer_id_ != null">
+		          customer_id_ = #{customer_id_, jdbcType=INTEGER},  <!-- 借款人ID -->
+			</if>
+			<if test="channel_ != null">
+		          channel_ = #{channel_, jdbcType=VARCHAR},  <!-- 展业途径 -->
+			</if>
+			<if test="product_code_ != null">
+		          product_code_ = #{product_code_, jdbcType=VARCHAR},  <!-- 产品编号 -->
+			</if>
+			<if test="product_name_ != null">
+		          product_name_ = #{product_name_, jdbcType=VARCHAR},  <!-- 产品名称 -->
+			</if>
+			<if test="loan_pattern_ != null">
+		          loan_pattern_ = #{loan_pattern_, jdbcType=VARCHAR},  <!-- 借款方式 -->
+			</if>
+			<if test="loan_staging_amount_ != null">
+		          loan_staging_amount_ = #{loan_staging_amount_, jdbcType=INTEGER},  <!-- 借款期数 -->
+			</if>
+			<if test="loan_staging_duration_ != null">
+		          loan_staging_duration_ = #{loan_staging_duration_, jdbcType=VARCHAR},  <!-- 借款期长 -->
+			</if>
+			<if test="annualized_rate_ != null">
+		          annualized_rate_ = #{annualized_rate_, jdbcType=NUMERIC},  <!-- 年化利率 -->
+			</if>
+			<if test="contract_pay_date_ != null">
+		          contract_pay_date_ = #{contract_pay_date_, jdbcType=VARCHAR},  <!-- 约定放款日 -->
+			</if>
+			<if test="contract_amount_ != null">
+		          contract_amount_ = #{contract_amount_, jdbcType=NUMERIC},  <!-- 合同金额 -->
+			</if>
+			<if test="expected_interest_ != null">
+		          expected_interest_ = #{expected_interest_, jdbcType=NUMERIC},  <!-- 预计可收利息 -->
+			</if>
+			<if test="expected_fee_ != null">
+		          expected_fee_ = #{expected_fee_, jdbcType=NUMERIC},  <!-- 预计可收服务费 -->
+			</if>
+			<if test="status_ != null">
+		          status_ = #{status_, jdbcType=INTEGER},  <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+			</if>
+			<if test="ext_ != null">
+		          ext_ = #{ext_, jdbcType=VARCHAR},  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+			</if>
+			<if test="created_time_ != null">
+		          created_time_ = #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+			</if>
+			<if test="created_by_ != null">
+		          created_by_ = #{created_by_, jdbcType=INTEGER},  <!-- created_by_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_contract WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_contractPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_contract WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_contractPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_contract
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_contractPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_contract
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_contractPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_contract
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_contractPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_contract
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_contractPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_contract
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_contract
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_contract
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- 借款合同ID -->
+		  platform_id_,  <!-- 归属业务线 -->
+		  contract_code_,  <!-- 借款合同编号 -->
+		  customer_name_,  <!-- customer_name_ -->
+		  customer_code_,  <!-- customer_code_ -->
+		  customer_idcard_,  <!-- customer_idcard_ -->
+		  customer_cellphone_,  <!-- customer_cellphone_ -->
+		  customer_id_,  <!-- 借款人ID -->
+		  channel_,  <!-- 展业途径 -->
+		  product_code_,  <!-- 产品编号 -->
+		  product_name_,  <!-- 产品名称 -->
+		  loan_pattern_,  <!-- 借款方式 -->
+		  loan_staging_amount_,  <!-- 借款期数 -->
+		  loan_staging_duration_,  <!-- 借款期长 -->
+		  annualized_rate_,  <!-- 年化利率 -->
+		  contract_pay_date_,  <!-- 约定放款日 -->
+		  contract_amount_,  <!-- 合同金额 -->
+		  expected_interest_,  <!-- 预计可收利息 -->
+		  expected_fee_,  <!-- 预计可收服务费 -->
+		  status_,  <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+		  ext_,  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		  created_time_,  <!-- created_time_ -->
+		  created_by_  <!-- created_by_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_contract.id_,  <!-- 借款合同ID -->
+		  fc_contract.platform_id_,  <!-- 归属业务线 -->
+		  fc_contract.contract_code_,  <!-- 借款合同编号 -->
+		  fc_contract.customer_name_,  <!-- customer_name_ -->
+		  fc_contract.customer_code_,  <!-- customer_code_ -->
+		  fc_contract.customer_idcard_,  <!-- customer_idcard_ -->
+		  fc_contract.customer_cellphone_,  <!-- customer_cellphone_ -->
+		  fc_contract.customer_id_,  <!-- 借款人ID -->
+		  fc_contract.channel_,  <!-- 展业途径 -->
+		  fc_contract.product_code_,  <!-- 产品编号 -->
+		  fc_contract.product_name_,  <!-- 产品名称 -->
+		  fc_contract.loan_pattern_,  <!-- 借款方式 -->
+		  fc_contract.loan_staging_amount_,  <!-- 借款期数 -->
+		  fc_contract.loan_staging_duration_,  <!-- 借款期长 -->
+		  fc_contract.annualized_rate_,  <!-- 年化利率 -->
+		  fc_contract.contract_pay_date_,  <!-- 约定放款日 -->
+		  fc_contract.contract_amount_,  <!-- 合同金额 -->
+		  fc_contract.expected_interest_,  <!-- 预计可收利息 -->
+		  fc_contract.expected_fee_,  <!-- 预计可收服务费 -->
+		  fc_contract.status_,  <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+		  fc_contract.ext_,  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		  fc_contract.created_time_,  <!-- created_time_ -->
+		  fc_contract.created_by_  <!-- created_by_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- 借款合同ID -->
+		</if>
+	   <if test="platform_id_ != null ">
+		      AND platform_id_ = #{platform_id_}  <!-- 归属业务线 -->
+		</if>
+	    <if test="contract_code_ != null and contract_code_ != ''">
+		      AND contract_code_ = #{contract_code_}  <!-- 借款合同编号 -->
+		</if>
+	    <if test="customer_name_ != null and customer_name_ != ''">
+		      AND customer_name_ = #{customer_name_}  <!-- customer_name_ -->
+		</if>
+	    <if test="customer_code_ != null and customer_code_ != ''">
+		      AND customer_code_ = #{customer_code_}  <!-- customer_code_ -->
+		</if>
+	    <if test="customer_idcard_ != null and customer_idcard_ != ''">
+		      AND customer_idcard_ = #{customer_idcard_}  <!-- customer_idcard_ -->
+		</if>
+	    <if test="customer_cellphone_ != null and customer_cellphone_ != ''">
+		      AND customer_cellphone_ = #{customer_cellphone_}  <!-- customer_cellphone_ -->
+		</if>
+	   <if test="customer_id_ != null ">
+		      AND customer_id_ = #{customer_id_}  <!-- 借款人ID -->
+		</if>
+	    <if test="channel_ != null and channel_ != ''">
+		      AND channel_ = #{channel_}  <!-- 展业途径 -->
+		</if>
+	    <if test="product_code_ != null and product_code_ != ''">
+		      AND product_code_ = #{product_code_}  <!-- 产品编号 -->
+		</if>
+	    <if test="product_name_ != null and product_name_ != ''">
+		      AND product_name_ = #{product_name_}  <!-- 产品名称 -->
+		</if>
+	    <if test="loan_pattern_ != null and loan_pattern_ != ''">
+		      AND loan_pattern_ = #{loan_pattern_}  <!-- 借款方式 -->
+		</if>
+	   <if test="loan_staging_amount_ != null ">
+		      AND loan_staging_amount_ = #{loan_staging_amount_}  <!-- 借款期数 -->
+		</if>
+	    <if test="loan_staging_duration_ != null and loan_staging_duration_ != ''">
+		      AND loan_staging_duration_ = #{loan_staging_duration_}  <!-- 借款期长 -->
+		</if>
+	   <if test="annualized_rate_ != null ">
+		      AND annualized_rate_ = #{annualized_rate_}  <!-- 年化利率 -->
+		</if>
+	    <if test="contract_pay_date_ != null and contract_pay_date_ != ''">
+		      AND contract_pay_date_ = #{contract_pay_date_}  <!-- 约定放款日 -->
+		</if>
+	   <if test="contract_amount_ != null ">
+		      AND contract_amount_ = #{contract_amount_}  <!-- 合同金额 -->
+		</if>
+	   <if test="expected_interest_ != null ">
+		      AND expected_interest_ = #{expected_interest_}  <!-- 预计可收利息 -->
+		</if>
+	   <if test="expected_fee_ != null ">
+		      AND expected_fee_ = #{expected_fee_}  <!-- 预计可收服务费 -->
+		</if>
+	   <if test="status_ != null ">
+		      AND status_ = #{status_}  <!-- 合同状态有：
+            1、正常
+            2、逾期
+            3、结清
+            4、坏账 -->
+		</if>
+	    <if test="ext_ != null and ext_ != ''">
+		      AND ext_ = #{ext_}  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ = #{created_time_}  <!-- created_time_ -->
+		</if>
+	   <if test="created_by_ != null ">
+		      AND created_by_ = #{created_by_}  <!-- created_by_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="contract_code_ != null and contract_code_ != ''">
+		      AND contract_code_ like '%${contract_code_}%'  <!-- 借款合同编号 -->
+		</if>
+	    <if test="customer_name_ != null and customer_name_ != ''">
+		      AND customer_name_ like '%${customer_name_}%'  <!-- customer_name_ -->
+		</if>
+	    <if test="customer_code_ != null and customer_code_ != ''">
+		      AND customer_code_ like '%${customer_code_}%'  <!-- customer_code_ -->
+		</if>
+	    <if test="customer_idcard_ != null and customer_idcard_ != ''">
+		      AND customer_idcard_ like '%${customer_idcard_}%'  <!-- customer_idcard_ -->
+		</if>
+	    <if test="customer_cellphone_ != null and customer_cellphone_ != ''">
+		      AND customer_cellphone_ like '%${customer_cellphone_}%'  <!-- customer_cellphone_ -->
+		</if>
+	    <if test="channel_ != null and channel_ != ''">
+		      AND channel_ like '%${channel_}%'  <!-- 展业途径 -->
+		</if>
+	    <if test="product_code_ != null and product_code_ != ''">
+		      AND product_code_ like '%${product_code_}%'  <!-- 产品编号 -->
+		</if>
+	    <if test="product_name_ != null and product_name_ != ''">
+		      AND product_name_ like '%${product_name_}%'  <!-- 产品名称 -->
+		</if>
+	    <if test="loan_pattern_ != null and loan_pattern_ != ''">
+		      AND loan_pattern_ like '%${loan_pattern_}%'  <!-- 借款方式 -->
+		</if>
+	    <if test="loan_staging_duration_ != null and loan_staging_duration_ != ''">
+		      AND loan_staging_duration_ like '%${loan_staging_duration_}%'  <!-- 借款期长 -->
+		</if>
+	    <if test="contract_pay_date_ != null and contract_pay_date_ != ''">
+		      AND contract_pay_date_ like '%${contract_pay_date_}%'  <!-- 约定放款日 -->
+		</if>
+	    <if test="ext_ != null and ext_ != ''">
+		      AND ext_ like '%${ext_}%'  <!-- 用于能适应借款合同将来可能出现的扩展属性 -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ like '%${created_time_}%'  <!-- created_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

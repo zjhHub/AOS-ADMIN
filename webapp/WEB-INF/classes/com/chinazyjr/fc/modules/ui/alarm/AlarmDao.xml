@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="alarm">
+
+	<select id="alarmTypeListPage" parameterType="Dto" resultType="Dto">
+		select 
+		  id_,
+		  pid_,
+		  name_,
+		  cycle_,
+		  templet_,
+		  create_time_,
+		  creator_
+		from 
+			fc_alarm_type
+	</select>
+	
+	
+	<select id="sendConfigListPage" parameterType="Dto" resultType="Dto">
+		select 
+		  fasc.id_,
+		  fasc.alarm_type_,
+		  fasc.address_,
+		  fasc.send_status_,
+		  fasc.send_name_,
+		  fasc.send_position_,
+		  fasc.create_time_,
+		  fat.name_
+		from 
+			fc_alarm_send_config fasc,
+			fc_alarm_type fat
+		where
+			fasc.alarm_type_ = fat.id_
+			
+	</select>
+	
+	
+	
+	<select id="sendLogPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		  fasl.id_, 
+		  fasl.alarm_id_,  
+		  fasl.alarm_type_, 
+		  fasl.send_address, 
+		  fasl.send_name_,  
+		  fasl.send_time_, 
+		  fasl.send_status_, 
+		  fasl.send_message, 
+		  fasl.send_content,
+		  fat.name_
+		FROM
+		  fc_alarm_send_log	fasl,
+		  fc_alarm_type fat
+	<where>
+		fasl.alarm_type_ = fat.id_
+		<if test="alarm_id_ != null and alarm_id_ != ''">
+			AND fasl.alarm_id_ = #{alarm_id_}
+		</if>
+		<if test="alarm_type_ != null and alarm_type_ != ''">
+			AND fasl.alarm_type_ = #{alarm_type_}
+		</if>
+		<if test="send_status_ != null and send_status_ != ''">
+			AND fasl.send_status_ = #{send_status_}
+		</if>
+
+		<if test="send_name_ != null and send_name_ != ''">
+			AND fasl.send_name_ like '%${send_name_}%'
+		</if>
+
+		<if test="start_time_ != null and start_time_ !='' "> 
+			AND fasl.send_time_ <![CDATA[ >= ]]> #{start_time_}  <!-- 开始日期 -->
+		</if>
+		
+		<if test="end_time_!= null and end_time_ !='' ">
+			AND fasl.send_time_ <![CDATA[ <= ]]> CONCAT(#{end_time_},' 23:59:59')  <!-- 结束日期 -->
+		</if>
+	</where>
+ 	 ORDER BY fasl.send_time_ DESC
+		
+	</select>
+	
+	
+	
+	<select id="alarmListPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		  fa.id_,  
+		  fa.alarm_type_, 
+		  fa.reference_order_, 
+		  fa.channel_name_,
+		  fa.channel_id_,
+		  fa.third_order_id_,  
+		  fa.reference_type_, 
+		  fa.accepted_id_,  
+		  fa.alarm_time_, 
+		  fa.alarm_reason_,  
+		  fa.processing_people_, 
+		  fa.processing_time_,  
+		  fa.processing_content_, 
+		  fa.alarm_status_, 
+		  fa.alarm_count_, 
+		  fa.alarm_next_,  
+		  fa.alarm_lo_,
+		  fat.name_
+		FROM
+		  fc_alarm fa,
+		  fc_alarm_type fat	
+	<where>
+		fa.alarm_type_ = fat.id_
+		<if test="reference_order_ != null and reference_order_ != ''">
+			AND fa.reference_order_ = #{reference_order_}
+		</if>
+		<if test="third_order_id_ != null and third_order_id_ != ''">
+			AND fa.third_order_id_ = #{third_order_id_}
+		</if>
+		<if test="alarm_type_ != null and alarm_type_ != ''">
+			AND fa.alarm_type_ = #{alarm_type_}
+		</if>
+		<if test="accepted_id_ != null and accepted_id_ != ''">
+			AND fa.accepted_id_ = #{accepted_id_}
+		</if>
+		<if test="alarm_status_ != null and alarm_status_ != ''">
+			AND fa.alarm_status_ = #{alarm_status_}
+		</if>
+		<if test="reference_type_ != null and reference_type_ != ''">
+			AND fa.reference_type_ = #{reference_type_}
+		</if>
+
+		<if test="start_time_ != null and start_time_ !='' "> 
+			AND fa.alarm_time_ <![CDATA[ >= ]]> #{start_time_}  <!-- 开始日期 -->
+		</if>
+		
+		<if test="end_time_!= null and end_time_ !='' ">
+			AND fa.alarm_time_ <![CDATA[ <= ]]> CONCAT(#{end_time_},' 23:59:59')  <!-- 结束日期 -->
+		</if>
+	</where>
+ 	 ORDER BY fa.alarm_time_ DESC
+		
+	</select>
+	
+     <select id="alarmTypeName" parameterType="Dto" resultType="Dto">
+		SELECT 
+		    id_ as value, 
+		    name_ as display	 
+		FROM 
+			fc_alarm_type 	
+	</select>
+	
+	
+     <select id="sendConfigInfo" parameterType="Dto" resultType="Dto">
+		select 
+		  fasc.id_,
+		  fasc.alarm_type_,
+		  fasc.address_,
+		  fasc.send_status_,
+		  fasc.send_name_,
+		  fasc.send_position_,
+		  fasc.create_time_
+<!-- 		  fat.name_ -->
+		from 
+			fc_alarm_send_config fasc,
+			fc_alarm_type fat
+		where
+			fasc.alarm_type_ = fat.id_
+			<if test="id_ != null and id_ != ''">
+			AND fasc.id_ = #{id_}
+			</if>	
+	</select>
+	
+	
+</mapper>

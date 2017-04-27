@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="disposedthreeloan">
+	
+	<select id="flatSetList" parameterType="Dto" resultType="Dto">
+		SELECT p.id_,p.platform_id_,p.third_channel_id_,f.name_ FROM platform_third_channel_for_loan p,fc_platform f 
+		WHERE p.platform_id_ = f.id_
+		<if test="third_channel_id_ != null and third_channel_id_ != ''">
+			AND p.third_channel_id_ = #{third_channel_id_}
+		</if>
+	
+	</select>
+	
+	<select id="queryFlatList" parameterType="Dto" resultType="Dto">
+		SELECT id_  value,name_ display from fc_platform
+	
+	</select>
+	
+</mapper>

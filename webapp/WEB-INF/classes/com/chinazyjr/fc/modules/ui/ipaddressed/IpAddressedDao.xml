@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- -->
+<mapper namespace="ipAddressed">
+	<select id="ipAddressedPage" parameterType="Dto" resultType="Dto">
+		SELECT
+			fip.id_,
+			fip.ip_address_,
+			fp.name_,
+			<!-- fip.deleted_ -->
+			CASE WHEN fip.deleted_= '0' THEN '禁用' WHEN fip.deleted_= '1' THEN '可用'  END AS deleted_
+		FROM
+			fc_ip_white_list fip,
+			fc_platform fp
+		WHERE
+			fip.platform_id_ = fp.id_
+		<if test="ip_address_ != null and ip_address_ != ''">
+			AND fip.ip_address_ like '%${ip_address_}%'<!-- IP地址 -->
+		</if>
+
+		<if test="id_ != null and id_ != ''">
+			AND fp.id_ = #{id_} <!-- 归属业务线 -->
+		</if>
+
+	</select>
+
+</mapper>

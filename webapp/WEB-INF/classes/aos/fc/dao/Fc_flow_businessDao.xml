@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_flow_business[fc_flow_business]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-04-06 13:11:52 -->
+<mapper namespace="aos.fc.dao.Fc_flow_businessDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_flow_businessPO">
+		INSERT INTO fc_flow_business (
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	         request_uuid_, <!-- request_uuid_ -->
+		</if>
+		<if test="occured_time_ != null and occured_time_ != ''">
+	         occured_time_, <!-- occured_time_ -->
+		</if>
+		<if test="contract_id_ != null">
+	         contract_id_, <!-- contract_id_ -->
+		</if>
+		<if test="summary_ != null and summary_ != ''">
+	         summary_, <!-- summary_ -->
+		</if>
+		<if test="reference_id_ != null and reference_id_ != ''">
+	         reference_id_, <!-- reference_id_ -->
+		</if>
+		<if test="platform_id_ != null">
+	         platform_id_, <!-- platform_id_ -->
+		</if>
+		<if test="remark_ != null and remark_ != ''">
+	         remark_, <!-- remark_ -->
+		</if>
+		<if test="created_time_ != null and created_time_ != ''">
+	         created_time_, <!-- created_time_ -->
+		</if>
+		<if test="created_by_ != null">
+	         created_by_, <!-- created_by_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	          #{request_uuid_, jdbcType=VARCHAR}, <!-- request_uuid_ -->
+	    </if>
+		<if test="occured_time_ != null and occured_time_ != ''">
+	          #{occured_time_, jdbcType=VARCHAR}, <!-- occured_time_ -->
+	    </if>
+		<if test="contract_id_ != null">
+	          #{contract_id_, jdbcType=INTEGER}, <!-- contract_id_ -->
+	    </if>
+		<if test="summary_ != null and summary_ != ''">
+	          #{summary_, jdbcType=VARCHAR}, <!-- summary_ -->
+	    </if>
+		<if test="reference_id_ != null and reference_id_ != ''">
+	          #{reference_id_, jdbcType=VARCHAR}, <!-- reference_id_ -->
+	    </if>
+		<if test="platform_id_ != null">
+	          #{platform_id_, jdbcType=INTEGER}, <!-- platform_id_ -->
+	    </if>
+		<if test="remark_ != null and remark_ != ''">
+	          #{remark_, jdbcType=VARCHAR}, <!-- remark_ -->
+	    </if>
+		<if test="created_time_ != null and created_time_ != ''">
+	          #{created_time_, jdbcType=VARCHAR}, <!-- created_time_ -->
+	    </if>
+		<if test="created_by_ != null">
+	          #{created_by_, jdbcType=INTEGER}, <!-- created_by_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_flow_businessPO">
+		INSERT INTO fc_flow_business (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{request_uuid_, jdbcType=VARCHAR},  <!-- request_uuid_ -->
+		    #{occured_time_, jdbcType=VARCHAR},  <!-- occured_time_ -->
+		    #{contract_id_, jdbcType=INTEGER},  <!-- contract_id_ -->
+		    #{summary_, jdbcType=VARCHAR},  <!-- summary_ -->
+		    #{reference_id_, jdbcType=VARCHAR},  <!-- reference_id_ -->
+		    #{platform_id_, jdbcType=INTEGER},  <!-- platform_id_ -->
+		    #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+		    #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+		    #{created_by_, jdbcType=INTEGER}  <!-- created_by_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_flow_businessPO">
+		UPDATE fc_flow_business
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="request_uuid_ != null">
+		          request_uuid_ = #{request_uuid_, jdbcType=VARCHAR},  <!-- request_uuid_ -->
+			</if>
+			<if test="occured_time_ != null">
+		          occured_time_ = #{occured_time_, jdbcType=VARCHAR},  <!-- occured_time_ -->
+			</if>
+			<if test="contract_id_ != null">
+		          contract_id_ = #{contract_id_, jdbcType=INTEGER},  <!-- contract_id_ -->
+			</if>
+			<if test="summary_ != null">
+		          summary_ = #{summary_, jdbcType=VARCHAR},  <!-- summary_ -->
+			</if>
+			<if test="reference_id_ != null">
+		          reference_id_ = #{reference_id_, jdbcType=VARCHAR},  <!-- reference_id_ -->
+			</if>
+			<if test="platform_id_ != null">
+		          platform_id_ = #{platform_id_, jdbcType=INTEGER},  <!-- platform_id_ -->
+			</if>
+			<if test="remark_ != null">
+		          remark_ = #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+			</if>
+			<if test="created_time_ != null">
+		          created_time_ = #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+			</if>
+			<if test="created_by_ != null">
+		          created_by_ = #{created_by_, jdbcType=INTEGER},  <!-- created_by_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_flow_business WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_flow_businessPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_flow_business WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_flow_businessPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_flow_business
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_flow_businessPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_flow_business
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_flow_businessPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_flow_business
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_flow_businessPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_flow_business
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_flow_businessPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_flow_business
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_flow_business
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_flow_business
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  request_uuid_,  <!-- request_uuid_ -->
+		  occured_time_,  <!-- occured_time_ -->
+		  contract_id_,  <!-- contract_id_ -->
+		  summary_,  <!-- summary_ -->
+		  reference_id_,  <!-- reference_id_ -->
+		  platform_id_,  <!-- platform_id_ -->
+		  remark_,  <!-- remark_ -->
+		  created_time_,  <!-- created_time_ -->
+		  created_by_  <!-- created_by_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_flow_business.id_,  <!-- id_ -->
+		  fc_flow_business.request_uuid_,  <!-- request_uuid_ -->
+		  fc_flow_business.occured_time_,  <!-- occured_time_ -->
+		  fc_flow_business.contract_id_,  <!-- contract_id_ -->
+		  fc_flow_business.summary_,  <!-- summary_ -->
+		  fc_flow_business.reference_id_,  <!-- reference_id_ -->
+		  fc_flow_business.platform_id_,  <!-- platform_id_ -->
+		  fc_flow_business.remark_,  <!-- remark_ -->
+		  fc_flow_business.created_time_,  <!-- created_time_ -->
+		  fc_flow_business.created_by_  <!-- created_by_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	    <if test="request_uuid_ != null and request_uuid_ != ''">
+		      AND request_uuid_ = #{request_uuid_}  <!-- request_uuid_ -->
+		</if>
+	    <if test="occured_time_ != null and occured_time_ != ''">
+		      AND occured_time_ = #{occured_time_}  <!-- occured_time_ -->
+		</if>
+	   <if test="contract_id_ != null ">
+		      AND contract_id_ = #{contract_id_}  <!-- contract_id_ -->
+		</if>
+	    <if test="summary_ != null and summary_ != ''">
+		      AND summary_ = #{summary_}  <!-- summary_ -->
+		</if>
+	    <if test="reference_id_ != null and reference_id_ != ''">
+		      AND reference_id_ = #{reference_id_}  <!-- reference_id_ -->
+		</if>
+	   <if test="platform_id_ != null ">
+		      AND platform_id_ = #{platform_id_}  <!-- platform_id_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ = #{remark_}  <!-- remark_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ = #{created_time_}  <!-- created_time_ -->
+		</if>
+	   <if test="created_by_ != null ">
+		      AND created_by_ = #{created_by_}  <!-- created_by_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="request_uuid_ != null and request_uuid_ != ''">
+		      AND request_uuid_ like '%${request_uuid_}%'  <!-- request_uuid_ -->
+		</if>
+	    <if test="occured_time_ != null and occured_time_ != ''">
+		      AND occured_time_ like '%${occured_time_}%'  <!-- occured_time_ -->
+		</if>
+	    <if test="summary_ != null and summary_ != ''">
+		      AND summary_ like '%${summary_}%'  <!-- summary_ -->
+		</if>
+	    <if test="reference_id_ != null and reference_id_ != ''">
+		      AND reference_id_ like '%${reference_id_}%'  <!-- reference_id_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ like '%${remark_}%'  <!-- remark_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ like '%${created_time_}%'  <!-- created_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

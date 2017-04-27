@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- as_balance_snapshot[as_balance_snapshot]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-23 18:18:48 -->
+<mapper namespace="com.chinazyjr.as.dao.As_balance_snapshotDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="As_balance_snapshotPO">
+		INSERT INTO as_balance_snapshot (
+		<if test="account_id_ != null">
+	         account_id_, <!-- account_id_ -->
+		</if>
+		<if test="reason_ != null">
+	         reason_, <!-- reason_ -->
+		</if>
+		<if test="origin_id_ != null">
+	         origin_id_, <!-- origin_id_ -->
+		</if>
+		<if test="created_time_ != null and created_time_ != ''">
+	         created_time_, <!-- created_time_ -->
+		</if>
+		<if test="total_balance_changing_ != null">
+	         total_balance_changing_, <!-- total_balance_changing_ -->
+		</if>
+		<if test="total_balance_before_ != null">
+	         total_balance_before_, <!-- total_balance_before_ -->
+		</if>
+		<if test="total_balance_after_ != null">
+	         total_balance_after_, <!-- total_balance_after_ -->
+		</if>
+		<if test="available_balance_changing_ != null">
+	         available_balance_changing_, <!-- available_balance_changing_ -->
+		</if>
+		<if test="available_balance_before_ != null">
+	         available_balance_before_, <!-- available_balance_before_ -->
+		</if>
+		<if test="available_balance_after_ != null">
+	         available_balance_after_, <!-- available_balance_after_ -->
+		</if>
+		<if test="froze_balance_changing_ != null">
+	         froze_balance_changing_, <!-- froze_balance_changing_ -->
+		</if>
+		<if test="froze_balance_before_ != null">
+	         froze_balance_before_, <!-- froze_balance_before_ -->
+		</if>
+		<if test="froze_balance_after_ != null">
+	         froze_balance_after_, <!-- froze_balance_after_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="account_id_ != null">
+	          #{account_id_, jdbcType=INTEGER}, <!-- account_id_ -->
+	    </if>
+		<if test="reason_ != null">
+	          #{reason_, jdbcType=INTEGER}, <!-- reason_ -->
+	    </if>
+		<if test="origin_id_ != null">
+	          #{origin_id_, jdbcType=INTEGER}, <!-- origin_id_ -->
+	    </if>
+		<if test="created_time_ != null and created_time_ != ''">
+	          #{created_time_, jdbcType=VARCHAR}, <!-- created_time_ -->
+	    </if>
+		<if test="total_balance_changing_ != null">
+	          #{total_balance_changing_, jdbcType=NUMERIC}, <!-- total_balance_changing_ -->
+	    </if>
+		<if test="total_balance_before_ != null">
+	          #{total_balance_before_, jdbcType=NUMERIC}, <!-- total_balance_before_ -->
+	    </if>
+		<if test="total_balance_after_ != null">
+	          #{total_balance_after_, jdbcType=NUMERIC}, <!-- total_balance_after_ -->
+	    </if>
+		<if test="available_balance_changing_ != null">
+	          #{available_balance_changing_, jdbcType=NUMERIC}, <!-- available_balance_changing_ -->
+	    </if>
+		<if test="available_balance_before_ != null">
+	          #{available_balance_before_, jdbcType=NUMERIC}, <!-- available_balance_before_ -->
+	    </if>
+		<if test="available_balance_after_ != null">
+	          #{available_balance_after_, jdbcType=NUMERIC}, <!-- available_balance_after_ -->
+	    </if>
+		<if test="froze_balance_changing_ != null">
+	          #{froze_balance_changing_, jdbcType=NUMERIC}, <!-- froze_balance_changing_ -->
+	    </if>
+		<if test="froze_balance_before_ != null">
+	          #{froze_balance_before_, jdbcType=NUMERIC}, <!-- froze_balance_before_ -->
+	    </if>
+		<if test="froze_balance_after_ != null">
+	          #{froze_balance_after_, jdbcType=NUMERIC}, <!-- froze_balance_after_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="As_balance_snapshotPO">
+		INSERT INTO as_balance_snapshot (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{account_id_, jdbcType=INTEGER},  <!-- account_id_ -->
+		    #{reason_, jdbcType=INTEGER},  <!-- reason_ -->
+		    #{origin_id_, jdbcType=INTEGER},  <!-- origin_id_ -->
+		    #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+		    #{total_balance_changing_, jdbcType=NUMERIC},  <!-- total_balance_changing_ -->
+		    #{total_balance_before_, jdbcType=NUMERIC},  <!-- total_balance_before_ -->
+		    #{total_balance_after_, jdbcType=NUMERIC},  <!-- total_balance_after_ -->
+		    #{available_balance_changing_, jdbcType=NUMERIC},  <!-- available_balance_changing_ -->
+		    #{available_balance_before_, jdbcType=NUMERIC},  <!-- available_balance_before_ -->
+		    #{available_balance_after_, jdbcType=NUMERIC},  <!-- available_balance_after_ -->
+		    #{froze_balance_changing_, jdbcType=NUMERIC},  <!-- froze_balance_changing_ -->
+		    #{froze_balance_before_, jdbcType=NUMERIC},  <!-- froze_balance_before_ -->
+		    #{froze_balance_after_, jdbcType=NUMERIC}  <!-- froze_balance_after_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="As_balance_snapshotPO">
+		UPDATE as_balance_snapshot
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="account_id_ != null">
+		          account_id_ = #{account_id_, jdbcType=INTEGER},  <!-- account_id_ -->
+			</if>
+			<if test="reason_ != null">
+		          reason_ = #{reason_, jdbcType=INTEGER},  <!-- reason_ -->
+			</if>
+			<if test="origin_id_ != null">
+		          origin_id_ = #{origin_id_, jdbcType=INTEGER},  <!-- origin_id_ -->
+			</if>
+			<if test="created_time_ != null">
+		          created_time_ = #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+			</if>
+			<if test="total_balance_changing_ != null">
+		          total_balance_changing_ = #{total_balance_changing_, jdbcType=NUMERIC},  <!-- total_balance_changing_ -->
+			</if>
+			<if test="total_balance_before_ != null">
+		          total_balance_before_ = #{total_balance_before_, jdbcType=NUMERIC},  <!-- total_balance_before_ -->
+			</if>
+			<if test="total_balance_after_ != null">
+		          total_balance_after_ = #{total_balance_after_, jdbcType=NUMERIC},  <!-- total_balance_after_ -->
+			</if>
+			<if test="available_balance_changing_ != null">
+		          available_balance_changing_ = #{available_balance_changing_, jdbcType=NUMERIC},  <!-- available_balance_changing_ -->
+			</if>
+			<if test="available_balance_before_ != null">
+		          available_balance_before_ = #{available_balance_before_, jdbcType=NUMERIC},  <!-- available_balance_before_ -->
+			</if>
+			<if test="available_balance_after_ != null">
+		          available_balance_after_ = #{available_balance_after_, jdbcType=NUMERIC},  <!-- available_balance_after_ -->
+			</if>
+			<if test="froze_balance_changing_ != null">
+		          froze_balance_changing_ = #{froze_balance_changing_, jdbcType=NUMERIC},  <!-- froze_balance_changing_ -->
+			</if>
+			<if test="froze_balance_before_ != null">
+		          froze_balance_before_ = #{froze_balance_before_, jdbcType=NUMERIC},  <!-- froze_balance_before_ -->
+			</if>
+			<if test="froze_balance_after_ != null">
+		          froze_balance_after_ = #{froze_balance_after_, jdbcType=NUMERIC},  <!-- froze_balance_after_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM as_balance_snapshot WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="As_balance_snapshotPO">
+		SELECT
+		<include refid="column" />
+		FROM as_balance_snapshot WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="As_balance_snapshotPO">
+		SELECT
+		    <include refid="column" />
+		FROM as_balance_snapshot
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="As_balance_snapshotPO">
+		SELECT
+			<include refid="column" />	
+		FROM as_balance_snapshot
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="As_balance_snapshotPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM as_balance_snapshot
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="As_balance_snapshotPO">
+		SELECT
+			<include refid="column" />	
+		FROM as_balance_snapshot
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="As_balance_snapshotPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM as_balance_snapshot
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM as_balance_snapshot
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM as_balance_snapshot
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  account_id_,  <!-- account_id_ -->
+		  reason_,  <!-- reason_ -->
+		  origin_id_,  <!-- origin_id_ -->
+		  created_time_,  <!-- created_time_ -->
+		  total_balance_changing_,  <!-- total_balance_changing_ -->
+		  total_balance_before_,  <!-- total_balance_before_ -->
+		  total_balance_after_,  <!-- total_balance_after_ -->
+		  available_balance_changing_,  <!-- available_balance_changing_ -->
+		  available_balance_before_,  <!-- available_balance_before_ -->
+		  available_balance_after_,  <!-- available_balance_after_ -->
+		  froze_balance_changing_,  <!-- froze_balance_changing_ -->
+		  froze_balance_before_,  <!-- froze_balance_before_ -->
+		  froze_balance_after_  <!-- froze_balance_after_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  as_balance_snapshot.id_,  <!-- id_ -->
+		  as_balance_snapshot.account_id_,  <!-- account_id_ -->
+		  as_balance_snapshot.reason_,  <!-- reason_ -->
+		  as_balance_snapshot.origin_id_,  <!-- origin_id_ -->
+		  as_balance_snapshot.created_time_,  <!-- created_time_ -->
+		  as_balance_snapshot.total_balance_changing_,  <!-- total_balance_changing_ -->
+		  as_balance_snapshot.total_balance_before_,  <!-- total_balance_before_ -->
+		  as_balance_snapshot.total_balance_after_,  <!-- total_balance_after_ -->
+		  as_balance_snapshot.available_balance_changing_,  <!-- available_balance_changing_ -->
+		  as_balance_snapshot.available_balance_before_,  <!-- available_balance_before_ -->
+		  as_balance_snapshot.available_balance_after_,  <!-- available_balance_after_ -->
+		  as_balance_snapshot.froze_balance_changing_,  <!-- froze_balance_changing_ -->
+		  as_balance_snapshot.froze_balance_before_,  <!-- froze_balance_before_ -->
+		  as_balance_snapshot.froze_balance_after_  <!-- froze_balance_after_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	   <if test="account_id_ != null ">
+		      AND account_id_ = #{account_id_}  <!-- account_id_ -->
+		</if>
+	   <if test="reason_ != null ">
+		      AND reason_ = #{reason_}  <!-- reason_ -->
+		</if>
+	   <if test="origin_id_ != null ">
+		      AND origin_id_ = #{origin_id_}  <!-- origin_id_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ = #{created_time_}  <!-- created_time_ -->
+		</if>
+	   <if test="total_balance_changing_ != null ">
+		      AND total_balance_changing_ = #{total_balance_changing_}  <!-- total_balance_changing_ -->
+		</if>
+	   <if test="total_balance_before_ != null ">
+		      AND total_balance_before_ = #{total_balance_before_}  <!-- total_balance_before_ -->
+		</if>
+	   <if test="total_balance_after_ != null ">
+		      AND total_balance_after_ = #{total_balance_after_}  <!-- total_balance_after_ -->
+		</if>
+	   <if test="available_balance_changing_ != null ">
+		      AND available_balance_changing_ = #{available_balance_changing_}  <!-- available_balance_changing_ -->
+		</if>
+	   <if test="available_balance_before_ != null ">
+		      AND available_balance_before_ = #{available_balance_before_}  <!-- available_balance_before_ -->
+		</if>
+	   <if test="available_balance_after_ != null ">
+		      AND available_balance_after_ = #{available_balance_after_}  <!-- available_balance_after_ -->
+		</if>
+	   <if test="froze_balance_changing_ != null ">
+		      AND froze_balance_changing_ = #{froze_balance_changing_}  <!-- froze_balance_changing_ -->
+		</if>
+	   <if test="froze_balance_before_ != null ">
+		      AND froze_balance_before_ = #{froze_balance_before_}  <!-- froze_balance_before_ -->
+		</if>
+	   <if test="froze_balance_after_ != null ">
+		      AND froze_balance_after_ = #{froze_balance_after_}  <!-- froze_balance_after_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ like '%${created_time_}%'  <!-- created_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

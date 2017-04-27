@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- as_account_balance_in_out_trans[as_account_balance_in_out_trans]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-15 17:26:57 -->
+<mapper namespace="com.chinazyjr.as.modules.balance.balancewater.As_account_balance_in_out_transVODao">
+	<select id="pageQuery" parameterType="Dto" resultType="As_account_balance_in_out_transVO">
+		select trans.id_ outside_trans_id,trans.type_ type,trans.time_ time,trans.amount_ amount,trans.position_ position,trans.remark_ remark  from as_account_balance_in_out_trans trans 
+		join as_accounts accounts on trans.account_id_=accounts.id_ 
+		where accounts.account_code_=#{account_code} 
+		and trans.time_ <![CDATA[>=]]> concat(#{recode_time_start},' 00:00:00')
+		and trans.time_ <![CDATA[ <= ]]>concat(#{recode_time_end},' 23:59:59')
+		<include refid="pageWhere"/>
+		limit #{page_size} offset #{page_offset}
+	</select>
+	
+	<select id="getPageTotalCount" parameterType="Dto" resultType="Long">
+		select count(1) from as_account_balance_in_out_trans trans 
+		join as_accounts accounts on trans.account_id_=accounts.id_ 
+		where accounts.account_code_=#{account_code} 
+		and trans.time_ <![CDATA[>=]]> concat(#{recode_time_start},' 00:00:00')
+		and trans.time_ <![CDATA[ <= ]]> concat(#{recode_time_end},' 23:59:59')
+		<include refid="pageWhere"/>
+	</select>
+	
+	<!-- 分页查询条件 -->
+	<sql id="pageWhere">
+		<if test="type != null and type != ''">
+			AND trans.type_ = #{type}
+		</if>
+		<if test="amount_start  != null and amount_start  != ''">
+			AND trans.amount_ <![CDATA[ >= ]]> #{amount_start }
+		</if>
+		<if test="amount_end != null and amount_end != ''">
+			AND trans.amount_ <![CDATA[ <= ]]> #{amount_end}
+		</if>
+	</sql>
+</mapper>

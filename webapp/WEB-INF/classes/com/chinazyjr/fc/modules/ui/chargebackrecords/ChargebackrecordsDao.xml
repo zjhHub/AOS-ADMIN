@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chargebackrecords">
+	<select id="chargebackrecordsPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		
+			fth.id_ AS routed_third_channel_id_,
+			fccl.target_date_,
+			fccl.chargeback_account_,
+			fccl.third_channel_id_,
+			fth.name_ AS channel_name_,
+			fccl.chargeback_failed_times_,
+			fccl.chargeback_succeed_times_,
+			fccl.today_total_chargebacked_amount_
+		FROM
+			fc_account_chargeback_log fccl,
+			fc_third_channel fth
+		WHERE fccl.third_channel_id_ = fth.id_
+		<if test="chargeback_account_ != null and chargeback_account_ != ''">
+			AND fccl.chargeback_account_ like '%${chargeback_account_}%' <!--  -->
+		</if>
+		
+		<if test="start_chargeback_failed_times_ != null and start_chargeback_failed_times_ !='' "> 
+			AND fccl.chargeback_failed_times_ <![CDATA[ >= ]]> #{start_chargeback_failed_times_}  <!-- 开始日期 -->
+		</if>
+		
+		<if test="end_chargeback_failed_times_ != null and end_chargeback_failed_times_ !='' ">
+			AND fccl.chargeback_failed_times_  <![CDATA[ <= ]]> #{end_chargeback_failed_times_}  <!-- 结束日期 -->
+		</if>
+		
+		<if test="routed_third_channel_id_ != null and routed_third_channel_id_ != ''">
+			AND fth.id_ = #{routed_third_channel_id_}
+		</if>
+		
+	
+		<if test="start_target_date_ != null and start_target_date_ !='' "> 
+			AND fccl.target_date_ <![CDATA[ >= ]]> #{start_target_date_}  <!-- 开始日期 -->
+		</if>
+		
+		<if test="end_target_date_ != null and end_target_date_ !='' ">
+			AND fccl.target_date_ <![CDATA[ <= ]]> CONCAT(#{end_target_date_},' 23:59:59')  <!-- 结束日期 -->
+		</if>
+		ORDER BY fccl.target_date_ DESC
+	</select>
+	
+	
+</mapper>

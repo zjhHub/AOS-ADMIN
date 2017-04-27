@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReconciliationDao">
+
+	<select id="getChargebackList" parameterType="Dto" resultType="Dto">
+
+		select 
+		A.id_,
+		A.routed_third_channel_id_,
+		A.third_channel_order_id_,
+		B.request_time,
+		B.trans_amount,
+		B.third_channel_fee_
+		from fc_chargeback_order A
+		left join fc_chargeback_order_result B on A.id_ = B.id_ 
+		where
+		B.order_result_status_ = 1 
+		and A.routed_third_channel_id_ = #{routed_third_channel_id_}
+		and B.request_time between #{beginDate} and #{endDate}
+
+	</select>
+	
+	<select id="getAcceptedList" parameterType="Dto" resultType="Dto">
+
+		select
+		A.id_, 
+		A.routed_third_channel_id_,
+		A.third_channel_order_id_,
+		B.request_time,
+		B.trans_amount,
+		B.third_channel_fee_
+		from fc_loan_accepted_order A
+		left join fc_loan_accepted_order_result B on A.id_ = B.id_ 
+		where
+		B.order_result_status_ = 1 
+		and A.routed_third_channel_id_ = #{routed_third_channel_id_}
+		and B.request_time between #{beginDate} and #{endDate}
+		
+	</select>
+
+	<select id="getTemporaryList" parameterType="Dto" resultType="Fc_reconciliation_temporaryPO">
+		SELECT
+		A.id_, 
+		A.record_id_,
+		A.third_channel_id_,    
+		A.type_,       
+		A.they_order_id_,   
+		A.they_settled_time_,   
+		A.they_trans_amount_,   
+		A.they_third_channel_fee_,
+		A.created_time_  			
+		FROM fc_reconciliation_temporary A 
+		left join fc_reconciliation_record B on A.record_id_ = B.id_  
+		
+		where B.id_ = #{record_id_}
+		
+	</select>
+	
+	<insert id="addDetailsBatch" parameterType="java.util.List">  
+
+	    insert into fc_reconciliation_details 
+	    (reconciliation_id_
+	    ,third_channel_id_
+	    ,type_,
+	    ,result_
+	    ,our_order_id_
+	    ,our_sent_time_
+	    ,our_trans_amount_
+	    ,our_third_channel_fee_
+	    ,they_order_id_
+	    ,they_settled_time_
+	    ,they_trans_amount_
+	    ,they_third_channel_fee_
+	    ,interference_status_
+	    ,created_time_
+	    ,updated_time_)   
+	      
+	    <foreach collection="list" item="item" index="index" separator="union all" >  
+	       select  #{item.reconciliation_id_}
+	        ,#{item.third_channel_id_}
+	        ,#{item.type_}
+	        ,#{item.result_}
+	        ,#{item.our_order_id_}
+	        ,#{item.our_sent_time_}
+	        ,#{item.our_trans_amount_}
+	        ,#{item.our_third_channel_fee_}
+	        ,#{item.they_order_id_}
+	        ,#{item.they_settled_time_}
+	        ,#{item.they_trans_amount_}
+	        ,#{item.they_third_channel_fee_}
+	        ,#{item.interference_status_}
+	        ,#{item.created_time_}
+	        ,#{item.updated_time_} from dual 
+	    </foreach>  
+	</insert>  
+	
+	<!-- 根据对账ID 删除关于对账的关联表的所有信息 -->
+	<delete id="deleteReconciliationById" parameterType="Dto">
+			delete from fc_reconciliation_interference where reconciliation_detail_id_ = 
+		some(select id_ From fc_reconciliation_details where reconciliation_id_ = #{reconciliation_id});
+		delete from fc_reconciliation_repair_detail where reconciliation_id_ = #{reconciliation_id};
+		delete from fc_reconciliation_details where reconciliation_id_ = #{reconciliation_id};
+		delete from fc_reconciliation where id_ = #{reconciliation_id};
+	</delete>
+
+	<!-- 根据条件删除相应的临时表数据  -->
+	<delete id="deleteTemporaryByCondition" parameterType="Dto">
+		 delete from  fc_reconciliation_temporary where 
+		record_id_ = 
+		some(select id_ From fc_reconciliation_record where 
+		third_channel_id_ = #{third_channel_id_} and
+		type_ = #{type_} 
+<!-- 		and reconciliation_date_ = #{reconciliation_date_}  -->
+		) 
+	</delete>
+	
+	<!-- 根据条件获取记录表最新的一条数据  -->
+	<select id="selectRecordTopOne" parameterType="Dto" resultType="Fc_reconciliation_recordPO">
+		select * From fc_reconciliation_record 
+		where 
+		third_channel_id_ = #{third_channel_id_} and
+		type_ = #{type_} and
+		reconciliation_date_ = #{reconciliation_date_}
+		order by id_ desc
+		limit 1
+	</select>
+	
+	
+	
+	<select id="selectChannelList" resultType="Fc_third_channelPO">
+		SELECT
+		<include refid="aos.fc.dao.Fc_third_channelDao.column" />
+		FROM fc_third_channel
+	</select>
+	
+	<!-- 时间处理，获取当前时间的前一天 -->
+	<select id="queryDateBefore" parameterType="Dto" resultType="Dto">
+		select date_sub(curdate(),interval 1 day) as  date_before_
+	</select>
+
+<!-- 根据记录ID删除临时表 -->
+	<select id="deleteTemporary" parameterType="Dto" resultType="Integer">
+		Delete from fc_reconciliation_temporary 
+		where record_id_=#{record_id_}
+	</select>
+
+
+</mapper>

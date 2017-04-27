@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cashEntry">
+	<select id="cashEntryPage" parameterType="Dto" resultType="Dto">
+		SELECT
+			rq.id_,
+			rq.type_,
+			rq.third_channel_,
+			rq.order_id_,
+			rq.target_,
+			rq.amount_,
+			rq.proving_way_,
+			rq.accepted_time_,
+			rq.request_uuid_,
+			rq.accepted_status_,
+			rs.status_
+			
+		FROM
+			as_recharge_withdraw_accepted rq
+		LEFT JOIN as_recharge_withdraw_accepted_result rs ON rq.id_ = rs.accepted_id_
+		WHERE
+			1 = 1 
+		<if test="id_ != null and id_ != ''">
+			AND rq.id_ = #{id_}
+		</if>
+		<if test="accepted_status_ != null and accepted_status_ != ''">
+			AND rq.accepted_status_ = #{accepted_status_}
+		</if>
+		
+		<if test="order_id_ != null and order_id_ != ''">
+			AND rq.order_id_ = #{order_id_}
+		</if>
+		
+		<if test="type_ != null and type_ != ''">
+			AND rq.type_ = #{type_}
+		</if>
+		
+		<if test="target_ != null and target_ != ''">
+			AND rq.target_ = #{target_}
+		</if>
+		
+		<if test="min_amount_ != null and min_amount_ != ''">
+			AND rq.amount_ <![CDATA[ >= ]]> #{min_amount_}
+		</if>
+		
+		<if test="max_amount_ != null and max_amount_ != ''">
+			AND rq.amount_ <![CDATA[ <= ]]> #{max_amount_}
+		</if>
+		
+		<if test="start_accepted_time_ != null and start_accepted_time_ != ''">
+			AND rq.accepted_time_ <![CDATA[ >= ]]> CONCAT(#{start_accepted_time_},' 00:00:00')
+		</if>
+		
+		<if test="end_accepted_time_ != null and end_accepted_time_ != ''">
+			AND rq.accepted_time_ <![CDATA[ <= ]]> CONCAT(#{end_accepted_time_},' 23:59:59')
+		</if>
+		<if test="third_channel_ != null and third_channel_ !='' "> 
+			AND rq.third_channel_ = #{third_channel_}
+		</if>
+		<if test="request_uuid_ != null and request_uuid_ !='' "> 
+			AND rq.request_uuid_ = #{request_uuid_}
+		</if>
+		<if test="proving_way_ != null and proving_way_ !='' "> 
+			AND rq.proving_way_ = #{proving_way_}
+		</if>
+		<if test="status_ != null and status_ !='' "> 
+			AND rs.status_ = #{status_}
+		</if>
+		order by rq.accepted_status_ asc,rq.accepted_time_ desc
+	</select>
+	
+	<select id="findAcceptedDetail" parameterType="Dto" resultType="Dto">
+		SELECT
+			rq.id_,
+			rq.type_,
+			rq.third_channel_,
+			rq.order_id_,
+			rq.target_,
+			rq.amount_,
+			rq.proving_way_,
+			rq.accepted_time_,
+			rq.request_uuid_,
+			rq.third_channel_fee_,
+			rq.arrived_amount_,
+			rq.ext_reference_,
+			rq.request_time_,
+			rq.response_time_,
+			rq.recharge_remark_,
+			rq.business_remark_,
+			rq.arrived_time_,
+			rq.accepted_status_,
+			rs.status_,
+			rs.amount_ actual_amount_,
+			rs.response_code_,
+			rs.response_summary_,
+			rs.response_msg_templet_,
+			rs.first_callback_time_,
+			rs.callback_content_
+		FROM
+			as_recharge_withdraw_accepted rq
+			LEFT JOIN as_recharge_withdraw_accepted_result rs ON rq.id_ = rs.accepted_id_
+			where rq.id_ =#{id_}
+	</select>
+	
+	<!-- 查询出入金账户分页 -->
+	<select id="inOutMoneyPage" parameterType="Dto" resultType="Dto">
+		select acc.id_,acc.amount_,acc.position_,acc.involve_reason_,ac.account_code_,customer.name_,customer.idcard_,snapshot.id_ snap_id_ from as_accepted_accounts acc
+		join as_accounts ac on ac.id_=acc.account_id_
+		join fc_customer customer on customer.id_=ac.customer_id_
+		left join as_balance_snapshot snapshot on snapshot.origin_id_=acc.id_ and snapshot.reason_ in (1,2,3,4)
+		where acc.accepted_id_=#{accepted_id_} and acc.involve_type_=#{involve_type_} 
+	</select>
+	
+	<!-- 查询回调记录分页 -->
+	<select id="initCallbackPage" parameterType="Dto" resultType="Dto">
+		select * from as_recharge_withdraw_accepted_callback where accepted_id_ =#{accepted_id_}
+	</select>
+	
+	<!-- 查询凭证记录 -->
+	<select id="findProofRecord" parameterType="Dto" resultType="As_proofPO">
+		select proof_name_,proof_file_path_ from as_proof where accepted_id_=#{accepted_id_}
+	</select>
+	
+	<!-- 系统自动校验真实性的记录分页-->
+	<select id="initProvingAutoPage" parameterType="Dto" resultType="Dto">
+		select * from as_proving_auto_results where accepted_id_=#{accepted_id_}
+	</select>
+	
+	<!-- 查询入金账户信息 -->
+	<select id="findInAcceptedAccounts" parameterType="Dto" resultType="Dto">
+		select acc.amount_ in_amount,acc.position_ in_position,acc.involve_reason_ involve_reason,ac.account_code_ in_account_code 
+		from as_accepted_accounts acc
+		join as_accounts ac on ac.id_=acc.account_id_
+		where acc.accepted_id_=#{accepted_id_} and acc.involve_type_=2
+	</select>
+	
+	<!-- 查询出金账户信息 -->
+	<select id="findOutAcceptedAccounts" parameterType="Dto" resultType="Dto">
+		select acc.amount_ out_amount,acc.position_ out_position,acc.involve_reason_ involve_reason,ac.account_code_ out_account_code
+		from as_accepted_accounts acc
+		join as_accounts ac on ac.id_=acc.account_id_
+		where acc.accepted_id_=#{accepted_id_} and acc.involve_type_=1 
+	</select>
+	
+</mapper>

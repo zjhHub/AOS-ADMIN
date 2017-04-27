@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="disposedThreePay">
+
+	<select id="banklistPage" parameterType="Dto" resultType="Dto">
+		SELECT bank.id_,bank.third_channel_id_,bank.bank_id_,fc.full_name_,bank.third_channel_bank_code_,bank.single_chargeback_max_limit_,
+			bank.single_date_max_limit_,CASE bank.is_enabled_  WHEN 1 THEN '是' WHEN 0 THEN '否' END AS is_enabled_
+		FROM fc_third_channel_bank bank,fc_banks fc 
+		WHERE bank.bank_id_=fc.id_
+		<if test="third_channel_id_ != null and third_channel_id_ != ''">
+			AND bank.third_channel_id_ = #{third_channel_id_}
+		</if>
+	
+	</select>
+	
+	<select id="thirdBankInfo" parameterType="Dto" resultType="Dto">
+		SELECT id_,third_channel_id_,bank_id_,single_chargeback_max_limit_,third_channel_bank_code_,
+			single_date_max_limit_,CASE is_enabled_ WHEN 1 THEN '是' WHEN 0 THEN '否' END AS is_enabled_
+		FROM fc_third_channel_bank where 1=1
+		<if test="third_channel_id_ != null and third_channel_id_ != ''">
+			AND third_channel_id_ = #{third_channel_id_}
+		</if>
+		<if test="third_channel_id_ != null and third_channel_id_ != ''">
+			AND bank_id_ = #{bank_id_}
+		</if>
+	
+	</select>
+	
+	<select id="thirdPriAllow" parameterType="Dto" resultType="Dto">
+		SELECT id_,code_,name_,failure_permission_times_,success_permission_times_,route_priority 
+		FROM fc_third_channel where 1=1
+		<if test="id_ != null and id_ != ''">
+			AND id_ = #{id_}
+		</if>
+	
+	</select>
+	
+	<select id="flatSetList" parameterType="Dto" resultType="Dto">
+		SELECT p.id_,p.platform_id_,p.third_channel_id_,f.name_ FROM fc_platform_third_channel p,fc_platform f 
+		WHERE p.platform_id_ = f.id_
+		<if test="third_channel_id_ != null and third_channel_id_ != ''">
+			AND p.third_channel_id_ = #{third_channel_id_}
+		</if>
+	
+	</select>
+	
+	<select id="queryFlatList" parameterType="Dto" resultType="Dto">
+		SELECT id_  value,name_ display from fc_platform
+	
+	</select>
+	
+	
+	<select id="banklist" parameterType="Dto" resultType="Dto">
+		SELECT 
+		    id_ as value, 
+		    full_name_ as display	 
+		FROM 
+			fc_banks
+	</select>
+	
+	<select id="bankcodeList" parameterType="Dto" resultType="Dto">
+		SELECT 
+		    id_ as value, 
+		    bank_code_ as display	 
+		FROM 
+			fc_banks
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 范例使用的手工SQL语句 -->
+<mapper namespace="accountengine">
+
+	<!-- 科目 -->
+	<select id="chargebackWaitRoutedPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		<include refid="aos.fc.dao.Fc_chargeback_acceptedDao.column" />
+		FROM fc_chargeback_accepted
+		WHERE location_ ='1'
+	</select>
+</mapper>

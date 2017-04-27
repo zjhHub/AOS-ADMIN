@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="payLoanRequestDao">
+
+
+
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_loan_accepted_order
+		<where>
+		    <if test="contract_id_ != null ">
+		      AND contract_id_ = #{contract_id_}  <!-- contract_id_ -->
+			</if>
+			   <if test="location_ != null ">
+		      AND location_ != #{location_}  <!-- location_ -->
+		</if>
+		</where>
+	</select>
+
+	
+	<select id="selectSuccess" parameterType="Dto" resultType="Integer">
+			SELECT count(1) FROM fc_loan_accepted_order_result  WHERE order_result_status_=1 AND id_ in (SELECT
+		 id_
+		FROM fc_loan_accepted_order WHERE contract_id_=#{contract_id_}  AND location_=4)
+			
+	</select>
+	
+<select id="getAcceptedResultList" resultType="Dto">
+		SELECT
+		   id_
+		FROM fc_loan_accepted_order_result
+		<where>
+		    id_ in  
+		    <foreach collection="list" item="item" open="("
+close=")" separator=",">
+				#{item.id_}
+			</foreach>
+		</where>		
+	</select>
+
+
+	<select id="thirdChannelForLoan" parameterType="Dto" resultType="Platform_third_channel_for_loanPO">
+			SELECT 
+				id_,
+				platform_id_,
+				third_channel_id_,
+				route_priority
+			FROM 
+				platform_third_channel_for_loan  
+			WHERE platform_id_=#{platform_id_} 
+			ORDER BY route_priority desc limit 1			
+	</select>
+
+</mapper>

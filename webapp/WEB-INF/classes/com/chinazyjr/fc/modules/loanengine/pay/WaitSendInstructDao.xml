@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="waitSendInstruct">
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateAcceptedOrderByKey" parameterType="Dto">
+		update fc_loan_accepted_order set location_ = #{location_},change_time_ = #{change_time_} where id_ = #{id_};
+	</update>
+	
+	<update id="updateLoanAcceptOrderRequestId" parameterType="Dto">
+		update fc_loan_accepted_order set third_channel_order_id_ = #{third_channel_order_id_} where id_ = #{id_}
+	</update>
+	
+	<update id="updateFcThirdChannelSeqByKey" parameterType="Dto">
+		update fc_third_channel set order_sequence_ = order_sequence_ + 1 where id_ = #{id_};
+	</update>
+	
+	<update id="updateOrderCheck" parameterType="Dto">
+		update fc_loan_order_check set checked_status_ = #{checked_status_} where loan_accepted_order_id_ = #{loan_accepted_order_id_} and third_channel_order_id_ = #{third_channel_order_id_}
+	</update>
+
+
+	<update id="updateLoanOrderSendByKey" parameterType="Dto">
+		update fc_loan_order_send set sent_status_ = #{sent_status_} where id_ = #{id_}
+	</update>
+	
+	
+	
+	<update id="updateLoanOrderCheckStatusByKey" parameterType="Dto">
+		update fc_loan_order_check set checked_status_ = #{checked_status_} where id_ = #{id_}
+	</update>
+	
+	<select id="selectOrderSendInfo" parameterType="Dto" resultType="Fc_loan_order_sendPO">
+		SELECT
+		  id_,
+		  loan_accepted_order_id_,
+		  third_channel_order_id_,
+		  sent_time_,
+		  sent_status_,
+		  ext_content_
+		FROM fc_loan_order_send
+		<where>
+		    <if test="loan_accepted_order_id_ != null ">
+		      	  AND loan_accepted_order_id_ = #{loan_accepted_order_id_}
+			</if>
+		    <if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+			      AND third_channel_order_id_ = #{third_channel_order_id_}
+			</if>
+		</where>
+		ORDER BY sent_time_ DESC LIMIT 1
+	</select>
+	
+	
+</mapper>

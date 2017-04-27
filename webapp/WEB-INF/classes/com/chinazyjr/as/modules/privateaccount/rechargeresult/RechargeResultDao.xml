@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RechargeResult">
+
+	<select id="outAcceptedAccountsList" parameterType="Dto" resultType="Dto">
+		SELECT
+			aa.amount_ as  out_amount,
+			aa.position_ as out_position,
+			a.account_code_ as out_account_code
+		FROM
+			 as_accepted_accounts  aa,
+			 as_accounts a
+		WHERE
+		 aa.account_id_ = a.id_
+		AND aa.accepted_id_ = #{accepted_id}
+		AND aa.involve_type_ = #{involve_type_}
+	</select>
+
+
+	<select id="inAcceptedAccountsList" parameterType="Dto" resultType="Dto">
+		SELECT
+			aa.amount_ as in_amount,
+			aa.position_ as in_position,
+			a.account_code_ as in_account_code
+		FROM
+			 as_accepted_accounts  aa,
+			 as_accounts a
+		WHERE
+		 aa.account_id_ = a.id_
+		AND aa.accepted_id_ = #{accepted_id}
+		AND aa.involve_type_ = #{involve_type_}
+	</select>
+
+</mapper>

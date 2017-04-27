@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- as_proving_auto[as_proving_auto]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-23 14:14:23 -->
+<mapper namespace="com.chinazyjr.as.dao.As_proving_autoDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="As_proving_autoPO">
+		INSERT INTO as_proving_auto (
+		<if test="accepted_id_ != null">
+	         accepted_id_, <!-- accepted_id_ -->
+		</if>
+		<if test="proving_url_ != null and proving_url_ != ''">
+	         proving_url_, <!-- proving_url_ -->
+		</if>
+		<if test="request_content_ != null and request_content_ != ''">
+	         request_content_, <!-- request_content_ -->
+		</if>
+		<if test="last_proving_count_ != null">
+	         last_proving_count_, <!-- last_proving_count_ -->
+		</if>
+		<if test="last_proving_result_ != null">
+	         last_proving_result_, <!-- last_proving_result_ -->
+		</if>
+		<if test="last_proving_time_ != null and last_proving_time_ != ''">
+	         last_proving_time_, <!-- last_proving_time_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="accepted_id_ != null">
+	          #{accepted_id_, jdbcType=INTEGER}, <!-- accepted_id_ -->
+	    </if>
+		<if test="proving_url_ != null and proving_url_ != ''">
+	          #{proving_url_, jdbcType=VARCHAR}, <!-- proving_url_ -->
+	    </if>
+		<if test="request_content_ != null and request_content_ != ''">
+	          #{request_content_, jdbcType=VARCHAR}, <!-- request_content_ -->
+	    </if>
+		<if test="last_proving_count_ != null">
+	          #{last_proving_count_, jdbcType=INTEGER}, <!-- last_proving_count_ -->
+	    </if>
+		<if test="last_proving_result_ != null">
+	          #{last_proving_result_, jdbcType=INTEGER}, <!-- last_proving_result_ -->
+	    </if>
+		<if test="last_proving_time_ != null and last_proving_time_ != ''">
+	          #{last_proving_time_, jdbcType=VARCHAR}, <!-- last_proving_time_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="As_proving_autoPO">
+		INSERT INTO as_proving_auto (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{accepted_id_, jdbcType=INTEGER},  <!-- accepted_id_ -->
+		    #{proving_url_, jdbcType=VARCHAR},  <!-- proving_url_ -->
+		    #{request_content_, jdbcType=VARCHAR},  <!-- request_content_ -->
+		    #{last_proving_count_, jdbcType=INTEGER},  <!-- last_proving_count_ -->
+		    #{last_proving_result_, jdbcType=INTEGER},  <!-- last_proving_result_ -->
+		    #{last_proving_time_, jdbcType=VARCHAR}  <!-- last_proving_time_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="As_proving_autoPO">
+		UPDATE as_proving_auto
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="accepted_id_ != null">
+		          accepted_id_ = #{accepted_id_, jdbcType=INTEGER},  <!-- accepted_id_ -->
+			</if>
+			<if test="proving_url_ != null">
+		          proving_url_ = #{proving_url_, jdbcType=VARCHAR},  <!-- proving_url_ -->
+			</if>
+			<if test="request_content_ != null">
+		          request_content_ = #{request_content_, jdbcType=VARCHAR},  <!-- request_content_ -->
+			</if>
+			<if test="last_proving_count_ != null">
+		          last_proving_count_ = #{last_proving_count_, jdbcType=INTEGER},  <!-- last_proving_count_ -->
+			</if>
+			<if test="last_proving_result_ != null">
+		          last_proving_result_ = #{last_proving_result_, jdbcType=INTEGER},  <!-- last_proving_result_ -->
+			</if>
+			<if test="last_proving_time_ != null">
+		          last_proving_time_ = #{last_proving_time_, jdbcType=VARCHAR},  <!-- last_proving_time_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM as_proving_auto WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="As_proving_autoPO">
+		SELECT
+		<include refid="column" />
+		FROM as_proving_auto WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="As_proving_autoPO">
+		SELECT
+		    <include refid="column" />
+		FROM as_proving_auto
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="As_proving_autoPO">
+		SELECT
+			<include refid="column" />	
+		FROM as_proving_auto
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="As_proving_autoPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM as_proving_auto
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="As_proving_autoPO">
+		SELECT
+			<include refid="column" />	
+		FROM as_proving_auto
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="As_proving_autoPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM as_proving_auto
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM as_proving_auto
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM as_proving_auto
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  accepted_id_,  <!-- accepted_id_ -->
+		  proving_url_,  <!-- proving_url_ -->
+		  request_content_,  <!-- request_content_ -->
+		  last_proving_count_,  <!-- last_proving_count_ -->
+		  last_proving_result_,  <!-- last_proving_result_ -->
+		  last_proving_time_  <!-- last_proving_time_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  as_proving_auto.id_,  <!-- id_ -->
+		  as_proving_auto.accepted_id_,  <!-- accepted_id_ -->
+		  as_proving_auto.proving_url_,  <!-- proving_url_ -->
+		  as_proving_auto.request_content_,  <!-- request_content_ -->
+		  as_proving_auto.last_proving_count_,  <!-- last_proving_count_ -->
+		  as_proving_auto.last_proving_result_,  <!-- last_proving_result_ -->
+		  as_proving_auto.last_proving_time_  <!-- last_proving_time_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	   <if test="accepted_id_ != null ">
+		      AND accepted_id_ = #{accepted_id_}  <!-- accepted_id_ -->
+		</if>
+	    <if test="proving_url_ != null and proving_url_ != ''">
+		      AND proving_url_ = #{proving_url_}  <!-- proving_url_ -->
+		</if>
+	    <if test="request_content_ != null and request_content_ != ''">
+		      AND request_content_ = #{request_content_}  <!-- request_content_ -->
+		</if>
+	   <if test="last_proving_count_ != null ">
+		      AND last_proving_count_ = #{last_proving_count_}  <!-- last_proving_count_ -->
+		</if>
+	   <if test="last_proving_result_ != null ">
+		      AND last_proving_result_ = #{last_proving_result_}  <!-- last_proving_result_ -->
+		</if>
+	    <if test="last_proving_time_ != null and last_proving_time_ != ''">
+		      AND last_proving_time_ = #{last_proving_time_}  <!-- last_proving_time_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="proving_url_ != null and proving_url_ != ''">
+		      AND proving_url_ like '%${proving_url_}%'  <!-- proving_url_ -->
+		</if>
+	    <if test="request_content_ != null and request_content_ != ''">
+		      AND request_content_ like '%${request_content_}%'  <!-- request_content_ -->
+		</if>
+	    <if test="last_proving_time_ != null and last_proving_time_ != ''">
+		      AND last_proving_time_ like '%${last_proving_time_}%'  <!-- last_proving_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

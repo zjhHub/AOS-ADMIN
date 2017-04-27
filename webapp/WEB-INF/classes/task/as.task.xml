@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- 充值提现受理执行结果回调 -->
+	<bean id="accountRequestCallbackTask" class="com.chinazyjr.as.modules.account.request.AccountRequestCallbackTask"></bean>
+
+	<bean id="accountRequestCallbackTaskDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="accountRequestCallbackTask" />
+		</property>
+		<property name="targetMethod">
+			<value>Task</value>
+		</property>
+	</bean>
+
+	<!-- 每五分钟跑一次 充值提现受理执行结果回调 -->
+	<bean id="accountRequestCallbackTaskTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="accountRequestCallbackTaskDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/1 * * * ?</value>
+		</property>
+	</bean>
+
+
+	<!-- 启动触发器的配置开始 -->
+	<bean name="startQuertAsTask" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- <ref bean="accountRequestCallbackTaskTrigger" /> -->
+
+			</list>
+		</property>
+	</bean>
+
+</beans>

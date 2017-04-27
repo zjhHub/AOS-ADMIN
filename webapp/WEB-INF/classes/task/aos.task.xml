@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 状态变动类 -->
+	<bean id="ChangeAndStockTask" class="com.chinazyjr.fc.modules.task.ChangeAndStockTask"></bean>
+
+	<bean id="changeAndStockDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="ChangeAndStockTask" />
+		</property>
+		<property name="targetMethod">
+			<value>runChangeAndStock</value>
+		</property>
+	</bean>
+
+	<!-- 凌晨 0-：00分执行 合同 分期 状态变更、快照存储 -->
+	<bean id="taskChangeAndStockJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="changeAndStockDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 0 * * ?</value>
+		</property>
+	</bean>
+
+
+
+
+	<!-- 在途指令获取 -->
+	<bean id="transitOrderTask"
+		class="com.chinazyjr.fc.modules.task.transitorder.TransitOrderTask"></bean>
+
+	<bean id="transitOrderTaskDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="transitOrderTask" />
+		</property>
+		<property name="targetMethod">
+			<value>pushTransitOrder</value>
+		</property>
+		<property name="concurrent"><!--配置为false不允许任务并发执行 -->
+			<value>false</value>
+		</property>
+	</bean>
+
+	<!-- 每15秒执行一次在途指令获取并推入队列 -->
+	<bean id="transitOrderJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="transitOrderTaskDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>*/15 * * * * ? </value>
+		</property>
+	</bean>
+
+	<!-- 扣款回调 -->
+	<bean id="callBackTask" class="com.chinazyjr.fc.modules.task.callback.CallBackTask"></bean>
+
+	<bean id="callBackDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="callBackTask" />
+		</property>
+		<property name="targetMethod">
+			<value>runCallbackTask</value>
+		</property>
+		<property name="concurrent"><!--配置为false不允许任务并发执行 -->
+			<value>false</value>
+		</property>
+	</bean>
+
+	<!-- 每15秒执行一次在途指令获取并推入队列 -->
+	<bean id="callBackJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="callBackDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/10 * * * ? </value>
+		</property>
+	</bean>
+
+
+
+	<!-- 放款在途指令获取 -->
+	<bean id="loanTransitOrderTask"
+		class="com.chinazyjr.fc.modules.task.loantransit.LoanTransitOrderTask"></bean>
+	<bean id="loanTransitOrderDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="loanTransitOrderTask" />
+		</property>
+		<property name="targetMethod">
+			<value>pushTransitOrder</value>
+		</property>
+		<property name="concurrent"><!--配置为false不允许任务并发执行 -->
+			<value>false</value>
+		</property>
+	</bean>
+	<bean id="loanTransitOrderJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="loanTransitOrderDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>*/15 * * * * ? </value>
+		</property>
+	</bean>
+
+	<!-- 第三期结果回调 -->
+	<bean id="loancallBackTask"
+		class="com.chinazyjr.fc.modules.task.loancallback.LoanCallBackTask"></bean>
+
+	<bean id="loancallBackDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="loancallBackTask" />
+		</property>
+		<property name="targetMethod">
+			<value>runLoanCallbackTask</value>
+		</property>
+		<property name="concurrent"><!--配置为false不允许任务并发执行 -->
+			<value>false</value>
+		</property>
+	</bean>
+
+	<!-- 每15秒执行一次在途指令获取并推入队列 -->
+	<bean id="loancallBackJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="loancallBackDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/10 * * * ? </value>
+		</property>
+	</bean>
+
+
+	<!-- 启动触发器的配置开始 -->
+	<bean name="startQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="taskChangeAndStockJobTrigger" />
+				<!-- <ref bean="transitOrderJobTrigger"/>
+				<ref bean="callBackJobTrigger"/>
+				<ref bean="loanTransitOrderJobTrigger"/>
+				<ref bean="loancallBackJobTrigger" /> -->
+
+			</list>
+		</property>
+	</bean>
+
+</beans>

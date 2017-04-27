@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freeze">
+	<select id="listPage" parameterType="Dto" resultType="Dto">
+		select frozen.id_,frozen.type_,frozen.amount_,
+		fi.ip_address_ trigger_by_,frozen.trigger_time_,
+		frozen.request_uuid_,frozen.remark_,accounts.account_code_,
+		snapshot.id_ snapshot_id_
+		from as_frozen_unfrozen frozen 
+		join as_accounts accounts on accounts.id_=frozen.account_id_
+		join as_balance_snapshot snapshot on snapshot.origin_id_=frozen.id_ 
+		and snapshot.reason_ in (9,10)
+		join fc_ip_white_list fi on fi.id_=frozen.trigger_by_ 
+		WHERE
+			1 = 1
+		<if test="id_ != null and id_ != ''">
+			AND frozen.id_ = #{id_}
+		</if>
+		
+		<if test="min_amount_ != null and min_amount_ != ''">
+			AND frozen.amount_ <![CDATA[ >= ]]> #{min_amount_}
+		</if>
+		
+		<if test="max_amount_ != null and max_amount_ != ''">
+			AND frozen.amount_ <![CDATA[ <= ]]> #{max_amount_}
+		</if>
+		
+		<if test="type_ != null and type_ != ''">
+			AND frozen.type_ = #{type_}
+		</if>
+		
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+			AND frozen.request_uuid_ = #{request_uuid_}
+		</if>
+
+		<if test="start_trigger_time_ != null and start_trigger_time_ != ''">
+			AND frozen.trigger_time_ <![CDATA[ >= ]]> CONCAT(#{start_trigger_time_},' 00:00:00')
+		</if>
+		
+		<if test="end_trigger_time_ != null and end_trigger_time_ != ''">
+			AND frozen.trigger_time_ <![CDATA[ <= ]]> CONCAT(#{end_trigger_time_},' 23:59:59')
+		</if>
+		
+		<if test="account_code_ != null and account_code_ !='' "> 
+			AND accounts.account_code_ = #{account_code_}
+		</if>
+		ORDER BY frozen.trigger_time_ DESC
+		
+	</select>
+	
+	<select id="findDetail" parameterType="Dto" resultType="Dto">
+		SELECT
+			rq.uuid_,
+			platform.name_ as platform_id_,
+			rq.service_code_,
+			rq.time_,
+			rs.response_time_,
+			rs.response_code_,
+			rs.summary_,
+			rs.message_,
+			rs.process_duration_,
+			rs.response_content_,
+			rq.content_
+		FROM
+			as_log_request rq
+		JOIN as_log_response rs ON rq.uuid_ = rs.request_uuid_
+		JOIN fc_platform platform ON platform.id_=rq.platform_id_
+		WHERE
+			1 = 1
+		<if test="uuid_ != null and uuid_ != ''">
+			AND rq.uuid_ = #{uuid_}
+		</if>
+	</select>
+</mapper>

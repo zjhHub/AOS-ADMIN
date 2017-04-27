@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SummaryAccount">
+
+	<select id="platformCombobox" resultType="Dto" parameterType="Dto">
+		SELECT
+			id_ AS value,
+			name_ AS display
+		FROM
+			fc_platform
+	</select>
+	
+	
+	
+	<!--根据汇总表id 作为父节点，查询所有相关数据 -->
+	<select id="queryDownAccount" parameterType="Dto" resultType="Dto">
+		select 
+			id_
+		from  
+			as_summary
+		WHERE
+		    parent_id_ = #{id_}
+	</select>
+	
+	
+
+<!-- 	获取所有下级账户信息列表 -->
+<!-- 	<select id="queryAllDownAccountPage" parameterType="Dto" resultType="Dto"> -->
+<!-- 		select  -->
+<!-- 		  at.id_ as account_id_, -->
+<!-- 		  at.attach_platform_, -->
+<!-- 		  at.customer_id_, -->
+<!-- 		  at.account_code_, -->
+<!-- 		  at.group_type_, -->
+<!-- 		  at.purpose_ as account_purpose_, -->
+<!-- 		  at.type_ as account_type_, -->
+<!-- 		  at.status_ as account_status_, -->
+<!-- 		  at.create_time_, -->
+<!-- 		  at.total_balance_, -->
+<!-- 		  pf.name_ as attach_platform_name_ -->
+<!-- 		from   -->
+<!-- 			as_accounts at, -->
+<!-- 			fc_platform pf, -->
+<!-- 			as_summary_account sa	 -->
+<!-- 		WHERE -->
+<!-- 			at.attach_platform_ = pf.id_ and sa.account_id_ = at.id_ -->
+<!-- 			and sa.gather_id_ = #{id_} -->
+<!-- 	</select> -->
+	
+	<!-- 	获取所有下级账户信息列表 -->
+	<select id="queryAllDownAccountPage" parameterType="Dto" resultType="Dto">
+		select 
+		  aa.id_ as account_id_,
+		  aa.attach_platform_,
+		  aa.customer_id_,
+		  aa.account_code_,
+		  aa.group_type_,
+		  aa.purpose_ as account_purpose_,
+		  aa.type_ as account_type_,
+		  aa.status_ as account_status_,
+		  aa.create_time_,
+		  aa.total_balance_,
+		  pf.name_ as attach_platform_name_
+		from  
+			as_accounts aa,
+			fc_platform pf,
+			as_summary_account sa,
+			as_summary sy	
+		WHERE
+			aa.attach_platform_ = pf.id_ and sa.account_id_ = aa.id_ and sy.id_ = sa.gather_id_
+			and sy.level_code_ like '${level_code_}%'
+			order by create_time_ asc	
+	</select>
+	
+	
+	<!--获取所有下级汇总信息列表-->
+	<select id="queryAllDownSummaryPage" resultType="Dto" parameterType="Dto">
+		select 
+		  id_ as summary_id_,
+		  level_code_,
+		  parent_id_,
+		  is_leaf_,
+		  name_,
+		  created_time_,
+		  created_by_,
+		  gather_purpose_
+		from  
+			as_summary
+		WHERE  level_code_ like '${level_code_}%'
+		 ORDER BY id_ ASC
+	</select>
+	
+
+
+	<!--获取所有下级汇总信息个数-->
+	<select id="queryAllDownSummaryTotal" resultType="Dto" parameterType="Dto">
+		select 
+			count(1) as total_
+		from  
+			as_summary
+		WHERE  level_code_ like '${level_code_ + " "}%'
+	</select>
+
+	
+	<!--根据汇总id 查询关联所有的账户id 的 总账面金额-->
+	<select id="queryTotalBalanceBySummaryId" resultType="Dto" parameterType="Dto">
+		select 
+			SUM(at.total_balance_) as  total_balance_ ,
+			SUM(at.available_balance_) as available_balance_,
+			SUM(at.froze_balance_) as froze_balance_
+		from  
+			as_accounts at,
+			as_summary_account sa	
+		WHERE sa.account_id_ = at.id_  AND sa.gather_id_ = #{gather_id_}
+	</select>
+
+
+	<select id="queryGatherAccountsPage" parameterType="Dto" resultType="Dto">
+		select 
+		  at.id_ as account_id_,
+		  at.attach_platform_,
+		  at.customer_id_,
+		  at.account_code_,
+		  at.group_type_,
+		  at.purpose_ as account_purpose_,
+		  at.type_ as account_type_,
+		  at.status_ as account_status_,
+		  at.create_time_,
+		  at.total_balance_,
+		  pf.name_ as attach_platform_name_
+		from  
+			as_accounts at,
+			fc_platform pf		
+		WHERE
+			at.attach_platform_ = pf.id_ 		
+		
+			AND at.id_ not in (select sa.account_id_ from as_summary_account sa where sa.gather_id_ = #{id_})
+		<if test="account_code_ != null and account_code_ != ''">
+			AND at.account_code_ = #{account_code_}
+		</if>
+		
+		<if test="account_type_ != null and account_type_ != ''">
+			AND at.type_ = #{account_type_}
+		</if>
+		
+		<if test="account_purpose_ != null and account_purpose_ != ''">
+			AND at.purpose_ = #{account_purpose_}
+		</if>
+		
+		<if test="attach_platform_name_ != null and attach_platform_name_ !='' "> 
+			AND at.attach_platform_ = #{attach_platform_name_}
+		</if>
+		<if test="account_status_ != null and account_status_ !='' "> 
+			AND at.status_ = #{account_status_}
+		</if>
+
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id="queryGatherInAccountsPage" parameterType="Dto" resultType="Dto">
+		select 
+		  at.id_ as account_id_,
+		  at.attach_platform_,
+		  at.customer_id_,
+		  at.account_code_,
+		  at.group_type_,
+		  at.purpose_ as account_purpose_,
+		  at.type_ as account_type_,
+		  at.status_ as account_status_,
+		  at.create_time_,
+		  at.total_balance_,
+		  pf.name_ as attach_platform_name_
+		from  
+			as_accounts at,
+			fc_platform pf		
+		WHERE
+			at.attach_platform_ = pf.id_ 		
+		
+			AND at.id_ in (select sa.account_id_ from as_summary_account sa where sa.gather_id_ = #{id_})
+		<if test="account_code_ != null and account_code_ != ''">
+			AND at.account_code_ = #{account_code_}
+		</if>
+		
+		<if test="account_type_ != null and account_type_ != ''">
+			AND at.type_ = #{account_type_}
+		</if>
+		
+		<if test="account_purpose_ != null and account_purpose_ != ''">
+			AND at.purpose_ = #{account_purpose_}
+		</if>
+		
+		<if test="attach_platform_name_ != null and attach_platform_name_ !='' "> 
+			AND at.attach_platform_ = #{attach_platform_name_}
+		</if>
+		<if test="account_status_ != null and account_status_ !='' "> 
+			AND at.status_ = #{account_status_}
+		</if>
+
+	</select>
+	
+	<select id="queryGatherAccountsId" parameterType="Dto" resultType="Dto">
+		select 
+		  id_ as account_id_
+		from  
+		  as_accounts	
+		WHERE id_ not in (select sa.account_id_ from as_summary_account sa where sa.gather_id_ = #{id_})
+	</select>
+	
+	
+	
+	<select id="queryDownSummaryByParentId" parameterType="Dto" resultType="Dto">
+		SELECT
+			id_,
+			level_code_
+		FROM
+			as_summary
+		WHERE
+		<if test="parent_id_ != null and parent_id_ != ''">
+			 parent_id_ = #{parent_id_}
+		</if>
+		order by created_time_ desc
+	</select>
+	
+	
+	<select id="findDetail" parameterType="Dto" resultType="Dto">
+		SELECT
+			rq.uuid_,
+			platform.name_ as platform_id_,
+			rq.service_code_,
+			rq.time_,
+			rs.response_time_,
+			rs.response_code_,
+			rs.summary_,
+			rs.message_,
+			rs.process_duration_,
+			rs.response_content_,
+			rq.content_
+		FROM
+			as_log_request rq
+		LEFT JOIN as_log_response rs ON rq.uuid_ = rs.request_uuid_
+		LEFT JOIN fc_platform platform ON platform.id_=rq.platform_id_
+		WHERE
+			1 = 1
+		<if test="uuid_ != null and uuid_ != ''">
+			AND rq.uuid_ = #{uuid_}
+		</if>
+	</select>
+	
+
+	<delete id="deleteAccount" parameterType="Dto">
+		DELETE FROM as_summary_account 
+		WHERE  gather_id_ = #{gather_id_} and account_id_ = #{account_id_}
+	
+	</delete>
+	
+	<!--获取所有下级汇总信息列表-->
+	<select id="queryAllDownSummary" resultType="Dto" parameterType="Dto">
+		select 
+		  id_
+		from  
+			as_summary
+		WHERE  level_code_ like '${level_code_}%'
+	</select>
+	
+	
+	<!--获取所有下级汇总信息列表-->
+	<select id="queryAllDownSummaryCount" resultType="Dto" parameterType="Dto">
+		select
+		  level_code_
+		from  
+			as_summary
+<!-- 		WHERE  level_code_ like '${level_code_}%' -->
+		WHERE parent_id_ =#{parent_id_}
+		order by created_time_ desc
+	</select>
+	
+	
+	<!-- 	根据汇总id 删除汇总表 -->
+	<delete id="deleteSummaryById" parameterType="Dto">
+		DELETE FROM as_summary WHERE  id_ = #{id_}
+	</delete>
+	
+	<!-- 	根据汇总id 删除所有的汇总账户表数据 -->
+	<delete id="deleteSummaryAccountBySummaryId" parameterType="Dto">
+		DELETE FROM as_summary_account 
+		WHERE  gather_id_ = #{id_}
+	</delete>
+	
+</mapper>

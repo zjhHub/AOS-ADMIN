@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- -->
+<mapper namespace="checkLoan">
+	<select id="queryLoanResult" parameterType="Dto" resultType="Dto">
+		SELECT fo.id_,fr.first_callback_time_,fo.interact_times_,fp.name_ platform,fo.contract_code_ contract_code,
+		fo.reference_ reference_id,fo.loan_account_ target_account,CASE fr.order_result_status_ WHEN 1 THEN '成功' WHEN 2 
+		THEN '失败' END AS loan_status,fo.loan_amount_ loan_amount,fr.trans_amount loaned_amount,fc.name_ third_channel,
+		fo.third_channel_order_id_ order_id,fr.request_time,fr.response_time_,fr.bank_echo_time_ bank_return_time,
+		fr.third_channel_fee_ third_channel_fee,fr.third_channel_feedback_ feedback 
+		FROM fc_loan_accepted_order fo LEFT JOIN fc_loan_accepted_order_result fr ON fo.id_ = fr.id_ 
+		LEFT JOIN fc_platform fp ON fo.platform_id_ = fp.id_ LEFT JOIN fc_third_channel fc 
+		ON fo.routed_third_channel_id_ = fc.id_ where 1=1
+
+		<if test="id_ != null and id_ !='' ">
+			AND fo.id_ = #{id_}  <!-- 放款受理指令ID -->
+		</if>
+	</select>
+
+</mapper>

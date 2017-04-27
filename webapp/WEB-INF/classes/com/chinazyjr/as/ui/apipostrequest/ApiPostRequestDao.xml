@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ApiPostRequest">
+		<select id="apiPostRequestPage" parameterType="Dto" resultType="Dto">
+		SELECT
+			rq.uuid_,
+			platform.name_ as platform_id_,
+			fi.ip_address_ ip_,
+			rq.service_code_,
+			rq.time_,
+			rs.response_time_,
+			rs.response_code_,
+			rs.summary_
+		FROM
+			fc_cu_log_request rq
+		LEFT JOIN fc_cu_log_response rs ON rq.uuid_ = rs.request_uuid_
+		LEFT JOIN fc_platform platform ON platform.id_=rq.platform_id_
+		LEFT JOIN fc_ip_white_list fi on fi.id_=rq.ip_ 
+		WHERE
+			1 = 1
+		<if test="uuid_ != null and uuid_ != ''">
+			AND rq.uuid_ = #{uuid_}
+		</if>
+		
+		<if test="platform_id_ != null and platform_id_ != ''">
+			AND rq.platform_id_ = #{platform_id_}
+		</if>
+		
+		<if test="ip_ != null and ip_ != ''">
+			AND rq.ip_ = #{ip_}
+		</if>
+		
+		<if test="service_code_ != null and service_code_ != ''">
+			AND rq.service_code_ = #{service_code_}
+		</if>
+
+		<if test="start_request_time_ != null and start_request_time_ != ''">
+			AND rq.time_ <![CDATA[ >= ]]> CONCAT(#{start_request_time_},' 00:00:00')
+		</if>
+		
+		<if test="end_request_time_ != null and end_request_time_ != ''">
+			AND rq.time_ <![CDATA[ <= ]]> CONCAT(#{end_request_time_},' 23:59:59')
+		</if>
+		
+		<if test="start_response_time_ != null and start_response_time_ != ''">
+			AND rs.response_time_ <![CDATA[ >= ]]> CONCAT(#{start_response_time_},' 00:00:00')
+		</if>
+		
+		<if test="end_response_time_ != null and end_response_time_ != ''">
+			AND rs.response_time_ <![CDATA[ <= ]]> CONCAT(#{end_response_time_},' 23:59:59')
+		</if>
+		
+		<if test="response_code_ != null and response_code_ !='' "> 
+			AND rs.response_code_ = #{response_code_}
+		</if>
+		ORDER BY rq.time_ DESC
+		
+	</select>
+	
+	<select id="findDetail" parameterType="Dto" resultType="Dto">
+		SELECT
+			rq.uuid_,
+			platform.name_ as platform_id_,
+			rq.service_code_,
+			rq.time_,
+			rs.response_time_,
+			rs.response_code_,
+			rs.summary_,
+			rs.message_,
+			rs.process_duration_,
+			rs.response_content_,
+			rq.content_
+		FROM
+			fc_cu_log_request rq
+		LEFT JOIN fc_cu_log_response rs ON rq.uuid_ = rs.request_uuid_
+		LEFT JOIN fc_platform platform ON platform.id_=rq.platform_id_
+		WHERE rq.uuid_ = #{uuid_}
+			
+	</select>
+</mapper>

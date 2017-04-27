@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 范例使用的手工SQL语句 -->
+<mapper namespace="ComboboxDao">
+
+
+
+	<select id="listPlatform" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		id_ AS
+		value
+		,
+		name_ AS display
+		FROM
+		fc_platform
+
+
+	</select>
+	<select id="listThirdChannel" resultType="Dto" parameterType="Dto">
+		select id_ as value, name_ as display from fc_third_channel
+	</select>
+</mapper>

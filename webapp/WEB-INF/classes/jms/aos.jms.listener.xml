@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd     http://www.springframework.org/schema/context     http://www.springframework.org/schema/context/spring-context-3.0.xsd    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
+
+	
+	
+	<!-- 划扣请求消费 -->
+    <bean id="requestConsumer" class="com.chinazyjr.fc.modules.engine.requesthandling.RequestHandingEngine" />
+	<!-- 划扣指令消费 -->
+	<bean id="chargebackOrderConsumer" class="com.chinazyjr.fc.modules.engine.pay.ThirdPayEngine" />
+	<!-- 划扣核查费 -->
+	<bean id="thirdQueryEngine" class="com.chinazyjr.fc.modules.engine.query.ThirdQueryEngine" />
+	<!-- 放款指令消费 -->
+	<bean id="loanConsumer" class="com.chinazyjr.fc.modules.loanengine.pay.PayLoanEngine" />
+	<!-- 放款核查消费 -->
+	<bean id="loanCheckConsumer" class="com.chinazyjr.fc.modules.loanengine.query.QueryLoanEngine" />
+	<!-- 账户报警队列-->
+	<bean id="asAlarmConsumer" class="com.chinazyjr.as.modules.alarm.AsAlarmEngine" />
+	
+	
+	<!-- 划扣请求监听 -->
+	<bean id="requestListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="requestConsumer"/>
+		<property name="defaultListenerMethod" value="requestConsumer"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<!-- 划扣请求配置 -->
+	<bean id="requestListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="requestDestination" />
+		<property name="messageListener" ref="requestListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+
+	
+	<!-- 银生宝划扣监听容器 --> 
+	<bean id="ysbListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="chargebackOrderConsumer"/>
+		<property name="defaultListenerMethod" value="dealYsbOrder"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	
+	<!-- 银生宝配置 --> 
+	<bean id="ysbListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="ysbDestination" />
+		<property name="messageListener" ref="ysbListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	<!-- 通联划扣监听容器 --> 
+	<bean id="tlListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="chargebackOrderConsumer"/>
+		<property name="defaultListenerMethod" value="dealTlOrder"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	
+	<!-- 通联配置 --> 
+	<bean id="tlListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="tlDestination" />
+		<property name="messageListener" ref="tlListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	
+	
+	<!-- 通联批次划扣监听容器 --> 
+	<bean id="tlBatchListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="chargebackOrderConsumer"/>
+		<property name="defaultListenerMethod" value="dealTlBatchOrder"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	
+	<!-- 通联批次划扣配置 --> 
+	<bean id="tlBatchListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="tlBatchDestination" />
+		<property name="messageListener" ref="tlBatchListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	
+	
+	
+	<!-- 宝付划扣监听 -->
+	<bean id="bfListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="chargebackOrderConsumer"/>
+		<property name="defaultListenerMethod" value="dealBfOrder"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<!-- 宝付监听容器 --> 
+	<bean id="bfListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="bfDestination" />
+		<property name="messageListener" ref="bfListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	<!-- 快付通划扣监听 -->
+	<!-- <bean id="kftListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter"> -->
+<!-- 		<constructor-arg ref="chargebackOrderConsumer"/> -->
+<!-- 		<property name="defaultListenerMethod" value="dealKftOrder"/> -->
+<!-- 		<property name="messageConverter" ref="messageConverter"/> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="kftListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"> -->
+<!-- 		<property name="connectionFactory" ref="connectionFactory" /> -->
+<!-- 		<property name="destination" ref="kftDestination" /> -->
+<!-- 		<property name="messageListener" ref="kftListener" /> -->
+<!-- 		<property name="concurrency" value="1-10"/> -->
+<!-- 	</bean> --> 
+	
+		
+<!-- 	快捷通划扣监听 -->
+	<bean id="kjtListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="chargebackOrderConsumer"/>
+		<property name="defaultListenerMethod" value="dealKjtOrder"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+<!-- 	快捷通监听容器   -->
+	<bean id="kjtListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="kjtDestination" />
+		<property name="messageListener" ref="kjtListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+
+
+
+ 	<!-- 							划扣核查消费									 --> 
+	
+	<!-- 通联核查监听 -->
+	<bean id="tlCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="thirdQueryEngine"/>
+		<property name="defaultListenerMethod" value="dealTlCheck"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="tlCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="tlCheckDestination" />
+		<property name="messageListener" ref="tlCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+		
+	<!-- 通联批次划扣核查监听 -->
+	<bean id="tlBatchCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="thirdQueryEngine"/>
+		<property name="defaultListenerMethod" value="dealTlBatchCheck"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="tlBatchCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="tlBatchCheckDestination" />
+		<property name="messageListener" ref="tlBatchCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	
+	<!-- 银生宝核查监听 -->
+	<bean id="ysbCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="thirdQueryEngine"/>
+		<property name="defaultListenerMethod" value="dealYsbCheck"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="ysbCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="ysbCheckDestination" />
+		<property name="messageListener" ref="ysbCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	<!-- 宝付核查监听 --> 
+	<bean id="bfCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="thirdQueryEngine"/>
+		<property name="defaultListenerMethod" value="dealBfCheck"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="bfCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="bfCheckDestination" />
+		<property name="messageListener" ref="bfCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	<!-- 快付通核查监听 -->
+	<!-- <bean id="kftCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="thirdQueryEngine"/>
+		<property name="defaultListenerMethod" value="dealKftCheck"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="kftCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="kftCheckDestination" />
+		<property name="messageListener" ref="kftCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean> -->
+		
+	<!-- 快捷通核查监听 -->
+	<bean id="kjtCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="thirdQueryEngine"/>
+		<property name="defaultListenerMethod" value="dealKjtCheck"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="kjtCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="kjtCheckDestination" />
+		<property name="messageListener" ref="kjtCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+		
+	
+   
+	<!-- 银生宝放款消费 -->
+	<bean id="ysbLoanListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="loanConsumer"/>
+		<property name="defaultListenerMethod" value="ysbLoanPay"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="ysbLoanListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="ysbLoanDestination" />
+		<property name="messageListener" ref="ysbLoanListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+
+    
+		<!-- 银生宝放款核查消费 -->
+	<bean id="ysbLoanCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="loanCheckConsumer"/>
+		<property name="defaultListenerMethod" value="ysbLoanQuery"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="ysbLoanCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="ysbLoanCheckDestination" />
+		<property name="messageListener" ref="ysbLoanCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	<!-- 	通联放款监听 -->
+	<bean id="tlLoanListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="loanConsumer"/>
+		<property name="defaultListenerMethod" value="tlLoanPay"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	
+	
+   <!-- 通联放款监听容器   -->
+	<bean id="tlLoanListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="tlLoanDestination" />
+		<property name="messageListener" ref="tlLoanListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+	
+	<!-- 通联放款核查消费 -->
+	<bean id="tlLoanCheckListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="loanCheckConsumer"/>
+		<property name="defaultListenerMethod" value="TLLoanQuery"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="tlLoanCheckListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="tlLoanCheckDestination" />
+		<property name="messageListener" ref="tlLoanCheckListener" />
+		<property name="concurrency" value="1-10"/>
+	</bean>
+	
+		<!-- 账户中心报警 -->
+	<bean id="asAlarmListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="asAlarmConsumer"/>
+		<property name="defaultListenerMethod" value="accountMD5Alarm"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+	<bean id="asAlarmListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="asAlarmDestination" />
+		<property name="messageListener" ref="asAlarmListener" />
+		<property name="concurrency" value="1"/>
+	</bean>
+</beans>

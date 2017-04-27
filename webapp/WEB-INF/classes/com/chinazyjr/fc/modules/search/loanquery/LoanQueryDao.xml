@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- -->
+<mapper namespace="loanQuery">
+	<select id="loanQueryPage" parameterType="Dto" resultType="Dto">
+		SELECT
+		<!-- 查出合同ID -->
+			ffb.contract_id_,
+			fm.request_time_ AS request_time,
+			fm.reponse_time_ AS response_time,
+			fm.flow_biz_id_,
+			fm.third_channel_ AS third_channel,
+			fm.order_id_ AS order_id,
+			fm.target_account_ AS target_account,
+			fm.trans_amount_ AS trans_amount,
+			fm.third_channel_fee_ AS third_channel_fee,
+			fm.arrived_time_ AS arrived_time,
+			fm.record_time_ AS record_time,
+			fm.remark_ AS remark
+		FROM
+			fc_flow_money fm,
+			fc_flow_business ffb,
+			fc_platform fp,
+			fc_third_channel ftc
+		WHERE
+			fm.flow_biz_id_ = ffb.id_
+			AND fm.platform_id_ = fp.id_
+			AND ftc.id_ = fm.third_channel_
+
+		<if test="platform != null and platform !='' ">
+			AND fp.name_ = #{platform}  <!-- 表示哪条业务线 -->
+		</if>
+		<if test="third_channel != null and third_channel != ''">
+			AND ftc.name_ = #{third_channel}  <!-- 标识出需要哪个支付渠道的放款流水 -->
+		</if>
+
+		<if test="arrived_time_start != null and arrived_time_start !=''">
+			AND fm.arrived_time_ &gt;= #{arrived_time_start} <!-- 资金到账时间的起点 -->
+		</if>
+		<if test="arrived_time_end != null and arrived_time_end !=''">
+			AND fm.arrived_time_ &lt;= #{arrived_time_end}  <!-- 资金到账时间的终点 -->
+		</if>
+		<if test="recode_time_start != null and recode_time_start != ''">
+			AND fm.record_time_ &gt;= #{recode_time_start}  <!-- 流水登记时间的起点 -->
+		</if>
+		<if test="recode_time_end != null and recode_time_end != ''">
+			AND fm.record_time_ &lt;= #{recode_time_end}  <!-- 流水登记时间的终点 -->
+		</if>
+	</select>
+	<select id="contractInfo" parameterType="Dto" resultType="Dto">
+		SELECT
+		fo.id_ AS contract_id_,
+		fp.name_ AS platform,
+		fo.contract_code_ AS
+		contract_code,
+		fo.status_ AS contract_status,
+		fo.customer_code_ AS customer_code,
+		fo.customer_name_ AS customer_name,
+		fo.customer_idcard_ AS idcard,
+		fo.customer_cellphone_ AS cellphone,
+		fo.product_code_ AS product_id,
+		fo.product_name_ AS product_name,
+		fo.loan_pattern_ AS loan_pattern,
+		fo.loan_staging_amount_ AS loan_staging_amount,
+		fo.loan_staging_duration_ AS loan_staging_duration,
+		fo.annualized_rate_ AS annualized_rate,
+		fo.contract_pay_date_ AS
+		contract_pay_date,
+		fo.contract_amount_ AS contract_amount,
+		fo.expected_interest_ AS expected_interest,
+		fo.expected_fee_ AS expected_fee
+		FROM
+		fc_contract fo,
+		fc_platform fp 
+		WHERE
+		fo.platform_id_ = fp.id_
+		AND
+		fo.id_ =
+		#{contract_id_}
+		<!-- fo.id_ = { 传进来的合同ID} -->
+	</select>
+
+	<select id="cutdto" parameterType="Dto" resultType="Dto">
+		SELECT
+		ffc.name_ AS cut,
+		fbc.cut_amount_ AS amount
+		FROM
+		fc_book_cuts fbc,
+		fc_financial_category ffc
+		WHERE
+		fbc.category_id_ = ffc.id_
+		AND
+		fbc.contract_id_ = #{contract_id_}
+		<!-- fbc.contract_id_ = { 传进来的合同ID} -->
+	</select>
+
+	<select id="subjectdto" parameterType="Dto" resultType="Dto">
+		SELECT
+			SUM(fbc.changing_amount_) AS received_amount,ffc.name_ AS SUBJECT
+		FROM
+			fc_book_change_log fbc,
+			fc_financial_category ffc
+		WHERE
+			fbc.category_id_ = ffc.id_
+		AND 
+			book_type_ = 1
+		AND 
+			target_ = 'received_amount'
+		AND 
+			fbc.flow_biz_id_ = #{flow_biz_id_}
+		GROUP BY
+			fbc.category_id_
+	</select>
+
+
+</mapper>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 范例使用的手工SQL语句 -->
+<mapper namespace="BorrowContractDao">
+
+
+
+	<select id="listBorrowContractPage" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		contract.id_ AS contract_id_,
+		contract.platform_id_,
+		platform.name_ AS platform_name_,
+		contract.contract_code_,
+		contract.channel_,
+		contract.customer_name_ AS customer_name_,
+		contract.customer_idcard_,
+		contract.product_name_,
+		contract_amount_,
+		contract.status_ AS
+		contract_status_
+		FROM
+		fc_contract contract
+		INNER JOIN
+		fc_platform
+		platform ON platform.id_ = contract.platform_id_
+
+
+		<where>
+
+			<if test="contract_id_ != null and  contract_id_ != '' ">
+				AND contract.id_ = #{contract_id_}  <!-- 借款合同ID -->
+			</if>
+			<if test="platform_id_ != null and platform_id_ != '' ">
+				AND contract.platform_id_ = #{platform_id_}  <!-- 归属业务线 -->
+			</if>
+			<if
+				test="contract_amount_start_ != null and  contract_amount_start_ !='' ">
+				AND contract.contract_amount_ &gt;= #{contract_amount_start_}
+			</if>
+			<if test="contract_amount_end_ != null and contract_amount_end_ != '' ">
+				AND contract.contract_amount_ &lt;=
+				#{contract_amount_end_}
+			</if>
+
+			<if test="contract_code_ != null and contract_code_ != '' ">
+
+				AND contract.contract_code_ like '%${contract_code_}%'  <!-- 借款合同编号 -->
+			</if>
+			<if test="contract_status_ != null and contract_status_ != '' ">
+				AND contract.status_ = #{contract_status_}  <!-- 合同状态有： 1、正常 2、逾期 3、结清 
+					4、坏账 -->
+			</if>
+			<if test="customer_name_ != null and customer_name_ != ''">
+				AND contract.customer_name_ like '%${customer_name_}%'  <!-- 展业途径 -->
+			</if>
+			<if test="product_name_ != null and product_name_ != '' ">
+				AND contract.product_name_ like '%${product_name_}%'  <!-- 产品名称 -->
+			</if>
+			<if test="channel_ != null and channel_ != '' ">
+				AND contract.channel_ like '%${channel_}%' <!-- 展业途径 -->
+			</if>
+			<if test="idcard_ != null and idcard_ != '' ">
+				AND contract.customer_idcard_ like '%${idcard_}%'   <!-- 展业途径 -->
+			</if>
+
+
+
+
+
+		</where>
+
+
+	</select>
+
+	<!-- 合同状态记录 -->
+	<select id="listContractStatusPage" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		changing_date_,before_,after_
+		FROM
+		fc_status_change_log
+		WHERE
+		ref_id_ = #{contract_id_}
+		AND type_ = 1
+		ORDER BY changing_date_ DESC
+
+	</select>
+
+	<!-- 分期状态记录 -->
+	<select id="listStagingStatusPage" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		changing_date_,before_,after_
+		FROM
+		fc_status_change_log
+		WHERE
+		ref_id_ = #{staging_id}
+		AND type_ = 2
+		ORDER BY changing_date_ DESC
+
+	</select>
+
+	<select id="listHistoryCutStatusPage" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		category.name_,
+		log.before_amount_,
+		log.changing_amount_,
+		log.after_amount_,
+		log.changing_date_
+		FROM
+		fc_book_change_log log
+		LEFT JOIN fc_financial_category category ON category.id_ =
+		log.category_id_
+		WHERE
+		book_type_ = 2
+		AND log.record_id_ IN (
+		SELECT
+		id_
+		FROM
+		fc_book_cuts
+		WHERE
+		contract_id_ = #{contract_id_}
+		)
+		ORDER BY log.changing_date_ DESC
+	</select>
+
+	<select id="listCurrentCutStatus" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		cuts.id_,
+		cuts.cut_amount_,
+		category.name_
+		FROM
+		fc_book_cuts cuts
+		LEFT JOIN fc_financial_category category ON
+		category.id_ =
+		cuts.category_id_
+		WHERE
+		cuts.contract_id_ =
+		#{contract_id_}
+	</select>
+
+
+
+
+	<select id="listDistinctSubjectByContractId" resultType="Dto"
+		parameterType="Dto">
+		SELECT
+		id_ AS category_id_,
+		name_ AS category_name_
+		FROM
+		fc_financial_category
+		WHERE
+		id_ IN (
+		SELECT DISTINCT
+		category_id_
+		FROM
+		fc_book_subject
+		WHERE
+		contract_id_ = #{contract_id_}
+		)
+
+	</select>
+
+	<select id="changeLoglist" parameterType="Dto" resultType="Dto">
+		SELECT fc_book_change_log.id_,
+		record_id_,
+		changing_amount_,
+		before_amount_,
+		after_amount_,
+		changing_date_,
+		flow_biz_id_
+		FROM
+		fc_book_change_log
+		INNER JOIN fc_book_subject on
+		fc_book_change_log.record_id_=fc_book_subject.id_
+		where book_type_=1
+		AND record_id_=#{subject_id}
+		AND target_=#{target_}
+
+		order BY changing_date_ DESC
+	</select>
+
+	<!-- 客户子表 -->
+	<select id="getCustomerBykey" parameterType="Dto" resultType="Dto">
+
+		SELECT
+		<include refid="aos.fc.dao.Fc_customerDao.column" />
+		FROM fc_customer WHERE id_ = #{customer_id_}
+
+	</select>
+	<!-- 合同详情主表 -->
+	<select id="getContractByKey" parameterType="Dto" resultType="Dto">
+
+		SELECT
+		<include refid="aos.fc.dao.Fc_contractDao.column" />
+		FROM fc_contract WHERE id_ = #{contract_id_}
+
+	</select>
+
+	<!-- 根据合同科目统计应收，已收 -->
+	<select id="categoryReceivableReceived" parameterType="Dto"
+		resultType="Dto">
+		SELECT
+		fc_book_subject.contract_id_,fc_book_subject.category_id_,COALESCE(sum(receivable_amount_),0)
+		as
+		sum_receivable_amount_ ,
+		COALESCE(sum(received_amount_),0) as
+		sum_received_amount_
+		FROM fc_book_subject
+		WHERE
+		fc_book_subject.contract_id_ = #{contract_id_}
+
+		GROUP BY fc_book_subject.contract_id_,fc_book_subject.category_id_
+	</select>
+
+	<!-- 科目“剩余” -->
+	<select id="categoryResidual" parameterType="Dto" resultType="Dto">
+
+		SELECT
+		fc_book_subject.contract_id_,fc_book_subject.category_id_,COALESCE(sum(receivable_amount_),0)
+		as
+		sum_receivable_amount_
+		FROM fc_book_subject
+		INNER JOIN fc_staging on
+		fc_staging.id_=fc_book_subject.staging_id_
+		WHERE
+		fc_book_subject.contract_id_ = #{contract_id_}
+		AND
+		fc_staging.status_=#{status_}
+
+		GROUP BY	fc_book_subject.contract_id_,fc_book_subject.category_id_
+
+	</select>
+
+	<!-- 科目 -->
+	<select id="categoryList" parameterType="Dto" resultType="Dto">
+		SELECT
+		<include refid="aos.fc.dao.Fc_financial_categoryDao.column" />
+		FROM fc_financial_category
+		WHERE id_ in 
+		<foreach collection="subjectList" item="subject" index="key"
+			open="(" close=")" separator=",">
+			#{subject.category_id_}
+		</foreach>
+	</select>
+</mapper>

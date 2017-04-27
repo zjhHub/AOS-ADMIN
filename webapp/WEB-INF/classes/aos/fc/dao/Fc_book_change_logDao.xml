@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_book_change_log[fc_book_change_log]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-04-07 14:59:23 -->
+<mapper namespace="aos.fc.dao.Fc_book_change_logDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_book_change_logPO">
+		INSERT INTO fc_book_change_log (
+		<if test="flow_biz_id_ != null">
+	         flow_biz_id_, <!-- flow_biz_id_ -->
+		</if>
+		<if test="book_type_ != null">
+	         book_type_, <!-- 账簿类型 -->
+		</if>
+		<if test="record_id_ != null">
+	         record_id_, <!-- 账目ID -->
+		</if>
+		<if test="target_ != null and target_ != ''">
+	         target_, <!-- 变动字段名 -->
+		</if>
+		<if test="changing_amount_ != null">
+	         changing_amount_, <!-- 变动金额 -->
+		</if>
+		<if test="before_amount_ != null">
+	         before_amount_, <!-- 变动前快照 -->
+		</if>
+		<if test="after_amount_ != null">
+	         after_amount_, <!-- 变动后快照 -->
+		</if>
+		<if test="changing_date_ != null and changing_date_ != ''">
+	         changing_date_, <!-- 变动时间 -->
+		</if>
+		<if test="category_id_ != null">
+	         category_id_, <!-- category_id_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="flow_biz_id_ != null">
+	          #{flow_biz_id_, jdbcType=INTEGER}, <!-- flow_biz_id_ -->
+	    </if>
+		<if test="book_type_ != null">
+	          #{book_type_, jdbcType=INTEGER}, <!-- 账簿类型 -->
+	    </if>
+		<if test="record_id_ != null">
+	          #{record_id_, jdbcType=INTEGER}, <!-- 账目ID -->
+	    </if>
+		<if test="target_ != null and target_ != ''">
+	          #{target_, jdbcType=VARCHAR}, <!-- 变动字段名 -->
+	    </if>
+		<if test="changing_amount_ != null">
+	          #{changing_amount_, jdbcType=NUMERIC}, <!-- 变动金额 -->
+	    </if>
+		<if test="before_amount_ != null">
+	          #{before_amount_, jdbcType=NUMERIC}, <!-- 变动前快照 -->
+	    </if>
+		<if test="after_amount_ != null">
+	          #{after_amount_, jdbcType=NUMERIC}, <!-- 变动后快照 -->
+	    </if>
+		<if test="changing_date_ != null and changing_date_ != ''">
+	          #{changing_date_, jdbcType=VARCHAR}, <!-- 变动时间 -->
+	    </if>
+		<if test="category_id_ != null">
+	          #{category_id_, jdbcType=INTEGER}, <!-- category_id_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_book_change_logPO">
+		INSERT INTO fc_book_change_log (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- 账簿变动记录ID -->
+		    #{flow_biz_id_, jdbcType=INTEGER},  <!-- flow_biz_id_ -->
+		    #{book_type_, jdbcType=INTEGER},  <!-- 账簿类型 -->
+		    #{record_id_, jdbcType=INTEGER},  <!-- 账目ID -->
+		    #{target_, jdbcType=VARCHAR},  <!-- 变动字段名 -->
+		    #{changing_amount_, jdbcType=NUMERIC},  <!-- 变动金额 -->
+		    #{before_amount_, jdbcType=NUMERIC},  <!-- 变动前快照 -->
+		    #{after_amount_, jdbcType=NUMERIC},  <!-- 变动后快照 -->
+		    #{changing_date_, jdbcType=VARCHAR},  <!-- 变动时间 -->
+		    #{category_id_, jdbcType=INTEGER}  <!-- category_id_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_book_change_logPO">
+		UPDATE fc_book_change_log
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- 账簿变动记录ID -->
+			</if>
+			<if test="flow_biz_id_ != null">
+		          flow_biz_id_ = #{flow_biz_id_, jdbcType=INTEGER},  <!-- flow_biz_id_ -->
+			</if>
+			<if test="book_type_ != null">
+		          book_type_ = #{book_type_, jdbcType=INTEGER},  <!-- 账簿类型 -->
+			</if>
+			<if test="record_id_ != null">
+		          record_id_ = #{record_id_, jdbcType=INTEGER},  <!-- 账目ID -->
+			</if>
+			<if test="target_ != null">
+		          target_ = #{target_, jdbcType=VARCHAR},  <!-- 变动字段名 -->
+			</if>
+			<if test="changing_amount_ != null">
+		          changing_amount_ = #{changing_amount_, jdbcType=NUMERIC},  <!-- 变动金额 -->
+			</if>
+			<if test="before_amount_ != null">
+		          before_amount_ = #{before_amount_, jdbcType=NUMERIC},  <!-- 变动前快照 -->
+			</if>
+			<if test="after_amount_ != null">
+		          after_amount_ = #{after_amount_, jdbcType=NUMERIC},  <!-- 变动后快照 -->
+			</if>
+			<if test="changing_date_ != null">
+		          changing_date_ = #{changing_date_, jdbcType=VARCHAR},  <!-- 变动时间 -->
+			</if>
+			<if test="category_id_ != null">
+		          category_id_ = #{category_id_, jdbcType=INTEGER},  <!-- category_id_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_book_change_log WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_book_change_logPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_book_change_log WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_book_change_logPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_book_change_log
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_book_change_logPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_book_change_log
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_book_change_logPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_book_change_log
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_book_change_logPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_book_change_log
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_book_change_logPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_book_change_log
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_book_change_log
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_book_change_log
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- 账簿变动记录ID -->
+		  flow_biz_id_,  <!-- flow_biz_id_ -->
+		  book_type_,  <!-- 账簿类型 -->
+		  record_id_,  <!-- 账目ID -->
+		  target_,  <!-- 变动字段名 -->
+		  changing_amount_,  <!-- 变动金额 -->
+		  before_amount_,  <!-- 变动前快照 -->
+		  after_amount_,  <!-- 变动后快照 -->
+		  changing_date_,  <!-- 变动时间 -->
+		  category_id_  <!-- category_id_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_book_change_log.id_,  <!-- 账簿变动记录ID -->
+		  fc_book_change_log.flow_biz_id_,  <!-- flow_biz_id_ -->
+		  fc_book_change_log.book_type_,  <!-- 账簿类型 -->
+		  fc_book_change_log.record_id_,  <!-- 账目ID -->
+		  fc_book_change_log.target_,  <!-- 变动字段名 -->
+		  fc_book_change_log.changing_amount_,  <!-- 变动金额 -->
+		  fc_book_change_log.before_amount_,  <!-- 变动前快照 -->
+		  fc_book_change_log.after_amount_,  <!-- 变动后快照 -->
+		  fc_book_change_log.changing_date_,  <!-- 变动时间 -->
+		  fc_book_change_log.category_id_  <!-- category_id_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- 账簿变动记录ID -->
+		</if>
+	   <if test="flow_biz_id_ != null ">
+		      AND flow_biz_id_ = #{flow_biz_id_}  <!-- flow_biz_id_ -->
+		</if>
+	   <if test="book_type_ != null ">
+		      AND book_type_ = #{book_type_}  <!-- 账簿类型 -->
+		</if>
+	   <if test="record_id_ != null ">
+		      AND record_id_ = #{record_id_}  <!-- 账目ID -->
+		</if>
+	    <if test="target_ != null and target_ != ''">
+		      AND target_ = #{target_}  <!-- 变动字段名 -->
+		</if>
+	   <if test="changing_amount_ != null ">
+		      AND changing_amount_ = #{changing_amount_}  <!-- 变动金额 -->
+		</if>
+	   <if test="before_amount_ != null ">
+		      AND before_amount_ = #{before_amount_}  <!-- 变动前快照 -->
+		</if>
+	   <if test="after_amount_ != null ">
+		      AND after_amount_ = #{after_amount_}  <!-- 变动后快照 -->
+		</if>
+	    <if test="changing_date_ != null and changing_date_ != ''">
+		      AND changing_date_ = #{changing_date_}  <!-- 变动时间 -->
+		</if>
+	   <if test="category_id_ != null ">
+		      AND category_id_ = #{category_id_}  <!-- category_id_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="target_ != null and target_ != ''">
+		      AND target_ like '%${target_}%'  <!-- 变动字段名 -->
+		</if>
+	    <if test="changing_date_ != null and changing_date_ != ''">
+		      AND changing_date_ like '%${changing_date_}%'  <!-- 变动时间 -->
+		</if>
+	</sql>
+	
+</mapper>

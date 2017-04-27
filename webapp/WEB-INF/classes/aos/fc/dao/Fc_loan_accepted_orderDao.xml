@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_loan_accepted_order[fc_loan_accepted_order]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-03-17 13:37:50 -->
+<mapper namespace="aos.fc.dao.Fc_loan_accepted_orderDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_loan_accepted_orderPO">
+		INSERT INTO fc_loan_accepted_order (
+		<if test="request_id_ != null and request_id_ != ''">
+	         request_id_, <!-- request_id_ -->
+		</if>
+		<if test="location_ != null">
+	         location_, <!-- location_ -->
+		</if>
+		<if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+	         routed_third_channel_code_, <!-- routed_third_channel_code_ -->
+		</if>
+		<if test="routed_third_channel_id_ != null">
+	         routed_third_channel_id_, <!-- routed_third_channel_id_ -->
+		</if>
+		<if test="async_callback_ != null and async_callback_ != ''">
+	         async_callback_, <!-- async_callback_ -->
+		</if>
+		<if test="platform_id_ != null">
+	         platform_id_, <!-- platform_id_ -->
+		</if>
+		<if test="biz_summary != null and biz_summary != ''">
+	         biz_summary, <!-- biz_summary -->
+		</if>
+		<if test="contract_id_ != null">
+	         contract_id_, <!-- contract_id_ -->
+		</if>
+		<if test="contract_code_ != null and contract_code_ != ''">
+	         contract_code_, <!-- contract_code_ -->
+		</if>
+		<if test="reference_ != null and reference_ != ''">
+	         reference_, <!-- reference_ -->
+		</if>
+		<if test="remark_ != null and remark_ != ''">
+	         remark_, <!-- remark_ -->
+		</if>
+		<if test="loan_amount_ != null">
+	         loan_amount_, <!-- loan_amount_ -->
+		</if>
+		<if test="loan_bank_id_ != null">
+	         loan_bank_id_, <!-- loan_bank_id_ -->
+		</if>
+		<if test="bank_code_ != null and bank_code_ != ''">
+	         bank_code_, <!-- bank_code_ -->
+		</if>
+		<if test="loan_account_ != null and loan_account_ != ''">
+	         loan_account_, <!-- loan_account_ -->
+		</if>
+		<if test="loan_name_ != null and loan_name_ != ''">
+	         loan_name_, <!-- loan_name_ -->
+		</if>
+		<if test="loan_idcard_ != null and loan_idcard_ != ''">
+	         loan_idcard_, <!-- loan_idcard_ -->
+		</if>
+		<if test="loan_cellphone_ != null and loan_cellphone_ != ''">
+	         loan_cellphone_, <!-- loan_cellphone_ -->
+		</if>
+		<if test="created_time_ != null and created_time_ != ''">
+	         created_time_, <!-- created_time_ -->
+		</if>
+		<if test="interact_times_ != null">
+	         interact_times_, <!-- interact_times_ -->
+		</if>
+		<if test="next_interact_time_ != null and next_interact_time_ != ''">
+	         next_interact_time_, <!-- next_interact_time_ -->
+		</if>
+		<if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+	         third_channel_order_id_, <!-- third_channel_order_id_ -->
+		</if>
+		<if test="change_time_ != null and change_time_ != ''">
+	         change_time_, <!-- change_time_ -->
+		</if>
+	          id_
+		)VALUES(
+		<if test="request_id_ != null and request_id_ != ''">
+	          #{request_id_, jdbcType=VARCHAR}, <!-- request_id_ -->
+	    </if>
+		<if test="location_ != null">
+	          #{location_, jdbcType=INTEGER}, <!-- location_ -->
+	    </if>
+		<if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+	          #{routed_third_channel_code_, jdbcType=VARCHAR}, <!-- routed_third_channel_code_ -->
+	    </if>
+		<if test="routed_third_channel_id_ != null">
+	          #{routed_third_channel_id_, jdbcType=INTEGER}, <!-- routed_third_channel_id_ -->
+	    </if>
+		<if test="async_callback_ != null and async_callback_ != ''">
+	          #{async_callback_, jdbcType=VARCHAR}, <!-- async_callback_ -->
+	    </if>
+		<if test="platform_id_ != null">
+	          #{platform_id_, jdbcType=INTEGER}, <!-- platform_id_ -->
+	    </if>
+		<if test="biz_summary != null and biz_summary != ''">
+	          #{biz_summary, jdbcType=VARCHAR}, <!-- biz_summary -->
+	    </if>
+		<if test="contract_id_ != null">
+	          #{contract_id_, jdbcType=INTEGER}, <!-- contract_id_ -->
+	    </if>
+		<if test="contract_code_ != null and contract_code_ != ''">
+	          #{contract_code_, jdbcType=VARCHAR}, <!-- contract_code_ -->
+	    </if>
+		<if test="reference_ != null and reference_ != ''">
+	          #{reference_, jdbcType=VARCHAR}, <!-- reference_ -->
+	    </if>
+		<if test="remark_ != null and remark_ != ''">
+	          #{remark_, jdbcType=VARCHAR}, <!-- remark_ -->
+	    </if>
+		<if test="loan_amount_ != null">
+	          #{loan_amount_, jdbcType=NUMERIC}, <!-- loan_amount_ -->
+	    </if>
+		<if test="loan_bank_id_ != null">
+	          #{loan_bank_id_, jdbcType=INTEGER}, <!-- loan_bank_id_ -->
+	    </if>
+		<if test="bank_code_ != null and bank_code_ != ''">
+	          #{bank_code_, jdbcType=VARCHAR}, <!-- bank_code_ -->
+	    </if>
+		<if test="loan_account_ != null and loan_account_ != ''">
+	          #{loan_account_, jdbcType=VARCHAR}, <!-- loan_account_ -->
+	    </if>
+		<if test="loan_name_ != null and loan_name_ != ''">
+	          #{loan_name_, jdbcType=VARCHAR}, <!-- loan_name_ -->
+	    </if>
+		<if test="loan_idcard_ != null and loan_idcard_ != ''">
+	          #{loan_idcard_, jdbcType=VARCHAR}, <!-- loan_idcard_ -->
+	    </if>
+		<if test="loan_cellphone_ != null and loan_cellphone_ != ''">
+	          #{loan_cellphone_, jdbcType=VARCHAR}, <!-- loan_cellphone_ -->
+	    </if>
+		<if test="created_time_ != null and created_time_ != ''">
+	          #{created_time_, jdbcType=VARCHAR}, <!-- created_time_ -->
+	    </if>
+		<if test="interact_times_ != null">
+	          #{interact_times_, jdbcType=INTEGER}, <!-- interact_times_ -->
+	    </if>
+		<if test="next_interact_time_ != null and next_interact_time_ != ''">
+	          #{next_interact_time_, jdbcType=VARCHAR}, <!-- next_interact_time_ -->
+	    </if>
+		<if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+	          #{third_channel_order_id_, jdbcType=VARCHAR}, <!-- third_channel_order_id_ -->
+	    </if>
+		<if test="change_time_ != null and change_time_ != ''">
+	          #{change_time_, jdbcType=VARCHAR}, <!-- change_time_ -->
+	    </if>
+	          null
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll" useGeneratedKeys="true" keyProperty="id_" parameterType="Fc_loan_accepted_orderPO">
+		INSERT INTO fc_loan_accepted_order (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{id_, jdbcType=INTEGER},  <!-- id_ -->
+		    #{request_id_, jdbcType=VARCHAR},  <!-- request_id_ -->
+		    #{location_, jdbcType=INTEGER},  <!-- location_ -->
+		    #{routed_third_channel_code_, jdbcType=VARCHAR},  <!-- routed_third_channel_code_ -->
+		    #{routed_third_channel_id_, jdbcType=INTEGER},  <!-- routed_third_channel_id_ -->
+		    #{async_callback_, jdbcType=VARCHAR},  <!-- async_callback_ -->
+		    #{platform_id_, jdbcType=INTEGER},  <!-- platform_id_ -->
+		    #{biz_summary, jdbcType=VARCHAR},  <!-- biz_summary -->
+		    #{contract_id_, jdbcType=INTEGER},  <!-- contract_id_ -->
+		    #{contract_code_, jdbcType=VARCHAR},  <!-- contract_code_ -->
+		    #{reference_, jdbcType=VARCHAR},  <!-- reference_ -->
+		    #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+		    #{loan_amount_, jdbcType=NUMERIC},  <!-- loan_amount_ -->
+		    #{loan_bank_id_, jdbcType=INTEGER},  <!-- loan_bank_id_ -->
+		    #{bank_code_, jdbcType=VARCHAR},  <!-- bank_code_ -->
+		    #{loan_account_, jdbcType=VARCHAR},  <!-- loan_account_ -->
+		    #{loan_name_, jdbcType=VARCHAR},  <!-- loan_name_ -->
+		    #{loan_idcard_, jdbcType=VARCHAR},  <!-- loan_idcard_ -->
+		    #{loan_cellphone_, jdbcType=VARCHAR},  <!-- loan_cellphone_ -->
+		    #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+		    #{interact_times_, jdbcType=INTEGER},  <!-- interact_times_ -->
+		    #{next_interact_time_, jdbcType=VARCHAR},  <!-- next_interact_time_ -->
+		    #{third_channel_order_id_, jdbcType=VARCHAR},  <!-- third_channel_order_id_ -->
+		    #{change_time_, jdbcType=VARCHAR}  <!-- change_time_ -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_loan_accepted_orderPO">
+		UPDATE fc_loan_accepted_order
+		<set>
+			<if test="id_ != null">
+		          id_ = #{id_, jdbcType=INTEGER},  <!-- id_ -->
+			</if>
+			<if test="request_id_ != null">
+		          request_id_ = #{request_id_, jdbcType=VARCHAR},  <!-- request_id_ -->
+			</if>
+			<if test="location_ != null">
+		          location_ = #{location_, jdbcType=INTEGER},  <!-- location_ -->
+			</if>
+			<if test="routed_third_channel_code_ != null">
+		          routed_third_channel_code_ = #{routed_third_channel_code_, jdbcType=VARCHAR},  <!-- routed_third_channel_code_ -->
+			</if>
+			<if test="routed_third_channel_id_ != null">
+		          routed_third_channel_id_ = #{routed_third_channel_id_, jdbcType=INTEGER},  <!-- routed_third_channel_id_ -->
+			</if>
+			<if test="async_callback_ != null">
+		          async_callback_ = #{async_callback_, jdbcType=VARCHAR},  <!-- async_callback_ -->
+			</if>
+			<if test="platform_id_ != null">
+		          platform_id_ = #{platform_id_, jdbcType=INTEGER},  <!-- platform_id_ -->
+			</if>
+			<if test="biz_summary != null">
+		          biz_summary = #{biz_summary, jdbcType=VARCHAR},  <!-- biz_summary -->
+			</if>
+			<if test="contract_id_ != null">
+		          contract_id_ = #{contract_id_, jdbcType=INTEGER},  <!-- contract_id_ -->
+			</if>
+			<if test="contract_code_ != null">
+		          contract_code_ = #{contract_code_, jdbcType=VARCHAR},  <!-- contract_code_ -->
+			</if>
+			<if test="reference_ != null">
+		          reference_ = #{reference_, jdbcType=VARCHAR},  <!-- reference_ -->
+			</if>
+			<if test="remark_ != null">
+		          remark_ = #{remark_, jdbcType=VARCHAR},  <!-- remark_ -->
+			</if>
+			<if test="loan_amount_ != null">
+		          loan_amount_ = #{loan_amount_, jdbcType=NUMERIC},  <!-- loan_amount_ -->
+			</if>
+			<if test="loan_bank_id_ != null">
+		          loan_bank_id_ = #{loan_bank_id_, jdbcType=INTEGER},  <!-- loan_bank_id_ -->
+			</if>
+			<if test="bank_code_ != null">
+		          bank_code_ = #{bank_code_, jdbcType=VARCHAR},  <!-- bank_code_ -->
+			</if>
+			<if test="loan_account_ != null">
+		          loan_account_ = #{loan_account_, jdbcType=VARCHAR},  <!-- loan_account_ -->
+			</if>
+			<if test="loan_name_ != null">
+		          loan_name_ = #{loan_name_, jdbcType=VARCHAR},  <!-- loan_name_ -->
+			</if>
+			<if test="loan_idcard_ != null">
+		          loan_idcard_ = #{loan_idcard_, jdbcType=VARCHAR},  <!-- loan_idcard_ -->
+			</if>
+			<if test="loan_cellphone_ != null">
+		          loan_cellphone_ = #{loan_cellphone_, jdbcType=VARCHAR},  <!-- loan_cellphone_ -->
+			</if>
+			<if test="created_time_ != null">
+		          created_time_ = #{created_time_, jdbcType=VARCHAR},  <!-- created_time_ -->
+			</if>
+			<if test="interact_times_ != null">
+		          interact_times_ = #{interact_times_, jdbcType=INTEGER},  <!-- interact_times_ -->
+			</if>
+			<if test="next_interact_time_ != null">
+		          next_interact_time_ = #{next_interact_time_, jdbcType=VARCHAR},  <!-- next_interact_time_ -->
+			</if>
+			<if test="third_channel_order_id_ != null">
+		          third_channel_order_id_ = #{third_channel_order_id_, jdbcType=VARCHAR},  <!-- third_channel_order_id_ -->
+			</if>
+			<if test="change_time_ != null">
+		          change_time_ = #{change_time_, jdbcType=VARCHAR},  <!-- change_time_ -->
+			</if>
+		</set>
+		WHERE  id_ = #{id_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_loan_accepted_order WHERE  id_ = #{id_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_loan_accepted_orderPO">
+		SELECT
+		<include refid="column" />
+		FROM fc_loan_accepted_order WHERE  id_ = #{id_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_loan_accepted_orderPO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_loan_accepted_order
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_loan_accepted_orderPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_loan_accepted_order
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_loan_accepted_orderPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_loan_accepted_order
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_loan_accepted_orderPO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_loan_accepted_order
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_loan_accepted_orderPO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_loan_accepted_order
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_loan_accepted_order
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_loan_accepted_order
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  id_,  <!-- id_ -->
+		  request_id_,  <!-- request_id_ -->
+		  location_,  <!-- location_ -->
+		  routed_third_channel_code_,  <!-- routed_third_channel_code_ -->
+		  routed_third_channel_id_,  <!-- routed_third_channel_id_ -->
+		  async_callback_,  <!-- async_callback_ -->
+		  platform_id_,  <!-- platform_id_ -->
+		  biz_summary,  <!-- biz_summary -->
+		  contract_id_,  <!-- contract_id_ -->
+		  contract_code_,  <!-- contract_code_ -->
+		  reference_,  <!-- reference_ -->
+		  remark_,  <!-- remark_ -->
+		  loan_amount_,  <!-- loan_amount_ -->
+		  loan_bank_id_,  <!-- loan_bank_id_ -->
+		  bank_code_,  <!-- bank_code_ -->
+		  loan_account_,  <!-- loan_account_ -->
+		  loan_name_,  <!-- loan_name_ -->
+		  loan_idcard_,  <!-- loan_idcard_ -->
+		  loan_cellphone_,  <!-- loan_cellphone_ -->
+		  created_time_,  <!-- created_time_ -->
+		  interact_times_,  <!-- interact_times_ -->
+		  next_interact_time_,  <!-- next_interact_time_ -->
+		  third_channel_order_id_,  <!-- third_channel_order_id_ -->
+		  change_time_  <!-- change_time_ -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_loan_accepted_order.id_,  <!-- id_ -->
+		  fc_loan_accepted_order.request_id_,  <!-- request_id_ -->
+		  fc_loan_accepted_order.location_,  <!-- location_ -->
+		  fc_loan_accepted_order.routed_third_channel_code_,  <!-- routed_third_channel_code_ -->
+		  fc_loan_accepted_order.routed_third_channel_id_,  <!-- routed_third_channel_id_ -->
+		  fc_loan_accepted_order.async_callback_,  <!-- async_callback_ -->
+		  fc_loan_accepted_order.platform_id_,  <!-- platform_id_ -->
+		  fc_loan_accepted_order.biz_summary,  <!-- biz_summary -->
+		  fc_loan_accepted_order.contract_id_,  <!-- contract_id_ -->
+		  fc_loan_accepted_order.contract_code_,  <!-- contract_code_ -->
+		  fc_loan_accepted_order.reference_,  <!-- reference_ -->
+		  fc_loan_accepted_order.remark_,  <!-- remark_ -->
+		  fc_loan_accepted_order.loan_amount_,  <!-- loan_amount_ -->
+		  fc_loan_accepted_order.loan_bank_id_,  <!-- loan_bank_id_ -->
+		  fc_loan_accepted_order.bank_code_,  <!-- bank_code_ -->
+		  fc_loan_accepted_order.loan_account_,  <!-- loan_account_ -->
+		  fc_loan_accepted_order.loan_name_,  <!-- loan_name_ -->
+		  fc_loan_accepted_order.loan_idcard_,  <!-- loan_idcard_ -->
+		  fc_loan_accepted_order.loan_cellphone_,  <!-- loan_cellphone_ -->
+		  fc_loan_accepted_order.created_time_,  <!-- created_time_ -->
+		  fc_loan_accepted_order.interact_times_,  <!-- interact_times_ -->
+		  fc_loan_accepted_order.next_interact_time_,  <!-- next_interact_time_ -->
+		  fc_loan_accepted_order.third_channel_order_id_,  <!-- third_channel_order_id_ -->
+		  fc_loan_accepted_order.change_time_  <!-- change_time_ -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	   <if test="id_ != null ">
+		      AND id_ = #{id_}  <!-- id_ -->
+		</if>
+	    <if test="request_id_ != null and request_id_ != ''">
+		      AND request_id_ = #{request_id_}  <!-- request_id_ -->
+		</if>
+	   <if test="location_ != null ">
+		      AND location_ = #{location_}  <!-- location_ -->
+		</if>
+	    <if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+		      AND routed_third_channel_code_ = #{routed_third_channel_code_}  <!-- routed_third_channel_code_ -->
+		</if>
+	   <if test="routed_third_channel_id_ != null ">
+		      AND routed_third_channel_id_ = #{routed_third_channel_id_}  <!-- routed_third_channel_id_ -->
+		</if>
+	    <if test="async_callback_ != null and async_callback_ != ''">
+		      AND async_callback_ = #{async_callback_}  <!-- async_callback_ -->
+		</if>
+	   <if test="platform_id_ != null ">
+		      AND platform_id_ = #{platform_id_}  <!-- platform_id_ -->
+		</if>
+	    <if test="biz_summary != null and biz_summary != ''">
+		      AND biz_summary = #{biz_summary}  <!-- biz_summary -->
+		</if>
+	   <if test="contract_id_ != null ">
+		      AND contract_id_ = #{contract_id_}  <!-- contract_id_ -->
+		</if>
+	    <if test="contract_code_ != null and contract_code_ != ''">
+		      AND contract_code_ = #{contract_code_}  <!-- contract_code_ -->
+		</if>
+	    <if test="reference_ != null and reference_ != ''">
+		      AND reference_ = #{reference_}  <!-- reference_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ = #{remark_}  <!-- remark_ -->
+		</if>
+	   <if test="loan_amount_ != null ">
+		      AND loan_amount_ = #{loan_amount_}  <!-- loan_amount_ -->
+		</if>
+	   <if test="loan_bank_id_ != null ">
+		      AND loan_bank_id_ = #{loan_bank_id_}  <!-- loan_bank_id_ -->
+		</if>
+	    <if test="bank_code_ != null and bank_code_ != ''">
+		      AND bank_code_ = #{bank_code_}  <!-- bank_code_ -->
+		</if>
+	    <if test="loan_account_ != null and loan_account_ != ''">
+		      AND loan_account_ = #{loan_account_}  <!-- loan_account_ -->
+		</if>
+	    <if test="loan_name_ != null and loan_name_ != ''">
+		      AND loan_name_ = #{loan_name_}  <!-- loan_name_ -->
+		</if>
+	    <if test="loan_idcard_ != null and loan_idcard_ != ''">
+		      AND loan_idcard_ = #{loan_idcard_}  <!-- loan_idcard_ -->
+		</if>
+	    <if test="loan_cellphone_ != null and loan_cellphone_ != ''">
+		      AND loan_cellphone_ = #{loan_cellphone_}  <!-- loan_cellphone_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ = #{created_time_}  <!-- created_time_ -->
+		</if>
+	   <if test="interact_times_ != null ">
+		      AND interact_times_ = #{interact_times_}  <!-- interact_times_ -->
+		</if>
+	    <if test="next_interact_time_ != null and next_interact_time_ != ''">
+		      AND next_interact_time_ = #{next_interact_time_}  <!-- next_interact_time_ -->
+		</if>
+	    <if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+		      AND third_channel_order_id_ = #{third_channel_order_id_}  <!-- third_channel_order_id_ -->
+		</if>
+	    <if test="change_time_ != null and change_time_ != ''">
+		      AND change_time_ = #{change_time_}  <!-- change_time_ -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="request_id_ != null and request_id_ != ''">
+		      AND request_id_ like '%${request_id_}%'  <!-- request_id_ -->
+		</if>
+	    <if test="routed_third_channel_code_ != null and routed_third_channel_code_ != ''">
+		      AND routed_third_channel_code_ like '%${routed_third_channel_code_}%'  <!-- routed_third_channel_code_ -->
+		</if>
+	    <if test="async_callback_ != null and async_callback_ != ''">
+		      AND async_callback_ like '%${async_callback_}%'  <!-- async_callback_ -->
+		</if>
+	    <if test="biz_summary != null and biz_summary != ''">
+		      AND biz_summary like '%${biz_summary}%'  <!-- biz_summary -->
+		</if>
+	    <if test="contract_code_ != null and contract_code_ != ''">
+		      AND contract_code_ like '%${contract_code_}%'  <!-- contract_code_ -->
+		</if>
+	    <if test="reference_ != null and reference_ != ''">
+		      AND reference_ like '%${reference_}%'  <!-- reference_ -->
+		</if>
+	    <if test="remark_ != null and remark_ != ''">
+		      AND remark_ like '%${remark_}%'  <!-- remark_ -->
+		</if>
+	    <if test="bank_code_ != null and bank_code_ != ''">
+		      AND bank_code_ like '%${bank_code_}%'  <!-- bank_code_ -->
+		</if>
+	    <if test="loan_account_ != null and loan_account_ != ''">
+		      AND loan_account_ like '%${loan_account_}%'  <!-- loan_account_ -->
+		</if>
+	    <if test="loan_name_ != null and loan_name_ != ''">
+		      AND loan_name_ like '%${loan_name_}%'  <!-- loan_name_ -->
+		</if>
+	    <if test="loan_idcard_ != null and loan_idcard_ != ''">
+		      AND loan_idcard_ like '%${loan_idcard_}%'  <!-- loan_idcard_ -->
+		</if>
+	    <if test="loan_cellphone_ != null and loan_cellphone_ != ''">
+		      AND loan_cellphone_ like '%${loan_cellphone_}%'  <!-- loan_cellphone_ -->
+		</if>
+	    <if test="created_time_ != null and created_time_ != ''">
+		      AND created_time_ like '%${created_time_}%'  <!-- created_time_ -->
+		</if>
+	    <if test="next_interact_time_ != null and next_interact_time_ != ''">
+		      AND next_interact_time_ like '%${next_interact_time_}%'  <!-- next_interact_time_ -->
+		</if>
+	    <if test="third_channel_order_id_ != null and third_channel_order_id_ != ''">
+		      AND third_channel_order_id_ like '%${third_channel_order_id_}%'  <!-- third_channel_order_id_ -->
+		</if>
+	    <if test="change_time_ != null and change_time_ != ''">
+		      AND change_time_ like '%${change_time_}%'  <!-- change_time_ -->
+		</if>
+	</sql>
+	
+</mapper>

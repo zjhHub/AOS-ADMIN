@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="searchCustomer">
+
+	<!-- 查询务线下的账户 -->
+	<select id="getCustomerList" parameterType="Dto" resultType="Dto">
+		SELECT
+		  fc.name_ name,
+		  fc.customer_code_ customer_code,
+		  fc.idcard_ idcard,
+		  fc.cellphone_ cellphone,
+		  CASE fc.platform_id_ WHEN 1 THEN '急借通' WHEN 2 THEN '发薪贷' END attach_platform,
+		  fc.created_time_ created_time,
+		  fl.change_time_ updated_time,
+      	  fl.change_by_ updated_by
+		FROM
+			fc_customer  fc LEFT JOIN (SELECT * from fc_customer_change_log group by customer_id_) fl ON fc.id_ = fl.customer_id_
+		<where>
+			<if test="idcard_ != null and idcard_ != ''">
+		      	AND fc.idcard_ like '%${idcard_}%'  <!-- 客户身份证 -->
+			</if>
+			<if test="name_ != null and name_ != ''">
+		      	AND fc.name_ like '%${name_}%'  <!-- 客户姓名 -->
+			</if>
+			<if test="cellphone_ != null and cellphone_ != ''">
+		      	AND fc.cellphone_ like '%${cellphone_}%'  <!-- 客户手机号 -->
+			</if>
+			<if test="platform_id_ != null ">
+		      	AND fc.platform_id_ = #{platform_id_}  <!-- 开户业务线 -->
+			</if>
+		</where>
+			limit #{beginIndex}, #{page_size}
+	</select>
+
+	<select id="getCustomerCount" parameterType="Dto" resultType="Dto">
+		SELECT
+			count(1) as count
+		FROM
+			fc_customer  fc
+		<where>
+			<if test="idcard_ != null and idcard_ != ''">
+		      	AND fc.idcard_ like '%${idcard_}%'  <!-- 客户身份证 -->
+			</if>
+			<if test="name_ != null and name_ != ''">
+		      	AND fc.name_ like '%${name_}%'  <!-- 客户姓名 -->
+			</if>
+			<if test="cellphone_ != null and cellphone_ != ''">
+		      	AND fc.cellphone_ like '%${cellphone_}%'  <!-- 客户手机号 -->
+			</if>
+			<if test="platform_id_ != null ">
+		      	AND fc.platform_id_ = #{platform_id_}  <!-- 开户业务线 -->
+			</if>
+		</where>
+	</select>
+
+</mapper>

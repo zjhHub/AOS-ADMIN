@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fc_log_chargeback_response[fc_log_chargeback_response]SQL自动映射 -->
+<!--  注意:此文件由AOS平台自动生成-禁止手工修改 2017-02-07 10:53:01 -->
+<mapper namespace="aos.fc.dao.Fc_log_chargeback_responseDao">
+	
+	<!-- 插入一个数据持久化对象(插入字段为传入PO实体的非空属性) -->
+	<insert id="insert"  parameterType="Fc_log_chargeback_responsePO">
+		INSERT INTO fc_log_chargeback_response (
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	         request_uuid_, <!-- 登账请求uuid -->
+		</if>
+		<if test="response_content_ != null and response_content_ != ''">
+	         response_content_, <!-- 响应内容 -->
+		</if>
+		<if test="response_time_ != null and response_time_ != ''">
+	         response_time_, <!-- 响应时间 -->
+		</if>
+		<if test="process_duration_ != null">
+	         process_duration_, <!-- 处理时长 -->
+		</if>
+		<if test="response_code != null and response_code != ''">
+	         response_code, <!-- response_code -->
+		</if>
+		<if test="summary != null and summary != ''">
+	         summary, <!-- summary -->
+		</if>
+		<if test="msg_templet != null and msg_templet != ''">
+	         msg_templet, <!-- msg_templet -->
+		</if>
+		<if test="response_uuid_ != null and response_uuid_ != ''">
+	          response_uuid_  <!-- response_uuid_ -->
+	   </if>
+		)VALUES(
+		<if test="request_uuid_ != null and request_uuid_ != ''">
+	          #{request_uuid_, jdbcType=VARCHAR}, <!-- 登账请求uuid -->
+	    </if>
+		<if test="response_content_ != null and response_content_ != ''">
+	          #{response_content_, jdbcType=VARCHAR}, <!-- 响应内容 -->
+	    </if>
+		<if test="response_time_ != null and response_time_ != ''">
+	          #{response_time_, jdbcType=VARCHAR}, <!-- 响应时间 -->
+	    </if>
+		<if test="process_duration_ != null">
+	          #{process_duration_, jdbcType=INTEGER}, <!-- 处理时长 -->
+	    </if>
+		<if test="response_code != null and response_code != ''">
+	          #{response_code, jdbcType=VARCHAR}, <!-- response_code -->
+	    </if>
+		<if test="summary != null and summary != ''">
+	          #{summary, jdbcType=VARCHAR}, <!-- summary -->
+	    </if>
+		<if test="msg_templet != null and msg_templet != ''">
+	          #{msg_templet, jdbcType=VARCHAR}, <!-- msg_templet -->
+	    </if>
+		<if test="response_uuid_ != null and response_uuid_ != ''">
+		     #{response_uuid_, jdbcType=VARCHAR}  <!-- response_uuid_ -->
+	    </if>
+		)
+	</insert>
+	
+	<!-- 插入一个数据持久化对象(含所有字段) -->
+	<insert id="insertAll"  parameterType="Fc_log_chargeback_responsePO">
+		INSERT INTO fc_log_chargeback_response (
+		    <include refid="column" />
+		)
+		VALUES (
+		    #{response_uuid_, jdbcType=VARCHAR},  <!-- response_uuid_ -->
+		    #{request_uuid_, jdbcType=VARCHAR},  <!-- 登账请求uuid -->
+		    #{response_content_, jdbcType=VARCHAR},  <!-- 响应内容 -->
+		    #{response_time_, jdbcType=VARCHAR},  <!-- 响应时间 -->
+		    #{process_duration_, jdbcType=INTEGER},  <!-- 处理时长 -->
+		    #{response_code, jdbcType=VARCHAR},  <!-- response_code -->
+		    #{summary, jdbcType=VARCHAR},  <!-- summary -->
+		    #{msg_templet, jdbcType=VARCHAR}  <!-- msg_templet -->
+		)
+	</insert>
+
+	<!-- 根据主键修改数据持久化对象 -->
+	<update id="updateByKey" parameterType="Fc_log_chargeback_responsePO">
+		UPDATE fc_log_chargeback_response
+		<set>
+			<if test="response_uuid_ != null">
+		          response_uuid_ = #{response_uuid_, jdbcType=VARCHAR},  <!-- response_uuid_ -->
+			</if>
+			<if test="request_uuid_ != null">
+		          request_uuid_ = #{request_uuid_, jdbcType=VARCHAR},  <!-- 登账请求uuid -->
+			</if>
+			<if test="response_content_ != null">
+		          response_content_ = #{response_content_, jdbcType=VARCHAR},  <!-- 响应内容 -->
+			</if>
+			<if test="response_time_ != null">
+		          response_time_ = #{response_time_, jdbcType=VARCHAR},  <!-- 响应时间 -->
+			</if>
+			<if test="process_duration_ != null">
+		          process_duration_ = #{process_duration_, jdbcType=INTEGER},  <!-- 处理时长 -->
+			</if>
+			<if test="response_code != null">
+		          response_code = #{response_code, jdbcType=VARCHAR},  <!-- response_code -->
+			</if>
+			<if test="summary != null">
+		          summary = #{summary, jdbcType=VARCHAR},  <!-- summary -->
+			</if>
+			<if test="msg_templet != null">
+		          msg_templet = #{msg_templet, jdbcType=VARCHAR},  <!-- msg_templet -->
+			</if>
+		</set>
+		WHERE  response_uuid_ = #{response_uuid_}
+	</update>
+	
+	<!-- 根据主键删除数据持久化对象 -->
+	<delete id="deleteByKey">
+		DELETE FROM fc_log_chargeback_response WHERE  response_uuid_ = #{response_uuid_}
+	</delete>
+
+	<!-- 根据主键查询并返回数据持久化对象 -->
+	<select id="selectByKey" resultType="Fc_log_chargeback_responsePO">
+		SELECT
+		<include refid="column" />
+		FROM fc_log_chargeback_response WHERE  response_uuid_ = #{response_uuid_}
+	</select>
+
+	<!-- 根据唯一组合条件查询并返回数据持久化对象 -->
+	<select id="selectOne" parameterType="Dto" resultType="Fc_log_chargeback_responsePO">
+		SELECT
+		    <include refid="column" />
+		FROM fc_log_chargeback_response
+		<where>
+		    <include refid="equal" />
+		</where>		
+	</select>
+
+	<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Dto" resultType="Fc_log_chargeback_responsePO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_log_chargeback_response
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Dto" resultType="Fc_log_chargeback_responsePO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_log_chargeback_response
+		<where>
+		    <include refid="equal" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Dto" resultType="Fc_log_chargeback_responsePO">
+		SELECT
+			<include refid="column" />	
+		FROM fc_log_chargeback_response
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Dto" resultType="Fc_log_chargeback_responsePO" useCache="false">
+	    SELECT
+			<include refid="column" />	
+		FRoM fc_log_chargeback_response
+		<where>
+		    <include refid="like" />
+		</where>	
+	</select>
+	
+	<!-- 根据Dto统计行数 -->
+	<select id="rows" resultType="Integer" parameterType="Dto">
+		SELECT COUNT(1) AS aos_rows_ FROM fc_log_chargeback_response
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Dto" resultType="String">
+		SELECT
+			${_expr}
+		FROM fc_log_chargeback_response
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+	
+	<!-- 表字段 -->
+	<sql id="column">
+		  response_uuid_,  <!-- response_uuid_ -->
+		  request_uuid_,  <!-- 登账请求uuid -->
+		  response_content_,  <!-- 响应内容 -->
+		  response_time_,  <!-- 响应时间 -->
+		  process_duration_,  <!-- 处理时长 -->
+		  response_code,  <!-- response_code -->
+		  summary,  <!-- summary -->
+		  msg_templet  <!-- msg_templet -->
+	</sql>
+	
+	<!-- 表字段(用于外表的关联时引用) -->
+	<sql id="column2">
+		  fc_log_chargeback_response.response_uuid_,  <!-- response_uuid_ -->
+		  fc_log_chargeback_response.request_uuid_,  <!-- 登账请求uuid -->
+		  fc_log_chargeback_response.response_content_,  <!-- 响应内容 -->
+		  fc_log_chargeback_response.response_time_,  <!-- 响应时间 -->
+		  fc_log_chargeback_response.process_duration_,  <!-- 处理时长 -->
+		  fc_log_chargeback_response.response_code,  <!-- response_code -->
+		  fc_log_chargeback_response.summary,  <!-- summary -->
+		  fc_log_chargeback_response.msg_templet  <!-- msg_templet -->
+	</sql>
+
+	<!-- Where精确匹配字段 -->
+	<sql id="equal">
+	    <if test="response_uuid_ != null and response_uuid_ != ''">
+		      AND response_uuid_ = #{response_uuid_}  <!-- response_uuid_ -->
+		</if>
+	    <if test="request_uuid_ != null and request_uuid_ != ''">
+		      AND request_uuid_ = #{request_uuid_}  <!-- 登账请求uuid -->
+		</if>
+	    <if test="response_content_ != null and response_content_ != ''">
+		      AND response_content_ = #{response_content_}  <!-- 响应内容 -->
+		</if>
+	    <if test="response_time_ != null and response_time_ != ''">
+		      AND response_time_ = #{response_time_}  <!-- 响应时间 -->
+		</if>
+	   <if test="process_duration_ != null ">
+		      AND process_duration_ = #{process_duration_}  <!-- 处理时长 -->
+		</if>
+	    <if test="response_code != null and response_code != ''">
+		      AND response_code = #{response_code}  <!-- response_code -->
+		</if>
+	    <if test="summary != null and summary != ''">
+		      AND summary = #{summary}  <!-- summary -->
+		</if>
+	    <if test="msg_templet != null and msg_templet != ''">
+		      AND msg_templet = #{msg_templet}  <!-- msg_templet -->
+		</if>
+	</sql>
+	
+	<!-- Where模糊匹配字段 -->
+	<sql id="like">
+	    <if test="response_uuid_ != null and response_uuid_ != ''">
+		      AND response_uuid_ like '%${response_uuid_}%'  <!-- response_uuid_ -->
+		</if>
+	    <if test="request_uuid_ != null and request_uuid_ != ''">
+		      AND request_uuid_ like '%${request_uuid_}%'  <!-- 登账请求uuid -->
+		</if>
+	    <if test="response_content_ != null and response_content_ != ''">
+		      AND response_content_ like '%${response_content_}%'  <!-- 响应内容 -->
+		</if>
+	    <if test="response_time_ != null and response_time_ != ''">
+		      AND response_time_ like '%${response_time_}%'  <!-- 响应时间 -->
+		</if>
+	    <if test="response_code != null and response_code != ''">
+		      AND response_code like '%${response_code}%'  <!-- response_code -->
+		</if>
+	    <if test="summary != null and summary != ''">
+		      AND summary like '%${summary}%'  <!-- summary -->
+		</if>
+	    <if test="msg_templet != null and msg_templet != ''">
+		      AND msg_templet like '%${msg_templet}%'  <!-- msg_templet -->
+		</if>
+	</sql>
+	
+</mapper>
